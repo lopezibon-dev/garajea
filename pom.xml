@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.unieus.garajea</groupId>
+    <artifactId>garajea</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>garajea-core</module>
+        <module>garajea-desktop</module>
+        <module>garajea-webapp</module>
+        <!--
+        
+        <module>garajea-webapp</module>-->
+    </modules>
+    <!-- Dependencias y plugins comunes aquí -->
+    <dependencyManagement>
+        <!-- Dependencias y versiones compartidas -->
+    </dependencyManagement>
+    <build>
+        <!-- Plugins globales (como el compiler plugin) -->
+    </build>
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+</project>
