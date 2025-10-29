@@ -1,4 +1,4 @@
-package com.unieus.garajea.webapp;
+package com.unieus.garajea.web;
 
 public class Main {
     public static void main(String[] args) {

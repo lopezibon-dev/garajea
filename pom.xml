@@ -8,12 +8,10 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
+        <module>garajea-model</module>
         <module>garajea-core</module>
         <module>garajea-desktop</module>
-        <module>garajea-webapp</module>
-        <!--
-        
-        <module>garajea-webapp</module>-->
+        <module>garajea-web</module>
     </modules>
     <!-- Dependencias y plugins comunes aquí -->
     <dependencyManagement>
