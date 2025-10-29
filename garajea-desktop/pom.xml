@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>garajea-desktop</artifactId>
-    <version>1.0.0</version>
 
     <dependencies>
         <dependency>

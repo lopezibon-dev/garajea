@@ -8,9 +8,9 @@
             <artifactId>garajea</artifactId>
             <version>1.0.0</version>
       </parent>
-
+      <packaging>jar</packaging>
       <artifactId>garajea-core</artifactId>
-      
+
       <dependencies>
             <dependency>
                   <groupId>com.unieus.garajea</groupId>

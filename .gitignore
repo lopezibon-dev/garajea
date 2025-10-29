@@ -1,0 +1,18 @@
+# MAven-eko konpilazio-fitxategiak
+target/
+*/target/
+**/target/
+
+# IDE-ko fitxategiak
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sistemako fitxategiak
+.DS_Store
+Thumbs.db
+
+# Fitxategi denboralak
+*.tmp
+*.temp
