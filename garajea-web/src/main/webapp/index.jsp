@@ -6,7 +6,7 @@
     <title>DIY Garajea</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="DIY Garajea: zure ibilgailua konpondu, mekanikoaren beharrik gabe edo haren laguntzarekin. Zure materialak ekarri edo bertan erosi!">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header>
