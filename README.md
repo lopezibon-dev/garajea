@@ -10,25 +10,42 @@ DIY Garajearen proiektua, tailer mekaniko baterako kudeaketa sistema informatiko
 
 * Ikuspegia (View) eta Kontrolatzailea (Controller) geruzak: Modulu desberdinetan (Web eta Desktop) inplementatuko dira, eta modulu bakoitzak bere kontrolatzaileak eta bistak ditu. garajea-core moduluarekiko menepekotasuna dute.
 
+* Proiektua egitura antolatu batean eraikitzeko Maven erabiltzen da. Arkitektura moduluanitza da:
+```mermaid
+graph TB
+garajea["garajea (gurasoa: POM)"]
+garajea-model["garajea-model"]
+garajea-core["garajea-core"]
+garajea-desktop["garajea-desktop"]
+garajea-web["garajea-web"]
+
+garajea --> garajea-model
+garajea --> garajea-core
+garajea --> garajea-desktop
+garajea --> garajea-web
+```
+
+Garajea modulua, proiektuaren modulu nagusia edo gurasoa da (edukiontzi bat), eta proiektu moduluanitzaren egitura orokorra definitzen du. Berez, karpeta batez eta pom.xml fitxategi batez osatzen da.
+
+* Dena dela, moduluetan egituratutako kodeak zenbait menpekotasun ditu:
+
+```mermaid
+graph BT
+garajea-model["garajea-model"]
+garajea-core["garajea-core"]
+garajea-desktop["garajea-desktop"]
+garajea-web["garajea-web"]
+
+garajea-core --> garajea-model
+garajea-desktop --> garajea-core
+garajea-web --> garajea-core
+```
+
 * Moduluak:
   - garajea-model: datuen iraunkortasunaz arduratzen da (DAO). Helburua, datuen iraunkortasuna negozio-logikatik banatzea da. Horrela, datuen iturburari (kasu honetan, MySQL) buruzko guztia (konexioa, datuen atzipena, etab) enkapsulatu egiten da. DAO-en erabileraren bitartez, ez da erakusten datu-base sistemaren xehetasunik (hala nola ResultSet delakoak, SQL kontsultak, etab). Ereduaren entitateen objektuak hartu edota itzuliko dituzte. 
   - garajea-core: Negozioaren logika biltzen du, eta garajea-model moduluan definitutako DAOak erabiliko ditu datuak lortu, manipulatu eta gordetzeko. Beraz, garajea-model moduluarekiko menepekotasuna du. Orokorrean, banaketa honek mantentze lanak erraztuko ditu: adibidez datu-base sistema aldatu behar bada, garajea-model modulua eta bere DAO-ak soilik aldatu behar dira.
-  - Web Modulua: Bezeroentzako interfazea. Hautazkoa: langileek ere erabili ahal izatea heuren egitekoak burutzeko.  
-  - Desktop Modulua: Langileentzako interfazea.
-
-```mermaid
-graph TB
-    garajea["garajea"]
-    garajea-model["garajea-model"]
-    garajea-core["garajea-core"]
-    garajea-desktop["garajea-desktop"]
-    garajea-web["garajea-web"]
-
-    garajea --> garajea-model
-    garajea-model --> garajea-core
-    garajea-core --> garajea-desktop
-    garajea-core --> garajea-web
-```
+  - Web Modulua: Bezeroentzako interfazea, garaje-core moduluaren menpe dago. Hautazkoa: langileek ere erabili ahal izatea heuren egitekoak burutzeko.  
+  - Desktop Modulua: Langileentzako interfazea, garaje-core moduluaren menpe dago.
 
 ### 3. Erabilitako Teknologiak
 * Programazio-lengoaia: Java  
@@ -86,6 +103,8 @@ erDiagram
       datetime hasiera_data_ordua
       datetime amaiera_data_ordua
       string oharrak
+      string egoera
+      int faktura_id FK
     }
     FAKTURA {
       int id PK
@@ -115,15 +134,15 @@ erDiagram
     }
 
     BEZEROA ||--|{ IBILGAILUA : "du"
-    BEZEROA ||--|{ ERRESERBA : "du"
-    IBILGAILUA ||--|{ ERRESERBA : "dago "
+    BEZEROA ||--|{ ERRESERBA : "sortu"
+    IBILGAILUA ||--|{ ERRESERBA : "dago"
+    KABINA ||--|{ ERRESERBA : "dago"
+    LANGILEA ||--|{ ERRESERBA : "lan"
+    ERRESERBA ||--|| FAKTURA : "du"
+    ERRESERBA ||--|{ ERRESERBA_MATERIALA : "osatu"
+    MATERIALA ||--|{ ERRESERBA_MATERIALA : "osatu"
     KABINA ||--|| GORAGAILUA : "du"
     KABINA ||--|{ MAKINA : "du"
-    KABINA ||--|{ ERRESERBA : "dago"
-    ERRESERBA ||--|| FAKTURA : "du"
-    LANGILEA ||--|{ ERRESERBA : "lan"
-    ERRESERBA ||--|{ ERRESERBA_MATERIALA : "erabili"
-    MATERIALA ||--|{ ERRESERBA_MATERIALA : "erabili"
 ```
 
 ```mermaid
@@ -196,7 +215,6 @@ erDiagram
       int erreserba_id PK, FK
       int materiala_id PK, FK
       int kopurua
-      
     }
 
     BEZEROA ||--|{ IBILGAILUA : "du"
