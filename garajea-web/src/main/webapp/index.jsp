@@ -12,7 +12,7 @@
     <header>
         <div class="logo-login-container">
             <div class="logo">
-                <img src="img/logo-horizontal.png" alt="DIY Garajea Logo">
+                <img src="img/garajea-740-300.png" alt="DIY Garajea">
             </div>
             <form class="login-form" method="post" action="login">
                 <label for="email">Email:</label>

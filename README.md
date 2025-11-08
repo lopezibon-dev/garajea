@@ -6,7 +6,7 @@
 DIY Garajearen proiektua, tailer mekaniko baterako kudeaketa sistema informatikoa da. Proiektuak bi alde nagusi ditu: Web aplikazioa eta Desktop aplikazioa.
 
 ### 2. Arkitektura Eredua: MVC Patroia (Model-View-Controller)
-* Eredua (Model) geruza: MVC patroiaren Eredua geruza bi  modulutan banatuko da: garajea-model (datuen iraunkortasuna) eta garajea-core (Negozio Logika)
+* Eredua (Model) geruza: MVC patroiaren Eredua geruza bi modulutan banatuko da: garajea-model (entitateak eta iraunkortasuna) eta garajea-core (Negozio Logika, Zerbitzuak)
 
 * Ikuspegia (View) eta Kontrolatzailea (Controller) geruzak: Modulu desberdinetan (Web eta Desktop) inplementatuko dira, eta modulu bakoitzak bere kontrolatzaileak eta bistak ditu. garajea-core moduluarekiko menepekotasuna dute.
 
@@ -42,9 +42,14 @@ garajea-web --> garajea-core
 ```
 
 * Moduluak:
-  - garajea-model: datuen iraunkortasunaz arduratzen da (DAO). Helburua, datuen iraunkortasuna negozio-logikatik banatzea da. Horrela, datuen iturburari (kasu honetan, MySQL) buruzko guztia (konexioa, datuen atzipena, etab) enkapsulatu egiten da. DAO-en erabileraren bitartez, ez da erakusten datu-base sistemaren xehetasunik (hala nola ResultSet delakoak, SQL kontsultak, etab). Ereduaren entitateen objektuak hartu edota itzuliko dituzte. 
-  - garajea-core: Negozioaren logika biltzen du, eta garajea-model moduluan definitutako DAOak erabiliko ditu datuak lortu, manipulatu eta gordetzeko. Beraz, garajea-model moduluarekiko menepekotasuna du. Orokorrean, banaketa honek mantentze lanak erraztuko ditu: adibidez datu-base sistema aldatu behar bada, garajea-model modulua eta bere DAO-ak soilik aldatu behar dira.
-  - Web Modulua: Bezeroentzako interfazea, garaje-core moduluaren menpe dago. Hautazkoa: langileek ere erabili ahal izatea heuren egitekoak burutzeko.  
+  - garajea-model: Entitateen definizioaz eta datuen Iraunkortasunaz (DAO patroia erabiliz) arduratzen den modulua da. Helburu nagusia datuen iraunkortasuna negozio-logikatik banatzea da.
+    $ Entitateak: sistema informatikoaren negozio-objektuak definitzen dituzte.
+    $ DAO (Data Access Object): Datuen atzipen-logika (CRUD eragiketak) enkapsulatzen du. Datuen iturburuari (MySQL kasu honetan) buruzko xehetasun guztiak (konexioa, datuen atzipena, etab.) isolatzen dira. Horrela, ez da datu-base sistemaren berariazko elementurik (adibidez, ResultSet delakoak edo SQL kontsultak) erakusten. Metodoek ereduaren Entitate-objektuak hartu edo itzuliko dituzte.
+
+  - garajea-core: Negozioaren logika biltzen du, eta garajea-model moduluan definitutako DAOak erabiliko ditu datuak lortu, manipulatu eta gordetzeko. Beraz, garajea-model moduluarekiko menepekotasuna du. Orokorrean, banaketa honek mantentze lanak erraztuko ditu: adibidez datu-base sistema aldatu behar bada, garajea-model modulua (zehazki DAO-ak) soilik aldatu behar da.
+
+  - Web Modulua: Bezeroentzako interfazea, garaje-core moduluaren menpe dago. Hautazkoa: langileek ere erabili ahal izatea heuren egitekoak burutzeko. 
+
   - Desktop Modulua: Langileentzako interfazea, garaje-core moduluaren menpe dago.
 
 ### 3. Erabilitako Teknologiak
@@ -66,7 +71,7 @@ erDiagram
     BEZEROA {
       int bezeroa_id PK
       string izena
-      string abizena
+      string abizenak
       string emaila
       string telefonoa
       string pasahitza
@@ -76,6 +81,8 @@ erDiagram
       string izena
       string abizena
       string lanpostua
+      string erabiltzailea
+      string pasahitza
     }
     IBILGAILUA {
       int ibilgailua_id PK
@@ -115,6 +122,7 @@ erDiagram
     ERREMINTA {
       int erreminta_id PK
       string izena
+      string mota
     }
     MAKINA {
       int id PK
@@ -126,6 +134,8 @@ erDiagram
       int id PK
       string izena
       string mota
+      double prezioa
+      int stock_Kopurua 
     }
     ERRESERBA_MATERIALA {
       int erreserba_id PK, FK
@@ -150,7 +160,7 @@ erDiagram
     BEZEROA {
       int bezeroa_id PK
       string izena
-      string abizena
+      string abizenak
       string emaila
       string telefonoa
       string pasahitza
@@ -160,6 +170,8 @@ erDiagram
       string izena
       string abizena
       string lanpostua
+      string erabiltzailea
+      string pasahitza
     }
     IBILGAILUA {
       int ibilgailua_id PK
@@ -199,6 +211,7 @@ erDiagram
     ERREMINTA {
       int erreminta_id PK
       string izena
+      string mota
     }
     MAKINA {
       int id PK
@@ -210,6 +223,8 @@ erDiagram
       int id PK
       string izena
       string mota
+      double prezioa
+      int stock_Kopurua 
     }
     ERRESERBA_MATERIALA {
       int erreserba_id PK, FK
@@ -282,4 +297,5 @@ erDiagram
 
 ## Bigarren fase baterako
 * Python erabiltzea, adibidez datu-base bateko taula bat esportatzeko edo inportatzeko.  
+* testu-fitxategi batean idatzi gertatutako erroreei buruzko informazioa
 * I18n (Internazionalizazioa) kontuan hartuta garatzea. Horrela, gaztelania eta ingelesa gehituz erabiltzaileak erabili ditzakeen hizkuntzak bezala.

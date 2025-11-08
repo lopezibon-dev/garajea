@@ -19,29 +19,31 @@ body {
 header {
     background: #222;
     color: #fff;
-    padding: 1em;
+    padding: 1em .5rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     row-gap: 0.5em;
 }
 /* Goiburuaren edukiontzia */
 .logo-login-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
     width: 100%;
     gap: 0.7em;
 }
 
 /* Logo */
 .logo img {
-    height: 38px;
+    max-height: 300px;
+    max-width: 95%;
     width: auto;
     margin-bottom: 0.2em;
 }
 
-/* Login formularioa zutabean eta estilo kompaktua */
+/* Login formularioa zutabean eta estilo konpaktua */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -163,19 +165,18 @@ footer {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 0.7em 1.5em;
+        padding: 0.7em 1em;
     }
 
     .logo-login-container {
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
-        gap: 2em;
+        justify-content: space-evenly;
+        gap: 1em;
     }
     .logo img {
-        height: 50px;
-        margin-bottom: 0;
-        margin-right: 0.7em;
+        max-height: 150px;
+        margin: 0;
     }
     .login-form {
         min-width: 185px;
