@@ -29,10 +29,6 @@ public class BezeroaDAOImpl implements BezeroaDAO {
         return bezeroa;
     }
 
-    // -----------------------------------------------------------------
-    // CRUD Metodoak
-    // -----------------------------------------------------------------
-    
     @Override
     public void save(Bezeroa bezeroa) {
         String sql = "INSERT INTO BEZEROA (izena, abizena, emaila, telefonoa, pasahitza) VALUES (?, ?, ?, ?, ?)";
@@ -63,14 +59,13 @@ public class BezeroaDAOImpl implements BezeroaDAO {
 
     @Override
     public void update(Bezeroa bezeroa) {
-        String sql = "UPDATE BEZEROA SET izena = ?, abizena = ?, emaila = ?, telefonoa = ?, pasahitza = ? WHERE bezeroa_id = ?";
+        String sql = "UPDATE BEZEROA SET izena = ?, abizena = ?, emaila = ?, telefonoa = ? WHERE bezeroa_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, bezeroa.getIzena());
             ps.setString(2, bezeroa.getAbizenak());
             ps.setString(3, bezeroa.getEmaila());
             ps.setString(4, bezeroa.getTelefonoa());
-            ps.setString(5, bezeroa.getPasahitza());
-            ps.setInt(6, bezeroa.getBezeroaId()); // PK WHERE klausulan
+            ps.setInt(5, bezeroa.getBezeroaId()); // PK WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Errorea Bezeroa eguneratzean: " + e.getMessage());
@@ -90,9 +85,6 @@ public class BezeroaDAOImpl implements BezeroaDAO {
         }
     }
 
-    // -----------------------------------------------------------------
-    // Bilatzeko Metodo Espezifikoak
-    // -----------------------------------------------------------------
     @Override
     public Bezeroa findById(int bezeroaId) {
         String sql = "SELECT bezeroa_id, izena, abizena, emaila, telefonoa, pasahitza FROM BEZEROA WHERE bezeroa_id = ?";
@@ -127,4 +119,51 @@ public class BezeroaDAOImpl implements BezeroaDAO {
         }
         return bezeroak;
     }
+
+    @Override
+    public boolean existitzenDaEmaila(String emaila) {
+        String sql = "SELECT COUNT(*) FROM BEZEROA WHERE emaila = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, emaila);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Errorea emaila existitzen den egiaztatzean: " + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public Bezeroa getByEmailaPasahitza(String emaila, String pasahitza) {
+        String sql = "SELECT * FROM BEZEROA WHERE emaila = ? AND pasahitza = ?";
+        Bezeroa bezeroa = null;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, emaila);
+            ps.setString(2, pasahitza);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Reutilizar el método mapper existente
+                    bezeroa = bezeroaSortu(rs); 
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Errorea emaila eta pasahitzaren arabera bezeroa bilatzean: " + e.getMessage());
+        }
+        return bezeroa;
+    }
+
+    @Override
+    public void updatePasahitza(int bezeroaId, String pasahitza) {
+        String sql = "UPDATE BEZEROA SET pasahitza = ? WHERE bezeroa_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, pasahitza);
+            ps.setInt(2, bezeroaId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errorea Bezeroa pasahitza eguneratzean: " + e.getMessage());
+        }
+    }    
 }

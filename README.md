@@ -43,10 +43,10 @@ garajea-web --> garajea-core
 
 * Moduluak:
   - garajea-model: Entitateen definizioaz eta datuen Iraunkortasunaz (DAO patroia erabiliz) arduratzen den modulua da. Helburu nagusia datuen iraunkortasuna negozio-logikatik banatzea da.
-    $ Entitateak: sistema informatikoaren negozio-objektuak definitzen dituzte.
-    $ DAO (Data Access Object): Datuen atzipen-logika (CRUD eragiketak) enkapsulatzen du. Datuen iturburuari (MySQL kasu honetan) buruzko xehetasun guztiak (konexioa, datuen atzipena, etab.) isolatzen dira. Horrela, ez da datu-base sistemaren berariazko elementurik (adibidez, ResultSet delakoak edo SQL kontsultak) erakusten. Metodoek ereduaren Entitate-objektuak hartu edo itzuliko dituzte.
+    - Entitateak: sistema informatikoaren negozio-objektuak definitzen dituzte.
+    - DAO (Data Access Object): Datuen atzipen-logika (CRUD eragiketak) enkapsulatzen du. Datuen iturburuari (MySQL kasu honetan) buruzko xehetasun guztiak (konexioa, datuen atzipena, etab.) isolatzen dira. Horrela, ez da datu-base sistemaren berariazko elementurik (adibidez, ResultSet delakoak edo SQL kontsultak) erakusten. Metodoek ereduaren Entitate-objektuak hartu edo itzuliko dituzte.
 
-  - garajea-core: Negozioaren logika biltzen du, eta garajea-model moduluan definitutako DAOak erabiliko ditu datuak lortu, manipulatu eta gordetzeko. Beraz, garajea-model moduluarekiko menepekotasuna du. Orokorrean, banaketa honek mantentze lanak erraztuko ditu: adibidez datu-base sistema aldatu behar bada, garajea-model modulua (zehazki DAO-ak) soilik aldatu behar da.
+  - garajea-core: Negozioaren logika biltzen du, eta garajea-model moduluan definitutako DAOak erabiliko ditu datuak lortu, manipulatu eta gordetzeko. Beraz, garajea-model moduluarekiko menpekotasuna du. Orokorrean, banaketa honek mantentze lanak erraztuko ditu: adibidez datu-base sistema aldatu behar bada, garajea-model modulua (zehazki DAO-ak) soilik aldatu behar da.
 
   - Web Modulua: Bezeroentzako interfazea, garaje-core moduluaren menpe dago. Hautazkoa: langileek ere erabili ahal izatea heuren egitekoak burutzeko. 
 
@@ -54,7 +54,7 @@ garajea-web --> garajea-core
 
 ### 3. Erabilitako Teknologiak
 * Programazio-lengoaia: Java  
-* Proiektuaren arkitekturaren kudeatzailea: Maven  
+* Proiektuaren azpiegituraren kudeatzailea (dependentziak, konpilazioa, enpaketatzea): Maven  
 * Datu-base Sistema: MySQL  
 * IDE: VS Code  
 * Web Teknologiak:  
@@ -65,7 +65,7 @@ garajea-web --> garajea-core
   - JSTL  
   - Expression Language
 
-### 4. garajea-model moduluko datuen espezifikazioa
+### 4. Garajea-model moduluko entiateen espezifikazioa
 ```
 erDiagram
     BEZEROA {
