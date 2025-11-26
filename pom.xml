@@ -13,15 +13,15 @@
         <module>garajea-desktop</module>
         <module>garajea-web</module>
     </modules>
-    <!-- Dependencias y plugins comunes aquí -->
+    
     <dependencyManagement>
-        <!-- Dependencias y versiones compartidas -->
+        
     </dependencyManagement>
     <build>
-        <!-- Plugins globales (como el compiler plugin) -->
+        
     </build>
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
     </properties>
 </project>

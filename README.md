@@ -186,7 +186,7 @@ erDiagram
       string izena
     }
     GORAGAILUA {
-      int id PK
+      int goragailua_id PK
       string izena
       int kabina_id FK, UK
     }

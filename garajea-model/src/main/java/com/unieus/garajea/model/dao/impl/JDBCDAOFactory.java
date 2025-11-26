@@ -12,7 +12,9 @@ import java.sql.SQLException;
 public class JDBCDAOFactory extends DAOFactory {
     
     // Konexioaren parametroak (Produkzioan ez lirateke hemen egon behar)
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/garajea?serverTimezone=UTC+1";
+    // private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/garajea?serverTimezone=Europe/Madrid";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/garajea?serverTimezone=Europe/Madrid";
+    //private static final String DB_URL = "jdbc:mysql://localhost:3306/garajea?serverTimezone=UTC+1&useSSL=false&allowPublicKeyRetrieval=true";
     private static final String DB_USER = "garajea";
     private static final String DB_PASSWORD = "1234";
     

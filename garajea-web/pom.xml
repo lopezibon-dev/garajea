@@ -11,12 +11,7 @@
     <packaging>war</packaging>
 
     <artifactId>garajea-web</artifactId>
-
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-    </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>com.unieus.garajea</groupId>
@@ -42,14 +37,14 @@
     </dependencies>
 
     <build>
-        <finalName>ROOT</finalName>
+        <finalName>garajea</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
                 <configuration>
-                    <warName>ROOT</warName>
+                    <warName>garajea</warName>
                 </configuration>
             </plugin>
         </plugins>
