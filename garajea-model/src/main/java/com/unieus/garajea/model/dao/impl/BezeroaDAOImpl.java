@@ -6,7 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BezeroaDAOImpl implements BezeroaDAO {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BezeroaDAOImpl.class);
 
     private Connection conn;
 
@@ -22,7 +27,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
  
         bezeroa.setBezeroaId(rs.getInt("bezeroa_id")); 
         bezeroa.setIzena(rs.getString("izena"));
-        bezeroa.setAbizenak(rs.getString("abizena"));
+        bezeroa.setAbizenak(rs.getString("abizenak"));
         bezeroa.setEmaila(rs.getString("emaila"));
         bezeroa.setTelefonoa(rs.getString("telefonoa"));
         bezeroa.setPasahitza(rs.getString("pasahitza"));
@@ -31,7 +36,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
 
     @Override
     public void save(Bezeroa bezeroa) {
-        String sql = "INSERT INTO BEZEROA (izena, abizena, emaila, telefonoa, pasahitza) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO BEZEROA (izena, abizenak, emaila, telefonoa, pasahitza) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, bezeroa.getIzena());
@@ -52,14 +57,21 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Errorea Bezeroa gordetzean: " + e.getMessage());
+
+            // logger-a catch blokean erabili (System.err.println -ren ordez)
+            LOG.error("Errorea datu-basean 'Bezeroa' gordetzean. Kodea: {}", e.getErrorCode(), e);
+            
+            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
+            throw new RuntimeException("Bezeroaren datuak gordetzeko errorea.", e);
+
+            //System.err.println("Errorea Bezeroa gordetzean: " + e.getMessage());
             // e.printStackTrace();
         }
     }
 
     @Override
     public void update(Bezeroa bezeroa) {
-        String sql = "UPDATE BEZEROA SET izena = ?, abizena = ?, emaila = ?, telefonoa = ? WHERE bezeroa_id = ?";
+        String sql = "UPDATE BEZEROA SET izena = ?, abizenak = ?, emaila = ?, telefonoa = ? WHERE bezeroa_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, bezeroa.getIzena());
             ps.setString(2, bezeroa.getAbizenak());
@@ -87,7 +99,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
 
     @Override
     public Bezeroa findById(int bezeroaId) {
-        String sql = "SELECT bezeroa_id, izena, abizena, emaila, telefonoa, pasahitza FROM BEZEROA WHERE bezeroa_id = ?";
+        String sql = "SELECT bezeroa_id, izena, abizenak, emaila, telefonoa, pasahitza FROM BEZEROA WHERE bezeroa_id = ?";
         Bezeroa bezeroa = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, bezeroaId);
@@ -105,7 +117,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
 
     @Override
     public List<Bezeroa> findAll() {
-        String sql = "SELECT bezeroa_id, izena, abizena, emaila, telefonoa, pasahitza FROM BEZEROA ORDER BY abizena";
+        String sql = "SELECT bezeroa_id, izena, abizenak, emaila, telefonoa, pasahitza FROM BEZEROA ORDER BY abizenak";
         List<Bezeroa> bezeroak = new ArrayList<>();
         try (Statement st = conn.createStatement(); 
              ResultSet rs = st.executeQuery(sql)) {
