@@ -11,7 +11,6 @@ import java.awt.GridLayout;
 
 import com.unieus.garajea.desktop.bootstrap.DesktopAppBootstrap;
 import com.unieus.garajea.desktop.ui.main.MainFrame;
-import com.unieus.garajea.desktop.ui.profila.LangileaProfilFrame;
 import com.unieus.garajea.core.exception.ZerbitzuSalbuespena;
 import com.unieus.garajea.core.services.context.ServiceContext;
 import com.unieus.garajea.core.services.LangileaService;

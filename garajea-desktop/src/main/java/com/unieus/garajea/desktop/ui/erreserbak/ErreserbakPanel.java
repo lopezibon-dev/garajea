@@ -10,7 +10,7 @@ public class ErreserbakPanel extends JPanel {
         setLayout(new BorderLayout());
 
         add(
-            new JLabel("Erreserbak – funtzionalitatea garatzen ari da"),
+            new JLabel("Erreserbak - funtzionalitatea garapen prozesuan."),
             BorderLayout.CENTER
         );
     }

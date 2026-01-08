@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import com.unieus.garajea.desktop.ui.database.ExportatuTaulaPanel;
 import com.unieus.garajea.desktop.ui.database.InportatuTaulaPanel;
 import com.unieus.garajea.desktop.ui.erreserbak.ErreserbakPanel;
+import com.unieus.garajea.desktop.ui.login.LoginFrame;
 import com.unieus.garajea.desktop.ui.profila.LangileaProfilPanel;
 import com.unieus.garajea.model.entities.Langilea;
 
@@ -22,7 +23,10 @@ public class MainFrame extends JFrame {
 
     public MainFrame(Langilea langilea) {
         this.langilea = langilea;
+        // Interfazearen egitura finkoa
         initUI();
+        // Edukin dinamikoa
+        erakutsiProfila();
     }
 
     private void initUI() {
@@ -109,7 +113,7 @@ public class MainFrame extends JFrame {
 
     private void itxiSaioa() {
         dispose();
-        // LoginFrame berriro irekiko da
+        new LoginFrame().setVisible(true);
     }
 }
 
