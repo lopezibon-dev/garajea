@@ -129,11 +129,14 @@ Entitateen eta erlazioen diagrama hemen dago:
 
 ### 5. Dokumentazio osagarria
 
-* [MVC](arkitektura/mvc.md)
+* [MVC Web](arkitektura/mvc-web.md)
+* [MVC Desktop](arkitektura/mvc-desktop.md)
+* [Bootstrap](arkitektura/bootstrap.md)
 * [Zerbitzu geruza (Service Layer)](arkitektura/zerbitzu-geruza.md)
-* [Erroreak eta balidazioak](arkitektura/erroreak-eta-balidazioak.md)
+* [Erroreak eta balidazioak - Web](arkitektura/erroreak-eta-balidazioak-web.md)
+* [Erroreak eta balidazioak - Desktop](arkitektura/erroreak-eta-balidazioak-desktop.md)
 
-## Bigarren fase baterako
+## Etorkizunerako garapen-aukerak
 
 * Python erabiltzea, adibidez datu-base bateko taula bat esportatzeko edo inportatzeko.  
 * I18n (Internazionalizazioa) kontuan hartuta garatzea. Horrela, gaztelania eta ingelesa gehituz erabiltzaileak erabili ditzakeen hizkuntzak bezala.
