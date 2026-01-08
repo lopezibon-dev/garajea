@@ -51,7 +51,7 @@ inplementatzen da.
 
 Hasieratze-fluxua:
 
-```
+```text
 Application startup
  └── WebAppInitializer (ServletContextListener)
        ├── InfraConfig kargatu
@@ -67,7 +67,7 @@ eta `ServletContext`-ean gordetzen da.
 
 Controller-ek honela eskuratzen dute:
 
-```
+```java
 ServiceContextFactory scf =
     (ServiceContextFactory) getServletContext()
         .getAttribute("serviceContextFactory");
@@ -75,7 +75,7 @@ ServiceContextFactory scf =
 
 Ondoren, HTTP eskaera bakoitzeko:
 
-```
+```java
 try (ServiceContext sc = scf.open()) {
     // Zerbitzu-deiak
 }
@@ -103,7 +103,7 @@ inplementatzen da: `DesktopAppBootstrap`.
 
 Hasieratze-fluxua:
 
-```
+```text
 Application startup
  └── DesktopAppBootstrap
        ├── InfraConfig kargatu
@@ -112,7 +112,49 @@ Application startup
               └── singleton gisa mantendu
 ```
 
-### 4.3 ServiceContextFactory-ren erabilera
+### 4.3 KonfigurazioaService-ren eskurapena (Desktop)
+
+Desktop aplikazioan, `KonfigurazioaService` **bootstrap fasean sortzen da**
+eta `ServiceContextFactory`-ri injektatzen zaio.
+
+UI geruzak (Swing):
+
+- **ez du inoiz** `KonfigurazioaService` zuzenean instantziatzen
+- **ez du inplementazio konkreturik ezagutzen**
+- beti `ServiceContext`-etik eskuratzen du
+
+Horren arrazoia da:
+
+- konfigurazioa aplikazio-mailakoa delako
+- web eta desktop arkitekturen arteko koherentzia mantentzeko
+- konfigurazioaren instantzia bakarra (singleton logikoa) bermatzeko
+
+Patroi zuzena honakoa da:
+
+UI ekintza
+└── ServiceContextFactory.open()
+    └── ServiceContext
+        └── KonfigurazioaService
+
+Adibidez, agenda sortzeko:
+
+```java
+try (ServiceContext sc =
+         DesktopAppBootstrap.getServiceContextFactory().open()) {
+
+    ErreserbaAgendaBuilder builder =
+        new ErreserbaAgendaBuilder(
+            sc.getKonfigurazioaService()
+        );
+
+    ...
+}
+```
+
+Horrela, desktop aplikazioak web aplikazioaren bootstrap eredua
+errespetatzen du, exekuzio-ingurunea desberdina izan arren.
+
+### 4.4 ServiceContextFactory-ren erabilera
 
 Desktop aplikazioan `ServiceContextFactory`:
 
@@ -122,7 +164,7 @@ Desktop aplikazioan `ServiceContextFactory`:
 
 Controller-ek honela erabiltzen dute:
 
-```
+```java
 try (ServiceContext sc =
         DesktopAppBootstrap
             .getServiceContextFactory()
@@ -144,11 +186,11 @@ printzipio bera aplikatzen da:
 
 Konparaketa:
 
-| Kontzeptua | Web | Desktop |
-|---------|-----|---------|
-| Ekintza-unitatea | HTTP eskaera | UI ekintza |
+|       Kontzeptua       |    Web             |      Desktop       |
+|------------------------|--------------------|--------------------|
+| Ekintza-unitatea       | HTTP eskaera       | UI ekintza         |
 | ServiceContext sorrera | request bakoitzean | ekintza bakoitzean |
-| Baliabideen askapena | request amaieran | ekintza amaieran |
+| Baliabideen askapena   | request amaieran   | ekintza amaieran   |
 
 Bi kasuetan:
 
@@ -184,4 +226,3 @@ DIY Garajea proiektuan bootstrap faseak:
 Web eta desktop inplementazioak
 exekuzio-ingurunearen araberakoak dira,
 baina oinarri arkitektoniko bera partekatzen dute.
-
