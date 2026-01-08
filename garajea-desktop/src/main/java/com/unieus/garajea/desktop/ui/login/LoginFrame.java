@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.awt.GridLayout;
 
 import com.unieus.garajea.desktop.bootstrap.DesktopAppBootstrap;
+import com.unieus.garajea.desktop.ui.main.MainFrame;
 import com.unieus.garajea.desktop.ui.profila.LangileaProfilFrame;
 import com.unieus.garajea.core.exception.ZerbitzuSalbuespena;
 import com.unieus.garajea.core.services.context.ServiceContext;
@@ -58,15 +59,13 @@ public class LoginFrame extends JFrame {
         try (ServiceContext sc =
             DesktopAppBootstrap.getServiceContextFactory().open()) {
 
-            LangileaService service =
+            LangileaService langileaService =
                 sc.getLangileaService();
 
             Langilea langilea =
-                service.saioaHasi(emaila, pasahitza);
+                langileaService.saioaHasi(emaila, pasahitza);
 
-            dispose();
-            new LangileaProfilFrame(langilea).setVisible(true);
-
+            loginOndo(langilea);
         } catch (ZerbitzuSalbuespena ex) {
             JOptionPane.showMessageDialog(
                 this,
@@ -85,6 +84,13 @@ public class LoginFrame extends JFrame {
                 JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+    private void loginOndo(Langilea langilea) {
+
+        dispose();
+
+        MainFrame mainFrame = new MainFrame(langilea);
+        mainFrame.setVisible(true);
     }
 }
 
