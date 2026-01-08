@@ -5,7 +5,7 @@
 <jsp:include page="WEB-INF/views/includes/header.jsp">
     <jsp:param name="title" value="Hasiera"/>
 </jsp:include>
-
+    <main>
         <h1>DIY Garajea</h1>
         <section>
             <h2>Erabili gure kabinak zure kabuz</h2>
@@ -32,6 +32,6 @@
                 Egin <strong>kabina erreserba</strong> eta, behar izanez gero, <strong>mekaniko baten laguntza</strong> ere bai. Zure garajearen esperientzia norberak erabakitzen du!
             </p>
         </section>
-
+    </main>
  <%-- footer.jsp txertatu --%>
 <jsp:include page="WEB-INF/views/includes/footer.jsp"/>

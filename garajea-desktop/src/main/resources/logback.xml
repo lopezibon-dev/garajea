@@ -6,14 +6,20 @@
     </appender>
 
     <appender name="DESKTOP_FITXATEGIA" class="ch.qos.logback.core.FileAppender">
-        <file>C:/logs/garajea_desktop_erroreak.log</file> 
+        <file>C:/logs/garajea_desktop.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/logs/garajea_desktop.%d{yyyy-MM-dd}.log</fileNamePattern>
+            
+            <maxHistory>30</maxHistory> 
+        </rollingPolicy>
         <encoder>
             <pattern>%d{dd/MM/yyyy HH:mm:ss}: %-5level %logger{36} - %msg%n</pattern>
         </encoder>
         <append>true</append>
     </appender>
 
-    <root level="INFO"> 
+    <root level="DEBUG"> 
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="DESKTOP_FITXATEGIA" />
     </root>

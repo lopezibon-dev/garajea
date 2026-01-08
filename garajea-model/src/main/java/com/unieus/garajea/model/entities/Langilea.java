@@ -8,9 +8,10 @@ public class Langilea {
     
     private int langileaId; // PK: langilea_id
     private String izena;
-    private String abizena;
-    private String lanpostua;
-    private String erabiltzailea;
+    private String abizenak;
+    private String kategoria;
+    private String telefonoa;
+    private String emaila;
     private String pasahitza;     
     
     // -----------------------------------------------------------------
@@ -18,12 +19,12 @@ public class Langilea {
     // -----------------------------------------------------------------
     public Langilea() {
     }
-    public Langilea(int langileaId, String izena, String abizena, String lanpostua, String erabiltzailea, String pasahitza) {
+    public Langilea(int langileaId, String izena, String abizenak, String kategoria, String emaila, String pasahitza) {
         this.langileaId = langileaId;
         this.izena = izena;
-        this.abizena = abizena;
-        this.lanpostua = lanpostua;
-        this.erabiltzailea = erabiltzailea;
+        this.abizenak = abizenak;
+        this.kategoria = kategoria;
+        this.emaila = emaila;
         this.pasahitza = pasahitza;
     }
 
@@ -47,28 +48,36 @@ public class Langilea {
         this.izena = izena;
     }
 
-    public String getAbizena() {
-        return abizena;
+    public String getAbizenak() {
+        return abizenak;
     }
 
-    public void setAbizena(String abizena) {
-        this.abizena = abizena;
+    public void setAbizenak(String abizenak) {
+        this.abizenak = abizenak;
     }
 
-    public String getLanpostua() {
-        return lanpostua;
+    public String getKategoria() {
+        return kategoria;
     }
 
-    public void setLanpostua(String lanpostua) {
-        this.lanpostua = lanpostua;
+    public void setKategoria(String kategoria) {
+        this.kategoria = kategoria;
+    }
+
+    public String getTelefonoa() {
+        return telefonoa;
     }
     
-    public String getErabiltzailea() {
-        return erabiltzailea;
+    public void setTelefonoa(String telefonoa) {
+        this.telefonoa = telefonoa;
     }
 
-    public void setErabiltzailea(String erabiltzailea) {
-        this.erabiltzailea = erabiltzailea;
+    public String getEmaila() {
+        return emaila;
+    }
+
+    public void setEmaila(String emaila) {
+        this.emaila = emaila;
     }
 
     public String getPasahitza() {
@@ -81,7 +90,7 @@ public class Langilea {
 
     @Override
     public String toString() {
-        return "Langilea [id=" + langileaId + ", izena=" + izena + ", abizena=" + abizena + ", lanpostua=" + lanpostua + ", erabiltzailea=" + erabiltzailea + "]";
+        return "Langilea [id=" + langileaId + ", izena=" + izena + ", abizenak=" + abizenak + ", kategoria=" + kategoria + ", emaila=" + emaila + "]";
     }
     // Oharra: pasahitza ez da toString() metodoan sartzen segurtasuna bermatzeko.
 }

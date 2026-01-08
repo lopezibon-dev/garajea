@@ -5,14 +5,25 @@
 <jsp:include page="../includes/header.jsp">
     <jsp:param name="title" value="Erregistratu"/>
 </jsp:include>
-
+    <main>
         <section class="register-page">
             <h1>Bezeroen Erregistroa</h1>
             <p>Bete formularioa zure kontua sortzeko.</p>
 
-            <c:if test="${not empty errorea}">
-                <div style="color: red; font-weight: bold; margin-bottom: 1em; padding: 0.5em; border: 1px solid red; background: #ffebeb;">
-                    ${errorea}
+            <c:if test="${not empty erroreak}">
+                <div style="
+                    color: red;
+                    font-weight: bold;
+                    margin-bottom: 1em;
+                    padding: 0.5em;
+                    border: 1px solid red;
+                    background: #ffebeb;
+                ">
+                    <ul style="margin: 0; padding-left: 1.2em;">
+                        <c:forEach var="errore" items="${erroreak}">
+                            <li>${errore}</li>
+                        </c:forEach>
+                    </ul>
                 </div>
             </c:if>
 
@@ -38,6 +49,6 @@
             
             <p style="margin-top: 1em;">Baduzu konturik? <a href="<c:url value="/bezeroa/login"/>">Saioa Hasi</a></p>
         </section>
-        
+    </main>    
 <%-- footer.jsp txertatu --%>
 <jsp:include page="../includes/footer.jsp"/>

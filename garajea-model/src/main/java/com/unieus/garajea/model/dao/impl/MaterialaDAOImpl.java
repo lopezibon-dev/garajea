@@ -29,9 +29,7 @@ public class MaterialaDAOImpl implements MaterialaDAO {
         materiala.setMaterialaId(rs.getInt("materiala_id")); 
         // Atributuak
         materiala.setIzena(rs.getString("izena"));
-        materiala.setMota(rs.getString("mota"));
         materiala.setPrezioa(rs.getDouble("prezioa")); // DECIMAL -> double
-        materiala.setStockKopurua(rs.getInt("stock_kopurua")); 
         return materiala;
     }
 
@@ -41,13 +39,11 @@ public class MaterialaDAOImpl implements MaterialaDAO {
     
     @Override
     public void save(Materiala materiala) {
-        String sql = "INSERT INTO MATERIALA (izena, mota, prezioa, stock_kopurua) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO MATERIALA (izena, prezioa) VALUES (?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, materiala.getIzena());
-            ps.setString(2, materiala.getMota());
-            ps.setDouble(3, materiala.getPrezioa());
-            ps.setInt(4, materiala.getStockKopurua());
+            ps.setDouble(2, materiala.getPrezioa());
             
             int affectedRows = ps.executeUpdate();
 
@@ -66,13 +62,11 @@ public class MaterialaDAOImpl implements MaterialaDAO {
     
     @Override
     public void update(Materiala materiala) {
-        String sql = "UPDATE MATERIALA SET izena = ?, mota = ?, prezioa = ?, stock_kopurua = ? WHERE materiala_id = ?";
+        String sql = "UPDATE MATERIALA SET izena = ?, prezioa = ? WHERE materiala_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, materiala.getIzena());
-            ps.setString(2, materiala.getMota());
-            ps.setDouble(3, materiala.getPrezioa());
-            ps.setInt(4, materiala.getStockKopurua());
-            ps.setInt(5, materiala.getMaterialaId()); // PK WHERE klausulan
+            ps.setDouble(2, materiala.getPrezioa());
+            ps.setInt(3, materiala.getMaterialaId()); // PK WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Errorea Materiala eguneratzean: " + e.getMessage());
@@ -94,7 +88,7 @@ public class MaterialaDAOImpl implements MaterialaDAO {
 
     @Override
     public Materiala findById(int materialaId) {
-        String sql = "SELECT materiala_id, izena, mota, prezioa, stock_kopurua FROM MATERIALA WHERE materiala_id = ?";
+        String sql = "SELECT materiala_id, izena, prezioa FROM MATERIALA WHERE materiala_id = ?";
         Materiala materiala = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, materialaId);
@@ -113,7 +107,7 @@ public class MaterialaDAOImpl implements MaterialaDAO {
     @Override
     public List<Materiala> findAll() {
         // SELECT eguneratua
-        String sql = "SELECT materiala_id, izena, mota, prezioa, stock_kopurua FROM MATERIALA ORDER BY izena";
+        String sql = "SELECT materiala_id, izena, prezioa FROM MATERIALA ORDER BY izena";
         List<Materiala> materialak = new ArrayList<>();
         try (Statement st = conn.createStatement(); 
              ResultSet rs = st.executeQuery(sql)) {
@@ -135,7 +129,7 @@ public class MaterialaDAOImpl implements MaterialaDAO {
     @Override
     public Materiala findByIzena(String izena) {
         // SELECT eguneratua
-        String sql = "SELECT materiala_id, izena, mota, prezioa, stock_kopurua FROM MATERIALA WHERE izena = ?";
+        String sql = "SELECT materiala_id, izena, prezioa FROM MATERIALA WHERE izena = ?";
         Materiala materiala = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, izena);
@@ -150,17 +144,4 @@ public class MaterialaDAOImpl implements MaterialaDAO {
         return materiala;
     }
     
-    // Material baten stocka eguneratzeko
-    @Override
-    public void updateStock(int materialaId, int stockKopurua) {
-        String sql = "UPDATE MATERIALA SET stock_kopurua = ? WHERE materiala_id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, stockKopurua);
-            ps.setInt(2, materialaId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Errorea stocka eguneratzean: " + e.getMessage());
-            // e.printStackTrace();
-        }
-    }
 }

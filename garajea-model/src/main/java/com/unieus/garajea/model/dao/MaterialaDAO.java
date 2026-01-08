@@ -22,11 +22,4 @@ public interface MaterialaDAO {
      */
     Materiala findByIzena(String izena);
 
-    /**
-     * Material baten stock kopurua eguneratzen du.
-     * Hau erabilgarria da materiala erreserba batean erosi edo entregatzen denean.
-     * @param materialaId Eguneratu beharreko materialaren IDa.
-     * @param stockKopurua Balio berria.
-     */
-    void updateStock(int materialaId, int stockKopurua);
 }

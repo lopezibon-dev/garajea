@@ -7,9 +7,9 @@
 <jsp:include page="../includes/header.jsp">
     <jsp:param name="title" value="Nire Profila"/>
 </jsp:include>
-
+    <main>
         <style>
-        /* Estilo osagarria formularioak banatzeko */
+        /* Estilo osagarria formularioak maketatzeko */
         .profile-container {
             display: flex;
             flex-direction: column;
@@ -39,9 +39,20 @@
                 ${arrakasta}
             </div>
         </c:if>
-        <c:if test="${not empty errorea}">
-            <div style="color: red; font-weight: bold; margin-bottom: 1em; padding: 0.5em; border: 1px solid red; background: #ffebeb;">
-                ${errorea}
+        <c:if test="${not empty erroreak}">
+            <div style="
+                color: red;
+                font-weight: bold;
+                margin-bottom: 1em;
+                padding: 0.5em;
+                border: 1px solid red;
+                background: #ffebeb;
+            ">
+                <ul style="margin: 0; padding-left: 1.2em;">
+                    <c:forEach var="errore" items="${erroreak}">
+                        <li>${errore}</li>
+                    </c:forEach>
+                </ul>
             </div>
         </c:if>
         
@@ -80,6 +91,6 @@
                 </form>
             </section>
         </div>
-        
+    </main> 
 <%-- footer.jsp txertatu --%>
 <jsp:include page="../includes/footer.jsp"/>

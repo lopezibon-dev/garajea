@@ -13,10 +13,10 @@ public class Erreserba {
     private int ibilgailuaId;         // FK: ibilgailua_id
     private int kabinaId;             // FK: kabina_id
     private Integer langileaId;       // FK: langilea_id (hautazkoa, null izan daiteke)
-    private LocalDateTime hasieraDataOrdua; // Data eta ordua: hasiera_data_ordua
-    private LocalDateTime amaieraDataOrdua; // Data eta ordua: amaiera_data_ordua
+    private LocalDateTime hasiera;    // Hasiera data eta ordua
+    private LocalDateTime amaiera;    // Amaiera data eta ordua
     private String oharrak;
-    private String egoera;            // Adib.: "Zain", "Martxan", "Burutua", "Ezeztatua"
+    private String egoera;            // Egoerak: "Zain", "Martxan", "Burutua", "Ezeztatua"
     private Integer fakturaId;        // FK: faktura_id (hautazkoa, erreserba burutua izan arte null izango da)
     
     // -----------------------------------------------------------------
@@ -25,16 +25,16 @@ public class Erreserba {
     public Erreserba() {
     }
 
-    public Erreserba(int erreserbaId, int bezeroaId, int ibilgailuaId, int kabinaId, Integer langileaId,
-            LocalDateTime hasieraDataOrdua, LocalDateTime amaieraDataOrdua, String oharrak, String egoera,
-            Integer fakturaId) {
+    public Erreserba(int erreserbaId, int bezeroaId, int ibilgailuaId, 
+        int kabinaId, Integer langileaId, LocalDateTime hasiera, LocalDateTime amaiera, String oharrak, String egoera,
+        Integer fakturaId) {
         this.erreserbaId = erreserbaId;
         this.bezeroaId = bezeroaId;
         this.ibilgailuaId = ibilgailuaId;
         this.kabinaId = kabinaId;
         this.langileaId = langileaId;
-        this.hasieraDataOrdua = hasieraDataOrdua;
-        this.amaieraDataOrdua = amaieraDataOrdua;
+        this.hasiera = hasiera;
+        this.amaiera = amaiera;
         this.oharrak = oharrak;
         this.egoera = egoera;
         this.fakturaId = fakturaId;
@@ -84,20 +84,20 @@ public class Erreserba {
         this.langileaId = langileaId;
     }
 
-    public LocalDateTime getHasieraDataOrdua() {
-        return hasieraDataOrdua;
+    public LocalDateTime getHasiera() {
+        return hasiera;
     }
 
-    public void setHasieraDataOrdua(LocalDateTime hasieraDataOrdua) {
-        this.hasieraDataOrdua = hasieraDataOrdua;
+    public void setHasiera(LocalDateTime hasiera) {
+        this.hasiera = hasiera;
     }
 
-    public LocalDateTime getAmaieraDataOrdua() {
-        return amaieraDataOrdua;
+    public LocalDateTime getAmaiera() {
+        return amaiera;
     }
 
-    public void setAmaieraDataOrdua(LocalDateTime amaieraDataOrdua) {
-        this.amaieraDataOrdua = amaieraDataOrdua;
+    public void setAmaiera(LocalDateTime amaiera) {
+        this.amaiera = amaiera;
     }
 
     public String getOharrak() {
@@ -126,6 +126,6 @@ public class Erreserba {
 
     @Override
     public String toString() {
-        return "Erreserba [id=" + erreserbaId + ", bezeroaId=" + bezeroaId + ", kabinaId=" + kabinaId + ", hasiera=" + hasieraDataOrdua + ", egoera=" + egoera + "]";
+        return "Erreserba [id=" + erreserbaId + ", bezeroaId=" + bezeroaId + ", kabinaId=" + kabinaId + ", hasiera=" + hasiera + ", egoera=" + egoera + "]";
     }
 }

@@ -4,7 +4,7 @@ import com.unieus.garajea.model.entities.Langilea;
 import java.util.List;
 
 /**
- * Langilea (Empleado) entitatearen datu sarbidearen interfazea.
+ * Langilea entitatearen datu atzipenerako interfazea.
  */
 public interface LangileaDAO {
     
@@ -16,16 +16,17 @@ public interface LangileaDAO {
     List<Langilea> findAll();
 
     /**
-     * Lanpostuaren arabera langile guztiak aurkitzen ditu.
-     * @param lanpostua bilatu beharreko lanpostua.
+     * Kategoriaren arabera langile guztiak bilatzen ditu.
+     * @param kategoria bilatu beharreko kategoria.
      * @return Langile zerrenda.
      */
-    List<Langilea> findByLanpostua(String lanpostua);
+    List<Langilea> findByKategoria(String kategoria);
     
     /**
-     * Erabiltzaile izenaren arabera langile bat aurkitzen du autentifikazioa egiteko.
-     * @param erabiltzailea login izena.
+     * Emaila eta pasahitzaren arabera langile bat bilatzen du autentifikazioa egiteko.
+     * @param emaila login emaila.
+     * @param pasahitza login pasahitza.
      * @return Langilea objektua edo null.
      */
-    Langilea findByErabiltzailea(String erabiltzailea);
+    Langilea getByEmailaPasahitza(String emaila, String pasahitza);
 }

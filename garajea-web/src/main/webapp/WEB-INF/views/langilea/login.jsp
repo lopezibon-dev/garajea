@@ -7,8 +7,7 @@
 </jsp:include>
     <main>
         <section class="login-page">
-            <h1>Bezeroen Saioa Hasi</h1>
-            <p>Sartu zure datuekin zure ibilgailuak kudeatzeko eta erreserbak egiteko.</p>
+            <h1>Langilearen saioa hasi</h1>
 
             <c:if test="${not empty erroreak}">
                 <div style="
@@ -27,7 +26,7 @@
                 </div>
             </c:if>
 
-            <form action="<c:url value="/bezeroa/login"/>" method="POST" class="login-form" style="max-width: 350px;">
+            <form action="<c:url value="/langilea/login"/>" method="POST" class="login-form" style="max-width: 350px;">
                 <label for="emaila">Posta Elektronikoa:</label>
                 <input type="email" id="emaila" name="emaila" required value="${param.emaila}">
 
@@ -36,8 +35,6 @@
                 
                 <button type="submit">Saioa Hasi</button>
             </form>
-            
-            <p style="margin-top: 1em;">Ez duzu konturik? <a href="<c:url value="/bezeroa/erregistratu"/>">Erregistratu orain</a></p>
         </section>
     </main>
 <%-- footer.jsp txertatu --%>

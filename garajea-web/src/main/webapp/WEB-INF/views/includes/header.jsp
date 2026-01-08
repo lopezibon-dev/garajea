@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${param.title} | DIY Garajea Proiektua</title>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>">
+
 </head>
 <body>
     <header>
@@ -18,7 +19,7 @@
             
             <c:choose>
                 <c:when test="${not empty sessionScope.current_user}">
-                    <%-- Vista de usuario logeado --%>
+                    <%-- sesioa hasitako erabiltzea --%>
                     <p style="color: #fff; margin: 0; font-weight: bold;">Kaixo, ${sessionScope.current_user.izena}!</p>
                     <a href="<c:url value="/bezeroa/logout"/>" style="color: #f39c12; font-weight: bold;">(Saioa Amaitu)</a>
                 </c:when>
@@ -28,7 +29,7 @@
             </c:choose>
         </div>
     </header>
-<nav>
+    <nav>
         <ul class="main-menu">
             <li><a href="<c:url value="/"/>">Hasiera</a></li>
             <li><a href="<c:url value="/nolaDabil"/>">Nola dabil?</a></li>
@@ -48,5 +49,3 @@
             </c:choose>
         </ul>
     </nav>
-    <main>
-  
