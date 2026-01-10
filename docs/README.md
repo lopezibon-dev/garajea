@@ -9,4 +9,4 @@ dokumentazio tekniko eta arkitektonikoa biltzen du.
 - **Arkitektura**: geruzak, patroiak eta diseinu-irizpideak
 - **Erabilera-kasuak**: sistemaren gaitasun nagusien ikuspegi orokorra
 - **ADR**: hartutako erabaki arkitektonikoen erregistroa
-- **Diagrama-fluxuak**: zenbait erabilera-kasuen diagrama-fluxuak
+- **Fluxu-diagramak**: zenbait erabilera-kasuen fluxu-diagramak
