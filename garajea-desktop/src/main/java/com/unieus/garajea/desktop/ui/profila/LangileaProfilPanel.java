@@ -1,5 +1,6 @@
 package com.unieus.garajea.desktop.ui.profila;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,8 +27,10 @@ public class LangileaProfilPanel extends JPanel {
         setLayout(new BorderLayout());
 
         JLabel izenaLabel = new JLabel(
-            langilea.getIzena() + " " + langilea.getAbizenak()
+            "Langilea: " + langilea.getIzena() + " " + langilea.getAbizenak()
         );
+        izenaLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+// top, left, bottom, right
 
         JTabbedPane tabs = new JTabbedPane();
 

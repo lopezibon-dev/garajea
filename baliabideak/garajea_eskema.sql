@@ -8,13 +8,13 @@ USE garajea;
 -- 2. Taula Nagusiak Sortu
 -- ----------------------------------------
 
--- BEZEROA (Bezeroak/Web Erabiltzaileak)
+-- BEZEROA (Bezeroak)
 CREATE TABLE BEZEROA (
     bezeroa_id INT AUTO_INCREMENT PRIMARY KEY,
     izena VARCHAR(100) NOT NULL,
     abizenak VARCHAR(100) NOT NULL,
+    telefonoa VARCHAR(20) UNIQUE NOT NULL,
     emaila VARCHAR(150) UNIQUE NOT NULL, 
-    telefonoa VARCHAR(20),
     pasahitza VARCHAR(255) NOT NULL
 );
 
@@ -22,9 +22,10 @@ CREATE TABLE BEZEROA (
 CREATE TABLE LANGILEA (
     langilea_id INT AUTO_INCREMENT PRIMARY KEY,
     izena VARCHAR(100) NOT NULL,
-    abizena VARCHAR(100) NOT NULL,
-    lanpostua VARCHAR(100),
-    erabiltzailea VARCHAR(100) UNIQUE NOT NULL,
+    abizenak VARCHAR(100) NOT NULL,
+    kategoria VARCHAR(100),
+    telefonoa VARCHAR(15) UNIQUE NOT NULL,
+    emaila VARCHAR(100) UNIQUE NOT NULL,
     pasahitza VARCHAR(255) NOT NULL 
 );
 
@@ -40,6 +41,7 @@ CREATE TABLE IBILGAILUA (
     matrikula VARCHAR(15) UNIQUE NOT NULL, 
     marka VARCHAR(100),
     modeloa VARCHAR(100),
+    kolorea VARCHAR(50),
     urtea INT,
     bezeroa_id INT NOT NULL,
     FOREIGN KEY (bezeroa_id) REFERENCES BEZEROA(bezeroa_id) ON DELETE CASCADE 
@@ -52,7 +54,8 @@ CREATE TABLE IBILGAILUA (
 -- ERREMINTA (Erreminta eskuragarriak)
 CREATE TABLE ERREMINTA (
     erreminta_id INT AUTO_INCREMENT PRIMARY KEY,
-    izena VARCHAR(100) UNIQUE NOT NULL
+    izena VARCHAR(100) UNIQUE NOT NULL,
+    deskribapena VARCHAR(100) 
 );
 
 -- MAKINA (Diagnostiko Makinak, etab.)
@@ -76,9 +79,7 @@ CREATE TABLE GORAGAILUA (
 CREATE TABLE MATERIALA (
     materiala_id INT AUTO_INCREMENT PRIMARY KEY,
     izena VARCHAR(100) UNIQUE NOT NULL,
-    mota VARCHAR(100),
     prezioa DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    stock_kopurua INT NOT NULL DEFAULT 0
 );
 
 -- ----------------------------------------
@@ -88,9 +89,9 @@ CREATE TABLE MATERIALA (
 -- FAKTURA (Sortutako Fakturak)
 CREATE TABLE FAKTURA (
     faktura_id INT AUTO_INCREMENT PRIMARY KEY,
-    erreserba_id INT UNIQUE, 
+    erreserba_id INT UNIQUE NOT NULL, 
     zenbatekoa DECIMAL(10, 2) NOT NULL,
-    data DATE NOT NULL
+    data DATETIME NOT NULL;
 );
 
 -- ERRESERBA (Kabinen Erreserbak)
@@ -100,11 +101,11 @@ CREATE TABLE ERRESERBA (
     ibilgailua_id INT NOT NULL,
     kabina_id INT NOT NULL,
     langilea_id INT, 
-    hasiera_data_ordua DATETIME NOT NULL,
-    amaiera_data_ordua DATETIME NOT NULL,
+    hasiera DATETIME NOT NULL,
+    amaiera DATETIME NOT NULL,
     oharrak TEXT,
     egoera VARCHAR(50) NOT NULL, 
-    faktura_id INT,
+    faktura_id INT DEFAULT NULL,
     
     FOREIGN KEY (bezeroa_id) REFERENCES BEZEROA(bezeroa_id),
     FOREIGN KEY (ibilgailua_id) REFERENCES IBILGAILUA(ibilgailua_id),

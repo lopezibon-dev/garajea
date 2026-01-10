@@ -16,3 +16,9 @@ Thumbs.db
 # Fitxategi denboralak
 *.tmp
 *.temp
+
+# GitHub
+.github/
+
+#VS Code
+.vscode/

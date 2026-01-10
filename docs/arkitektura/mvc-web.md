@@ -37,6 +37,15 @@ Ereduaren logika bi modulutan banatzen da:
 - DAO interfazeak eta inplementazioak (JDBC)
 - Datu-basearekiko elkarrekintza
 
+#### 3.2.1 DAOen kontratuak eta inbarianteak
+
+- Erreserbak itzultzen dituzten DAO kontsultak
+  kronologikoki ordenatuta daude beti (`ORDER BY hasiera`).
+- Ordenazio hau domeinuko inbariante bat da:
+  erreserba-zerrendek zentzua dute soilik denbora-ordenan.
+- Zerbitzu-geruzak ordenazioa emanda datorrela suposatu dezake,
+  logika errepikapena saihestuz.
+
 **garajea-core** moduluan:
 
 - Negozio-zerbitzuak (Service Layer)
@@ -68,9 +77,9 @@ Ereduaren logika bi modulutan banatzen da:
 
 - Ez dago negozio-logikarik
 - Ez dago SQL kontsultarik
-- Ez dag datu-base konexiorik zuzenean kudeatzen
+- Ez dago datu-base konexiorik zuzenean kudeatzen
 
-## 5. Ikuspegia (View)
+## 5. Bista (View)
 
 ### 5.1 Teknologia
 

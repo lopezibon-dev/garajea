@@ -350,7 +350,7 @@ MainFrame: aplikazioaren leiho nagusia
 - ProfilPanel: Langilearen profilari buruzko funtzionalitatea
 - ErreserbakPanel: Erreserbei buruzko funtzionalitatea (adib. errsserba-listak erakustea)
 - ExportatuPanel: datu-baseko taula bat fitxategi batera exportatzeko funtzionalitatea
-- InportatuPanel: datu-baseko taula bat fitxategi batera inportatzeko funtzionalitatea
+- InportatuPanel: fitxategi baten edukia datu-baseko taula batera inportatzeko funtzionalitatea
 
 #### Nabigazioa
 

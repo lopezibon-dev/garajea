@@ -10,7 +10,7 @@ DIY Garajearen proiektua, tailer mekaniko baterako kudeaketa sistema informatiko
 
 * Eredua (Model) geruza: MVC patroiaren Eredua geruza bi modulutan banatuko da: garajea-model (entitateak eta iraunkortasuna) eta garajea-core (Negozio Logika, Zerbitzuak)
 
-* Ikuspegia (View) eta Kontrolatzailea (Controller) geruzak: Modulu desberdinetan (Web eta Desktop) inplementatuko dira, eta modulu bakoitzak bere kontrolatzaileak eta bistak ditu. garajea-core moduluarekiko menepekotasuna dute.
+* Bista (View) eta Kontrolatzailea (Controller) geruzak: Modulu desberdinetan (Web eta Desktop) inplementatuko dira, eta modulu bakoitzak bere kontrolatzaileak eta bistak ditu. Garajea-core moduluarekiko menpekotasuna dute.
 
 * Proiektua egitura antolatu batean eraikitzeko Maven erabiltzen da. Arkitektura moduluanitza da:
 
