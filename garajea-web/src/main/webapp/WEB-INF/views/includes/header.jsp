@@ -8,44 +8,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${param.title} | DIY Garajea Proiektua</title>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
 </head>
 <body>
-    <header>
-        <div class="logo-login-container">
+	<header>
+        <div class="container header-container">
             <div class="logo">
                 <img src="<c:url value="/img/garajea-740-300.png"/>" alt="DIY Garajea Logoa"> 
             </div>
-            
-            <c:choose>
-                <c:when test="${not empty sessionScope.current_user}">
-                    <%-- sesioa hasitako erabiltzea --%>
-                    <p style="color: #fff; margin: 0; font-weight: bold;">Kaixo, ${sessionScope.current_user.izena}!</p>
-                    <a href="<c:url value="/bezeroa/logout"/>" style="color: #f39c12; font-weight: bold;">(Saioa Amaitu)</a>
-                </c:when>
-                <c:otherwise>
-                    <div class="login-form" style="display: none;"></div>
-                </c:otherwise>
-            </c:choose>
         </div>
     </header>
-    <nav>
-        <ul class="main-menu">
-            <li><a href="<c:url value="/"/>">Hasiera</a></li>
-            <li><a href="<c:url value="/nolaDabil"/>">Nola dabil?</a></li>
-            <li><a href="<c:url value="/kabinaErreserba"/>">Kabinen erreserba</a></li>
-            <li><a href="<c:url value="/zureMateriala"/>">Zure materiala</a></li>
-            <li><a href="<c:url value="/kontaktua"/>">Kontaktua</a></li>
-            
-            <c:choose>
-                <c:when test="${empty sessionScope.current_user}">
-                   
-                    <li><a href="<c:url value="/bezeroa/erregistratu"/>">Erregistratu</a></li>
-                    <li><a href="<c:url value="/bezeroa/login"/>">Saioa Hasi</a></li>
-                </c:when>
-                <c:otherwise>
-                     <li><a href="<c:url value="/bezeroa/profila"/>">Nire Profila</a></li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
-    </nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="navbar-inner-wrapper">
+		<div class="nav-inner">
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
+				DIY Garajea
+			</a>
+
+			<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarContent"
+					aria-controls="navbarContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarContent">
+
+				<c:choose>
+					<c:when test="${empty sessionScope.current_user_type}">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/">
+									Hasiera
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/erregistratu">
+									Erregistratu
+								</a>
+							</li>						
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/login">
+									Bezeroa Login
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/langilea/login">
+									Langilea Login
+								</a>
+							</li>
+						</ul>
+					</c:when>
+					<c:when test="${sessionScope.current_user_type eq 'bezeroa'}">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/profila">
+									Profila
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/erreserbak">
+									Nire Erreserbak
+								</a>
+							</li>
+						</ul>
+
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/logout">
+									Irten
+								</a>
+							</li>
+						</ul>
+					</c:when>
+					<c:when test="${sessionScope.current_user_type eq 'langilea'}">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/langilea/profila">
+									Dashboard
+								</a>
+							</li>
+							   <li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/erreserbak">
+									Erreserbak
+								</a>
+							</li>
+						</ul>
+
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/logout">
+									Irten
+								</a>
+							</li>
+						</ul>
+					</c:when>
+
+				</c:choose>
+
+			</div>
+		</div>
+      </div>
+	</nav>

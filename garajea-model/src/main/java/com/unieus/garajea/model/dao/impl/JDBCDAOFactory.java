@@ -124,7 +124,6 @@ public class JDBCDAOFactory extends DAOFactory {
     public MakinaDAO getMakinaDAO() {
         return new MakinaDAOImpl(connection);
     }
-
     // -----------------------------------------------------------------
     // UnitOfWork funtzionalitatea
     // -----------------------------------------------------------------
@@ -136,7 +135,7 @@ public class JDBCDAOFactory extends DAOFactory {
     public class JDBCUnitOfWork implements UnitOfWork {
 
         private static final Logger LOG = LoggerFactory.getLogger(JDBCUnitOfWork.class);
-        private Connection conn;
+        private Connection transactionalConn;
         private boolean transactionActive = false;
 
         /**
@@ -145,27 +144,27 @@ public class JDBCDAOFactory extends DAOFactory {
          * @throws SQLException konexioan errorea gertatzen bada
          */
         public JDBCUnitOfWork() throws SQLException {
-            this.conn = DriverManager.getConnection(infra.getDbUrl(), infra.getDbUser(),
+            this.transactionalConn = DriverManager.getConnection(infra.getDbUrl(), infra.getDbUser(),
                     infra.getDbPassword());
         }
 
         @Override
         public void begin() throws SQLException {
-            conn.setAutoCommit(false);
+            transactionalConn.setAutoCommit(false);
             transactionActive = true;
         }
 
         @Override
         public void commit() throws SQLException {
-            conn.commit();
-            conn.setAutoCommit(true);
+            transactionalConn.commit();
+            transactionalConn.setAutoCommit(true);
             transactionActive = false;
         }
 
         @Override
         public void rollback() throws SQLException {
-            conn.rollback();
-            conn.setAutoCommit(true);
+            transactionalConn.rollback();
+            transactionalConn.setAutoCommit(true);
             transactionActive = false;
         }
 
@@ -175,16 +174,16 @@ public class JDBCDAOFactory extends DAOFactory {
                 // 1.- Rollback automatikoa, transakzioa aktiboa bada
                 if (transactionActive) {
                     try {
-                        conn.rollback();
-                        conn.setAutoCommit(true);
+                        transactionalConn.rollback();
+                        transactionalConn.setAutoCommit(true);
                     } catch (SQLException e) {
                         LOG.error("Errorea rollback automatikoa egitean. Kodea: {}. Mezua: {}",
                                 e.getErrorCode(), e.getMessage(), e);
                     }
                 }
                 // 2.- Konexioa itxi
-                if (conn != null && !conn.isClosed()) {
-                    conn.close();
+                if (transactionalConn != null && !transactionalConn.isClosed()) {
+                    transactionalConn.close();
                 }
             } catch (SQLException e) {
                 LOG.error("Errorea UnitOfWork konexioa ixterakoan. Kodea: {}. Mezua: {}",
@@ -195,13 +194,13 @@ public class JDBCDAOFactory extends DAOFactory {
         @Override
         public ErreserbaDAO getErreserbaDAO() {
             // Kontuz: MaterialaDAO ere konexio honetatik sortu behar da
-            MaterialaDAO materialaDAO = new MaterialaDAOImpl(conn);
-            return new ErreserbaDAOImpl(conn, materialaDAO);
+            MaterialaDAO materialaDAO = new MaterialaDAOImpl(transactionalConn);
+            return new ErreserbaDAOImpl(transactionalConn, materialaDAO);
         }
 
         @Override
         public MaterialaDAO getMaterialaDAO() {
-            return new MaterialaDAOImpl(conn);
+            return new MaterialaDAOImpl(transactionalConn);
         }
     }
 

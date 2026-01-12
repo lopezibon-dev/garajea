@@ -66,7 +66,7 @@ Ez da Zerbitzu bat sortzen honako kasu hauetan:
 - Negozio-arau propiorik ez dagoenean
 - DAO baten metodoak zuzenean delegatzen direnean
 
-Adibidez, Materiala edo Kabina bezalako entitateek ez dute zertan Zerbitzu propioa izan, baldin eta ez badute negozio-logika berezirik.
+Adibidez, Materiala edo Kabina bezalako entitateek ez dute zertan Zerbitzu propioa izan behar, baldin eta ez badute negozio-logika berezirik.
 
 ### 3.3 Zerbitzuak eta Aggregate Root kontzeptua
 
@@ -97,7 +97,7 @@ Bereziki:
 
 - Erreserbak itzultzen dituzten DAO metodoek erreserba-zerrendak kronologikoki ordenatuta ematen dituzte (hasiera dataren arabera).
 - Ordenazio hau domeinuko inbariante bat da:
-  erreserba-zerrenda batek zentzua du soilik denbora-ordenan.
+  erreserba-zerrenda batek zentzua du soilik denbora-ordenean.
 - Ondorioz, zerbitzu-geruzak ez du berriro ordenatzeko logikarik gehitzen,
   eta DAOaren kontratu hori oinarri gisa erabiltzen du.
 
@@ -132,6 +132,7 @@ Zerbitzu-geruzak erabakitzen du eragiketa hori baliozkoa den eta nola koordinatu
 - (negozio-)balidazioak egiten ditu
 - transakzioak definitzen ditu
 - DAOen arteko koordinazioa egiten du
+- datuak berrantolatu ditzake, erabilera-kasuen arabera (adib. datuak taldekatu)
 - ez du HTTP edo UI kontzepturik ezagutzen
 
 ### 3.5.3 DAO
@@ -140,8 +141,10 @@ DAOek erabakitzen dute datuak nola eskuratu edo gorde behar diren:
 
 - SQL kontsultak definitzen ditu
 - datu-basearekiko elkarrekintza burutzen du
-- emaitzak entitate edo DTO bihurtzen ditu
+- emaitzak normalean entitate, `List<entitate>`, edota DTO bihurtzen ditu
+- kasu berezia: datu-atzipenak gako-balio erlazio naturala sortzen duenean (adib. kontabilitatezko SQL kontsulta bat egitean: SELECT kabina_id, COUNT(*) FROM ERRESERBA GROUP BY kabina_id => `Map<Integer, Integer>`)
 - ez du negozio-logikarik aplikatzen
+- ez du egiturarik eraikitzen bista edota erabilera-kasu baterako pentsatuta
 
 ## 4. ServiceContext kontzeptua
 

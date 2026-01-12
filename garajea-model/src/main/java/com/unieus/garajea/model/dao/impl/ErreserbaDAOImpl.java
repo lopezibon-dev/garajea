@@ -141,7 +141,6 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
             ps.setInt(9, erreserba.getErreserbaId()); // PK WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
-            //System.err.println("Errorea Erreserba eguneratzean: " + e.getMessage());
             LOG.error("Errorea datu-basean Erreserba eguneratzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             throw new RuntimeException("Errorea Erreserba eguneratzean.", e);
         }
@@ -154,7 +153,6 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
             ps.setInt(1, erreserbaId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            //System.err.println("Errorea Erreserba ezabatzean: " + e.getMessage());
             LOG.error("Errorea datu-basean Erreserba ezabatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             throw new RuntimeException("Errorea Erreserba ezabatzean.", e);
         }
@@ -172,7 +170,6 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
                 }
             }
         } catch (SQLException e) {
-            //System.err.println("Errorea Erreserba bilatzean: " + e.getMessage());
             LOG.error("Errorea datu-basean Erreserba bilatzean (ID). Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             throw new RuntimeException("Errorea Erreserba bilatzean.", e);
         }
@@ -181,7 +178,7 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
 
     @Override
     public List<Erreserba> findAll() {
-        String sql = "SELECT * FROM erreserba ORDER BY hasiera DESC";
+        String sql = "SELECT * FROM erreserba ORDER BY hasiera ASC";
         List<Erreserba> erreserbak = new ArrayList<>();
         try (Statement st = conn.createStatement(); 
              ResultSet rs = st.executeQuery(sql)) {
@@ -190,7 +187,6 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
                 erreserbak.add(erreserbaSortu(rs));
             }
         } catch (SQLException e) {
-            //System.err.println("Errorea Erreserba guztiak bilatzean: " + e.getMessage());
             LOG.error("Errorea datu-basean Erreserba guztiak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             throw new RuntimeException("Errorea erreserba zerrenda lortzean.", e);
         }
@@ -333,13 +329,15 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
 
     @Override
     public List<Integer> bilatuKabinaOkupatuak(
-        LocalDateTime hasiera,
-        LocalDateTime amaiera) {
+        LocalDateTime tarteHasiera,
+        LocalDateTime tarteAmaiera) {
             
         String sql = """
             SELECT DISTINCT kabina_id
             FROM ERRESERBA
-            WHERE hasiera < ?
+            WHERE 
+            egoera != 'Ezeztatua'
+            AND hasiera < ?
             AND amaiera > ?
             """;
 
@@ -347,8 +345,8 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setTimestamp(1, Timestamp.valueOf(amaiera));
-            ps.setTimestamp(2, Timestamp.valueOf(hasiera));
+            ps.setTimestamp(1, Timestamp.valueOf(tarteHasiera));
+            ps.setTimestamp(2, Timestamp.valueOf(tarteAmaiera));
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -357,30 +355,31 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
             } 
         } catch (SQLException e) {
             LOG.error("Errorea datu-basean kabina okupatuak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
-            throw new RuntimeException("Errorea bezeroaren erreserbak bilatzean.", e);
+            throw new RuntimeException("Errorea datu-basean lan egitean.", e);
         }
         return emaitza;
     }
 
     @Override
     public List<Integer> bilatuMekanikariOkupatuak(
-            LocalDateTime hasiera,
-            LocalDateTime amaiera) {
+            LocalDateTime tarteHasiera,
+            LocalDateTime tarteAmaiera) {
 
         String sql = """
             SELECT DISTINCT langilea_id
             FROM ERRESERBA
             WHERE langilea_id IS NOT NULL
-            AND hasiera_data_ordua < ?
-            AND amaiera_data_ordua > ?
+            AND egoera != 'Ezeztatua'
+            AND hasiera < ?
+            AND amaiera > ?
             """;
 
         List<Integer> emaitza = new ArrayList<>();
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setTimestamp(1, Timestamp.valueOf(amaiera));
-            ps.setTimestamp(2, Timestamp.valueOf(hasiera));
+            ps.setTimestamp(1, Timestamp.valueOf(tarteAmaiera));
+            ps.setTimestamp(2, Timestamp.valueOf(tarteHasiera));
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -390,7 +389,7 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
 
         } catch (SQLException e) {
             LOG.error("Errorea datu-basean mekanikari okupatuak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
-            throw new RuntimeException("Errorea bezeroaren erreserbak bilatzean.", e);
+            throw new RuntimeException("Errorea datu-basean lan egitean.", e);
         }
 
         return emaitza;
@@ -412,9 +411,8 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
                 return !rs.next(); 
             }
         } catch (SQLException e) {
-            //System.err.println("Errorea kabina-erabilgarritasuna egiaztatzean: " + e.getMessage());
             LOG.error("Errorea datu-basean kabina-erabilgarritasuna egiaztatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
-            throw new RuntimeException("Errorea kabina-erabilgarritasuna egiaztatzean.", e);
+            throw new RuntimeException("Errorea datu-basean lan egitean.", e);
         }
     }
     
