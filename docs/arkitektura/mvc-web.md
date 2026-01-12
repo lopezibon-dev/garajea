@@ -101,6 +101,35 @@ Ereduaren logika bi modulutan banatzen da:
 - Ez dago negozio-arauik
 - Ez dago DAO edo ServiceContext erabilerarik
 
+### 5.4 Data eta orduen formateatzea (java.time)
+
+JSP + EL ingurunean, Expression Language-k ez du zuzenean `java.time` APIko metodoen deia onartzen (adib. `LocalDateTime.format()`).
+
+Hori dela eta, DIY Garajea proiektuan **EL funtzio pertsonalizatuak** erabiltzen dira data eta orduen formateatzea egiteko.
+
+#### Irizpideak
+
+- Ez da formateatzerik egiten backend-ean
+- Ez da Java kodea erabiltzen JSP fitxategietan
+
+#### Inplementazioa
+
+- Utilitate-klasea:
+  - `com.unieus.garajea.web.el.DateTimeFunctions`
+- TLD fitxategia:
+  - `/WEB-INF/tld/datetime-functions.tld`
+
+#### Erabilera adibidea
+
+```jsp
+<%@ taglib uri="http://garajea.local/functions/datetime" prefix="dt" %>
+
+${dt:format(erreserbaInfo.hasiera, "HH:mm")}
+${dt:format(erreserbaInfo.hasiera, "yyyy-MM-dd HH:mm:ss")}
+```
+
+Sistema honek LocalDate eta LocalDateTime motak onartzen ditu, java.time API-a  erabiliz.
+
 ## 6. Fluxu orokorra
 
 HTTP eskaera baten prozesamenduaren fluxu orokorra honakoa da:

@@ -16,6 +16,7 @@ erDiagram
       string matrikula UK
       string marka
       string modeloa
+      string kolorea
       int urtea
       int bezeroa_id FK
     }
@@ -28,9 +29,8 @@ erDiagram
       string emaila UK
       string pasahitza
     }
-
     KABINA {
-      int id PK
+      int kabina_id PK
       string izena
     }
     GORAGAILUA {
@@ -44,8 +44,8 @@ erDiagram
       int ibilgailua_id FK
       int kabina_id FK
       int langilea_id FK
-      datetime hasiera_data_ordua
-      datetime amaiera_data_ordua
+      datetime hasiera
+      datetime amaiera
       string oharrak
       string egoera
     }
@@ -58,20 +58,18 @@ erDiagram
     ERREMINTA {
       int erreminta_id PK
       string izena
-      string mota
+      string deskribapena
     }
     MAKINA {
-      int id PK
+      int makina_id PK
       string izena
       string mota
-      int kabina_id FK, UK
+      int kabina_id FK
     }
     MATERIALA {
-      int id PK
+      int materiala_id PK
       string izena
-      string mota
       double prezioa
-      int stock_Kopurua 
     }
     ERRESERBA_MATERIALA {
       int erreserba_id PK, FK

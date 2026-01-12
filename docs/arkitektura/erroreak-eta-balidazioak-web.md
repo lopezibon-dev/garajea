@@ -27,43 +27,121 @@ DIY Garajea proiektuan honako printzipio hauek aplikatzen dira:
 ### 3.1 Zer balidatzen da
 
 Kontrolatzaileek **sarrera-datuen balidazioa** egiten dute.
-Hau da, adib. HTTP eskaeratik datozen datuak.
+Hau da, adib. HTTP eskaeratik (`HttpServletRequest`) datozen datuak.
 
-Balidazio mota nagusiak:
+Balidazio honen helburua da:
 
-- null edo hutsik dagoen balioa
-- datu mota okerra
-- formatu okerra (emaila, zenbakiak, etab.)
-- balio-barrutiak  (adib. luzera minimoa)
+- Erabiltzaileak bidalitako datuen formatua eta oinarrizko koherentzia bermatzea
+- Negozio-logikara datu baliogabeak ez pasatzea
+- Akats sinpleak ahalik eta azkarren detektatzea
+
+Kontrolatzaile-mailan egiten diren balidazio mota nagusiak hauek dira:
+
+- parametro hutsa edo hutsik dagoena
+- datu mota okerra (adib. zenbaki bat espero denean testua jasotzea)
+- formatu okerra (emaila, data, ordua, etab.)
+- balio-barrutiak edo luzera-mugak
 
 Balidazio hauek **zerbitzuak deitu aurretik** egiten dira,
-alferrikako baliabide-kontsumoa saihesteko.
+`ServiceContext` ireki baino lehen, alferrikako baliabide-kontsumoa saihesteko.
 
-### 3.2 Erabilitako salbuespena
+Kontuan izan balidazio honek **ez duela negozio-logika** ordezkatzen:
+erreferentziazko osotasuna edo entitateen arteko erlazioak
+zerbitzu-geruzan balidatzen dira.
 
-Balidazio hauek huts egiten dutenean,
-honako salbuespena erabiltzen da:
+---
 
-- InputBalidazioSalbuespena
+### 3.2 Sarrera-datuen balidazioaren inplementazioa (BalidazioTresnak)
+
+Web aplikazioko sarrera-datuen balidazioa zentralizatzeko,
+`BalidazioTresnak` izeneko utilitate-klase estatikoa erabiltzen da.
+
+Klase honen ezaugarri nagusiak:
+
+- Metodo estatikoak soilik ditu (ezin da instanziatu)
+- Kontrolatzaileetatik zuzenean erabiltzeko pentsatua dago
+- Balidazio sinple eta berrerabilgarria eskaintzen du
+- Ez du negozio-logikarik edo datu-basearekiko dependentziarik
+
+`BalidazioTresnak` erabiliz, kontrolatzaileek HTTP parametroak modu koherentean
+irakurri, garbitu (trim) eta balioztatu ditzakete, kode bikoizketa saihestuz.
+
+### 3.2.1 `getRequiredX` eta `getOptionalX` metodoak
+
+Balidazio-metodoek bi familia nagusi dituzte:
+
+- `getRequiredX(...)`
+- `getOptionalX(...)`
+
+Bereizketa honek **kasuaren semantika** adierazten du:
+
+- `getRequiredX(...)` metodoek:
+  - parametroa derrigorrezkoa dela adierazten dute
+  - parametroa falta bada edo hutsik badago, errorea gehitzen dute
+  - erabiltzaileak zuzendu beharreko errorea dela suposatzen dute
+- `getOptionalX(...)` metodoek:
+
+- parametroa hautazkoa dela adierazten dute
+- parametroa falta bada, null itzultzen dute, errorea gehitu gabe
+- parametroa existitzen bada baina baliogabea bada, errorea gehitzen dute
+
+Metodo egokia aukeratzea **kontrolatzailearen ardura da**, kasu bakoitzeko erabilera-espezifikazioaren arabera.
+
+---
+
+### 3.3 Erabilitako salbuespena
+
+Balidazio hauek huts egiten dutenean, `InputBalidazioSalbuespena` salbuespena erabiltzen da.
 
 Salbuespen honek:
 
 - errore-mezu bakarra, edo
 - errore-zerrenda bat
 
-izan dezake.
+izan dezake, balidazioan zehar metatutako erroreen arabera.
 
-Salbuespen hau **kontrolatzailean bertan harrapatzen da**
-eta normalean erabiltzailea jatorrizko bista berdinera itzultzen da
-(mezu egokiarekin).
+Salbuespen hau **kontrolatzailean bertan harrapatzen da** eta normalean:
 
-### 3.3 Adibide kontzeptuala
+- erabiltzailea jatorrizko bista berdinera itzultzen da, edo
+- errorearen kritikotasunaren arabera, errore-orri orokorra bistaratzen da
+
+Horrela, erabiltzaileak errore guztiak batera ikus ditzake, eta ez bata bestearen atzetik.
+
+---
+
+### 3.4 Adibide kontzeptualak
+
+#### Adibide orokorra
 
 Controller
 ├── HTTP parametroak hartu
-├── Balidazioa
-│ └── InputBalidazioSalbuespena
-└── ServiceContext ireki
+├── Input balidazioa (BalidazioTresnak)
+│   └── InputBalidazioSalbuespena
+├── ServiceContext.open()
+│   └── Zerbitzu-deiak
+└── Bista (JSP)
+
+#### Erabilera-kasua: langile baten `log in` eragiketa
+
+POST /langilea/login
+└── Controller
+    ├── HTTP param → SaioHasieraDTO
+    ├── Input balidazioa (BalidazioTresnak)
+    ├── ServiceContext.open()
+    │   └── LangileaService.saioaHasi()
+    ├── Sesioa
+    └── Redirect / Forward (Bista)
+
+### 3.5 Eboluzio-aukerak
+
+Diseinu honek aukera ematen du etorkizunean:
+
+- Balidazio-logika zorrozteko `BalidazioTresnak` aldatuz
+- Emailaren balidazio sendoagoa gehitzeko
+- Bean Validation (Jakarta / Hibernate Validator) integratzeko
+- Spring framework-ean oinarritutako arkitektura migratzeko
+
+Hori guztia egungo kontrolatzaileak eta fluxua hautsi gabe.
 
 ## 4. Balidazioa Zerbitzu Geruzan (Service Layer)
 
@@ -77,17 +155,14 @@ Zerbitzu geruzan **negozio-logika** balidatzen da:
 
 ### 4.2 Erabilitako salbuespena
 
-Negozio-arauak betetzen ez direnean,
-honako salbuespena erabiltzen da:
-
-- ZerbitzuSalbuespena
+Negozio-arauak betetzen ez direnean `ZerbitzuSalbuespena` salbuespena erabiltzen da.
 
 Salbuespen honek:
 
 - errore-mezu bakarra, edo
 - errore-zerrenda
 
-izan dezake.
+izan dezake, balidazioan zehar metatutako erroreen arabera.
 
 Zerbitzu geruzak **ez du erabakitzen nola erakutsi errorea**;
 salbuespena gorantz propagatzen da.
@@ -185,15 +260,13 @@ HTTP Request
 
 | Errore mota                          | Salbuespena                 | Bista                        | UI jokabidea / Iradokizuna                            |
 | ------------------------------------ | --------------------------- | ---------------------------- | ----------------------------------------------------- |
-| Eremu hutsa                          | `InputBalidazioSalbuespena` | Formulario bera              | Errorea formulario gainean bistaratzea                |
+| Parametro hutsa                      | `InputBalidazioSalbuespena` | `errorea.jsp` edo bista bera | Errorearen kritikotasunaren arabera                   |
 | Email bikoiztua                      | `ZerbitzuSalbuespena`       | Formulario bera              | Jakinarazi helbide elektronikoa lehendik dagoela      |
 | Kredentzial txarrak                  | `ZerbitzuSalbuespena`       | `login.jsp`                  | Errore-mezu generikoa erakutsi                        |
 | JSP akatsa                           | `Exception`                 | `errorea.jsp`                | Zerbitzariaren barne-errorea                          |
 | `SQLException`                       | `Exception`                 | `errorea.jsp`                | Datu-basearen errorea                                 |
-| ID gaizki eratua                     | `InputBalidazioSalbuespena` | `errorea.jsp`                | Errore kritikoa: ezin da testuingurua berreskuratu    |
-| Parametro baliogabea (adib. filtroa) | `InputBalidazioSalbuespena` | Bista bera                   | Iragazkia ez aplikatu, emaitza guztiak erakutsi       |
-| Data okerra                          | `InputBalidazioSalbuespena` | Bista bera                   | Lehenetsitako balioak erabili (adib. uneko hilabetea) |
-| Parametro hutsa                      | `InputBalidazioSalbuespena` | `errorea.jsp` edo bista bera | Errorearen kritikotasunaren arabera                   |
+| ID gaizki eratua                     | `ZerbitzuSalbuespena`       | `errorea.jsp`                | Errore kritikoa: ezin da testuingurua berreskuratu    |
+| Parametro baliogabea (adib. filtroa) | `InputBalidazioSalbuespena` | Bista bera                   | Filtroa ez aplikatu, lehenetsitako balioak erabili    |
 
 ## 9. Ondorioa
 

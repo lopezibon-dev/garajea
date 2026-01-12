@@ -104,6 +104,45 @@ Bereziki:
 Honek logika errepikapena saihesten du
 eta zerbitzuen kodea sinpleagoa eta adierazgarriagoa bihurtzen du.
 
+## 3.5 Geruzen arteko erantzukizunen banaketa (Controller / Service / DAO)
+
+DIY Garajea proiektuan, aplikazioaren geruza nagusiek ardura zehatz eta bereiziak dituzte.
+
+Helburua da:
+
+- arduren nahasketa saihestea
+- kodearen irakurgarritasuna handitzea
+- negozio-logika isolatzea
+- aplikazioaren eboluzioa erraztea
+
+### 3.5.1 Controller
+
+Controller-ak erabakitzen du zer egin nahi den eta zein parametroekin:
+
+- HTTP parametroak parseatzen ditu
+- balio lehenetsiak ezartzen ditu
+- erabilera-kasu egokia deitzen du
+- zerbitzuen arteko deirik EZ du egiten zuzenean
+
+### 3.5.2 Service
+
+Zerbitzu-geruzak erabakitzen du eragiketa hori baliozkoa den eta nola koordinatu behar den:
+
+- negozio-arauak aplikatzen ditu
+- (negozio-)balidazioak egiten ditu
+- transakzioak definitzen ditu
+- DAOen arteko koordinazioa egiten du
+- ez du HTTP edo UI kontzepturik ezagutzen
+
+### 3.5.3 DAO
+
+DAOek erabakitzen dute datuak nola eskuratu edo gorde behar diren:
+
+- SQL kontsultak definitzen ditu
+- datu-basearekiko elkarrekintza burutzen du
+- emaitzak entitate edo DTO bihurtzen ditu
+- ez du negozio-logikarik aplikatzen
+
 ## 4. ServiceContext kontzeptua
 
 ### 4.1 Zer da ServiceContext?
