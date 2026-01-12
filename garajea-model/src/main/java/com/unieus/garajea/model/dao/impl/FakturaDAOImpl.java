@@ -3,7 +3,6 @@ package com.unieus.garajea.model.dao.impl;
 import com.unieus.garajea.model.dao.FakturaDAO;
 import com.unieus.garajea.model.entities.Faktura;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -118,6 +118,26 @@ public class KabinaDAOImpl implements KabinaDAO {
         return kabinak;
     }
 
+    @Override
+    public List<Integer> findAllIds() {
+        String sql = "SELECT kabina_id FROM KABINA";
+        List<Integer> ids = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                ids.add(rs.getInt("kabina_id"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ids;
+    }
+
+
     // -----------------------------------------------------------------
     // Bilaketa Metodo Espezifikoak
     // -----------------------------------------------------------------

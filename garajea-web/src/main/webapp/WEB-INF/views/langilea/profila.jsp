@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://garajea.local/functions/datetime" prefix="dt" %>
 <%@ page import="com.unieus.garajea.model.entities.Langilea" %>
 
 <c:set var="langilea" value="${sessionScope.current_user}" scope="request"/>
@@ -118,18 +120,20 @@
                             <th>Bezeroa</th>
                             <th>Ibilgailua</th>
                             <th>Hasiera</th>
+                            <th>Amaiera</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="erreserba" items="${langilearenErreserbak}">
+                        <c:forEach var="erreserbaInfo" items="${langilearenErreserbak}">
                             <tr>
-                                <td>${erreserba.erreserbaId}</td>
-                                <td>${erreserba.langileIzena}</td>
-                                <td>${erreserba.kabinaIzena}</td>
-                                <td>${erreserba.egoera}</td>
-                                <td>${erreserba.bezeroIzenAbizenak}</td>
-                                <td>${erreserba.ibilgailuInfo}</td>
-                                <td>${erreserba.hasieraOrdua}</td>
+                                <td>${erreserbaInfo.erreserbaId}</td>
+                                <td>${erreserbaInfo.langileIzena}</td>
+                                <td>${erreserbaInfo.kabinaIzena}</td>
+                                <td>${erreserbaInfo.egoera}</td>
+                                <td>${erreserbaInfo.bezeroIzenAbizenak}</td>
+                                <td>${erreserbaInfo.ibilgailuInfo}</td>
+                                <td>${erreserbaInfo.hasiera}</td>
+                                <td>${erreserbaInfo.amaiera}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -147,8 +151,9 @@
                         <c:when test="${blokea.mota == 'ERRESERBA'}">
                         <div class="blokea erreserba" 
                             title="${blokea.erreserbaInfo.bezeroIzenAbizenak}">
-                            <strong>${blokea.hasieraOrdua} - ${blokea.amaieraOrdua}</strong><br>
-                            ${blokea.erreserbaInfo.kabinaIzena} - ${erreserba.egoera}<br>
+                            <strong>${dt:formatDateTime(blokea.erreserbaInfo.hasiera, "HH:mm")} -
+                                ${dt:formatDateTime(blokea.erreserbaInfo.amaiera, "HH:mm")}</strong><br>
+                            ${blokea.erreserbaInfo.kabinaIzena} - ${erreserba.erreserbaInfo.egoera}<br>
                             ${blokea.erreserbaInfo.bezeroIzenAbizenak} - <i>${blokea.erreserbaInfo.ibilgailuInfo}</i>
                         </div>
                         </c:when>
@@ -165,18 +170,6 @@
             </div>
         </div>
 
-        <div class="profile-container">
-            <section class="form-section">
-                <h2>Datu Pertsonalak Eguneratu</h2>
-                <p>Kudeatu zure izena, abizenak, emaila eta telefonoa.</p>
-            </section>
-            
-            <section class="form-section">
-                <h2>Pasahitza Aldatu</h2>
-                <p>Segurtasunagatik, pasahitza aldatzeko formulario bereizia erabiltzen dugu.</p>
-            </section>
-
-        </div>
     </main>    
 <%-- footer.jsp txertatu --%>
 <jsp:include page="../includes/footer.jsp"/>

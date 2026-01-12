@@ -14,6 +14,7 @@ public interface LangileaDAO {
     
     Langilea findById(int langileaId);
     List<Langilea> findAll();
+    List<Integer> findMekanikariIds();
 
     /**
      * Kategoriaren arabera langile guztiak bilatzen ditu.

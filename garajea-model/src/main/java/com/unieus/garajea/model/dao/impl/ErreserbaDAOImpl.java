@@ -115,7 +115,6 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
                 }
             }
         } catch (SQLException e) {
-            //System.err.println("Errorea Erreserba gordetzean: " + e.getMessage());
             LOG.error("Errorea datu-basean Erreserba gordetzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             throw new RuntimeException("Errorea Erreserba gordetzean.", e);
         }
@@ -333,6 +332,71 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
     }
 
     @Override
+    public List<Integer> bilatuKabinaOkupatuak(
+        LocalDateTime hasiera,
+        LocalDateTime amaiera) {
+            
+        String sql = """
+            SELECT DISTINCT kabina_id
+            FROM ERRESERBA
+            WHERE hasiera < ?
+            AND amaiera > ?
+            """;
+
+        List<Integer> emaitza = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setTimestamp(1, Timestamp.valueOf(amaiera));
+            ps.setTimestamp(2, Timestamp.valueOf(hasiera));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    emaitza.add(rs.getInt("kabina_id"));
+                }
+            } 
+        } catch (SQLException e) {
+            LOG.error("Errorea datu-basean kabina okupatuak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            throw new RuntimeException("Errorea bezeroaren erreserbak bilatzean.", e);
+        }
+        return emaitza;
+    }
+
+    @Override
+    public List<Integer> bilatuMekanikariOkupatuak(
+            LocalDateTime hasiera,
+            LocalDateTime amaiera) {
+
+        String sql = """
+            SELECT DISTINCT langilea_id
+            FROM ERRESERBA
+            WHERE langilea_id IS NOT NULL
+            AND hasiera_data_ordua < ?
+            AND amaiera_data_ordua > ?
+            """;
+
+        List<Integer> emaitza = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setTimestamp(1, Timestamp.valueOf(amaiera));
+            ps.setTimestamp(2, Timestamp.valueOf(hasiera));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    emaitza.add(rs.getInt("langilea_id"));
+                }
+            }
+
+        } catch (SQLException e) {
+            LOG.error("Errorea datu-basean mekanikari okupatuak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            throw new RuntimeException("Errorea bezeroaren erreserbak bilatzean.", e);
+        }
+
+        return emaitza;
+    }
+
+    @Override
     public boolean isKabinaErabilgarri(int kabinaId, LocalDateTime hasiera, LocalDateTime amaiera) {
         // Logika: Bilatu erreserbarik dagoen gure tartea gurutzatzen duena.
         // Gurutzatzen du: (Amaiera > Hasiera Berria) ETA (Hasiera < Amaiera Berria)
@@ -365,7 +429,7 @@ public class ErreserbaDAOImpl implements ErreserbaDAO {
      * @param kopurua erositako kopurua.
      */
     @Override
-    public void materialaGehitu(int erreserbaId, int materialaId, int kopurua) {
+    public void gehituMateriala(int erreserbaId, int materialaId, int kopurua) {
         String sql = "INSERT INTO ERRESERBA_MATERIALA (erreserba_id, materiala_id, kopurua) VALUES (?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, erreserbaId);

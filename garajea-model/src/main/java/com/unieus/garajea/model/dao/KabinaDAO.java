@@ -14,6 +14,7 @@ public interface KabinaDAO {
     
     Kabina findById(int kabinaId);
     List<Kabina> findAll();
+    List<Integer> findAllIds();
 
     /**
      * Kabina bat izenaren arabera aurkitzen du.

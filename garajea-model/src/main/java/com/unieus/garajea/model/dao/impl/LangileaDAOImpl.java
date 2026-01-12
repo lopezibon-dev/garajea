@@ -137,6 +137,32 @@ public class LangileaDAOImpl implements LangileaDAO {
         return langileak;
     }
 
+    @Override
+    public List<Integer> findMekanikariIds() {
+
+        String sql = """
+            SELECT langilea_id
+            FROM LANGILEA
+            WHERE kategoria = 'mekanikoa'
+            """;
+
+        List<Integer> ids = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                ids.add(rs.getInt("langilea_id"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ids;
+    }
+  
+
     // -----------------------------------------------------------------
     // Bilaketa Metodo Espezifikoak 
     // -----------------------------------------------------------------

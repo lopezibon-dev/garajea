@@ -53,6 +53,24 @@ public interface ErreserbaDAO {
     List<Erreserba> findByBezeroa(int bezeroaId);
 
     /**
+    * Denbora-tarte jakin batean okupatutako kabina-identifikazioak bilatzen ditu.
+    *
+    * @param hasiera bilaketa tarteko hasieraren data eta ordua
+    * @param amaiera bilaketa tarteko amaieraren data eta ordua
+    * @return zehaztutako denbora-tartean okupatuta dauden kabina-identifikatzaileen zerrenda
+    */
+    List<Integer> bilatuKabinaOkupatuak(LocalDateTime hasiera, LocalDateTime amaiera);
+
+    /**
+    * Lanpetutako mekanikariak bilatzen ditu zehaztutako denbora-tarte batean.
+    *
+    * @param hasiera bilaketa tarteko hasieraren data eta ordua
+    * @param bukaera bilaketa tarteko amaieraren data eta ordua
+    * @return zehaztutako denbora tartean lanpetuta dauden mekanikari-identifikatzaileen zerrenda
+    */
+    List<Integer> bilatuMekanikariOkupatuak(LocalDateTime hasiera, LocalDateTime amaiera);
+    
+    /**
      * Data eta ordu tarte batean kabina bat erabilgarri dagoen egiaztatzen du.
      * @param kabinaId egiaztatu beharreko kabinaren IDa.
      * @param hasiera hasiera data eta ordua.
@@ -61,6 +79,9 @@ public interface ErreserbaDAO {
      */
     boolean isKabinaErabilgarri(int kabinaId, LocalDateTime hasiera, LocalDateTime amaiera);
     
+
+
+
     // -----------------------------------------------------------------
     // N:M Harremana (ERRESERBA_MATERIALA)
     // -----------------------------------------------------------------
@@ -71,7 +92,7 @@ public interface ErreserbaDAO {
      * @param materialaId erositako materialaren IDa.
      * @param kopurua erositako kopurua.
      */
-    void materialaGehitu(int erreserbaId, int materialaId, int kopurua);
+    void gehituMateriala(int erreserbaId, int materialaId, int kopurua);
 
     /**
      * Erreserba baten erositako materialak lortzen ditu (Map<Materiala, Kopurua> moduan).

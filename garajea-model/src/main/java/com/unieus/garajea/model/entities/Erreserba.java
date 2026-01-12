@@ -17,8 +17,7 @@ public class Erreserba {
     private LocalDateTime amaiera;    // Amaiera data eta ordua
     private String oharrak;
     private String egoera;            // Egoerak: "Zain", "Martxan", "Burutua", "Ezeztatua"
-    private Integer fakturaId;        // FK: faktura_id (hautazkoa, erreserba burutua izan arte null izango da)
-    
+
     // -----------------------------------------------------------------
     // Eraikitzaileak
     // -----------------------------------------------------------------
@@ -37,7 +36,6 @@ public class Erreserba {
         this.amaiera = amaiera;
         this.oharrak = oharrak;
         this.egoera = egoera;
-        this.fakturaId = fakturaId;
     }
 
     // -----------------------------------------------------------------
@@ -116,16 +114,15 @@ public class Erreserba {
         this.egoera = egoera;
     }
 
-    public Integer getFakturaId() {
-        return fakturaId;
-    }
-
-    public void setFakturaId(Integer fakturaId) {
-        this.fakturaId = fakturaId;
-    }
-
     @Override
     public String toString() {
-        return "Erreserba [id=" + erreserbaId + ", bezeroaId=" + bezeroaId + ", kabinaId=" + kabinaId + ", hasiera=" + hasiera + ", egoera=" + egoera + "]";
+        return "Erreserba [id=" + erreserbaId 
+            + ", kabinaId=" + kabinaId
+            + ", bezeroaId=" + bezeroaId 
+            + ", ibilgailuaId=" + ibilgailuaId
+            + ", langileaId=" + langileaId
+            + ", hasiera=" + hasiera 
+            + ", egoera=" + egoera 
+            + "]";
     }
 }

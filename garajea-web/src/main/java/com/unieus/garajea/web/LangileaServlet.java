@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import com.unieus.garajea.core.services.context.ServiceContext;
 import com.unieus.garajea.core.services.context.ServiceContextFactory;
+import com.unieus.garajea.core.exception.ZerbitzuSalbuespena;
 import com.unieus.garajea.core.presentation.agenda.AgendaBlokeaDTO;
 import com.unieus.garajea.core.presentation.agenda.ErreserbaAgendaBuilder;
 import com.unieus.garajea.model.dto.ErreserbaInfoDTO;
 import com.unieus.garajea.model.entities.Langilea;
+import com.unieus.garajea.web.balidazioa.BalidazioTresnak;
+import com.unieus.garajea.web.dto.SaioHasieraDTO;
+import com.unieus.garajea.web.exception.InputBalidazioSalbuespena;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -61,9 +66,10 @@ public class LangileaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Eragiketa ezezaguna.");
             }
         } catch (Exception e) {
+            throw e;
             // Errore kudeaketa
-            request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
+            // request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
+            // request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
         }
     }
 
@@ -93,9 +99,10 @@ public class LangileaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Eragiketa ezezaguna.");
             }
         } catch (Exception e) {
+            throw e;
             // DB edo bestelako errorea
-            request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
+            // request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
+            // request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
         }    
     }
 
@@ -143,45 +150,43 @@ public class LangileaServlet extends HttpServlet {
             // Bistara bidali
             request.getRequestDispatcher("/WEB-INF/views/langilea/profila.jsp").forward(request,
                     response);
-
-        } catch (RuntimeException e) {
-            // Errore kudeaketa
-            e.printStackTrace(); // Garapenerako
-            request.setAttribute("errorea",
-                    "Errorea Langilearen profila kargatzean: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     private void handleSaioaHasi(ServiceContext ctx, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String emaila = request.getParameter("emaila");
-        String pasahitza = request.getParameter("pasahitza");
+        List<String> erroreak = new ArrayList<>();
+
+        SaioHasieraDTO dto = new SaioHasieraDTO();
+        dto.setEmaila(BalidazioTresnak.getRequiredEmail(
+        request, "emaila", "Emaila", erroreak));
+        dto.setPasahitza(BalidazioTresnak.getRequiredString(
+        request, "pasahitza", 100, "Pasahitza", erroreak));
+
+        if (!erroreak.isEmpty()) {
+            throw new InputBalidazioSalbuespena(erroreak);
+        }
 
         try {
             // Logika exekutatu: saioa hasi
-            Langilea langilea = ctx.getLangileaService().saioaHasi(emaila, pasahitza);
-
-            if (langilea != null) {
-                // Saioa ondo hasi da
-                HttpSession session = request.getSession(true);
-                session.setAttribute("current_user", langilea);
-                session.setAttribute("current_user_type", "langilea");
-                response.sendRedirect(request.getContextPath() + "/langilea/profila");
-            } else { // langilea == null
-                // Errorea: kredentzial okerrak
-                request.setAttribute("errorea", "Emaila edo pasahitza okerrak.");
-                request.getRequestDispatcher("/WEB-INF/views/langilea/login.jsp").forward(request,
-                        response);
-            }
-
-        } catch (RuntimeException e) {
-            // Errore kudeaketa
-            e.printStackTrace(); // Garapenerako
-            request.setAttribute("errorea", "Errorea saioa hastean: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
+            Langilea langilea = ctx.getLangileaService().saioaHasi(
+                dto.getEmaila(), 
+                dto.getPasahitza()
+            );
+            // sesioa eratu
+            HttpSession session = request.getSession(true);
+            session.setAttribute("current_user", langilea);
+            session.setAttribute("current_user_type", "langilea");
+            response.sendRedirect(request.getContextPath() + "/langilea/profila");
+        } catch (ZerbitzuSalbuespena e) {
+            request.setAttribute("erroreak", e.getErroreak());
+            request.getRequestDispatcher("/WEB-INF/views/langilea/login.jsp")
+                .forward(request, response);
+        } catch (Exception e) {
+            throw e;
         }
     }
-
 }

@@ -95,15 +95,12 @@ public class BezeroaServlet extends HttpServlet {
             }
         // Negozio logikako salbuespenak kudeatu    
         } catch (ZerbitzuSalbuespena e) {
-
             request.setAttribute("erroreak", e.getErroreak());
-
             String Bista = erabakiErroreBista(pathInfo);
             request.getRequestDispatcher(Bista).forward(request, response);
         // Sarreren balidazioaren salbuespenak kudeatu
         } catch (InputBalidazioSalbuespena e) {
-            request.setAttribute("erroreak", "Errorea aplikazioan: " + e.getErroreak());
-            
+            request.setAttribute("erroreak", e.getErroreak());
             String Bista = erabakiErroreBista(pathInfo);
             request.getRequestDispatcher(Bista).forward(request, response);
         }
@@ -228,8 +225,6 @@ public class BezeroaServlet extends HttpServlet {
         if (!erroreak.isEmpty()) {
             throw new InputBalidazioSalbuespena(erroreak);
         }
-
-
 
         try (ServiceContext ctx = scf.open()){
             // bezeroaEguneratu objektua sortu datuekin

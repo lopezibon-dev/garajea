@@ -24,7 +24,7 @@ public class WebAppInitializer implements ServletContextListener {
         ServletContext ctx = sce.getServletContext();
 
         try {
-            // Infrastruktura konfigurazioko propietateak kargatu
+            // Azpiegiturako konfigurazia kargatu
             Properties infraProperties =
                 PropertiesLoader.loadFromClasspath("infrastructure.properties");
 

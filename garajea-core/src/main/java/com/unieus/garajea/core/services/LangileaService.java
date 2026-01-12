@@ -28,7 +28,7 @@ public class LangileaService {
 
         if (langilea == null) {
             throw new ZerbitzuSalbuespena(
-                "Emaila edo pasahitza ez dira zuzenak."
+                "Emaila edota pasahitza ez dira zuzenak."
             );
         }
 
