@@ -78,7 +78,7 @@ Kontrolatzailearen ardurak:
 
 Kontrolatzaileak **ez du**:
 
-- negozio-arauik inplementatzen
+- negozio-araurik inplementatzen
 - SQL kontsultarik exekutatzen
 - datu-base konexiorik zuzenean kudeatzen
 
@@ -92,7 +92,7 @@ Desktop aplikazioak web aplikazioaren
 ### 4.1 ServiceContext erabilera
 
 UI ekintza bakoitzean (adib. botoi baten klik-a),
-ServiceContext bat irekitzen da:
+ServiceContext bat sortzen da:
 
 ```java
 try (ServiceContext sc = serviceContextFactory.open()) {
@@ -135,7 +135,7 @@ flowchart TD
 #### ServiceContextFactory
 
 - Aplikazioaren hasieran sortzen da (Desktop Bootstrap)
-- Singleton moduan gordetzen da
+- Singleton patroiaren bidez gordetzen da
 - Ez da inoiz ixten aplikazioa martxan dagoen bitartean
 
 #### ServiceContext
@@ -160,7 +160,7 @@ Honek bermatzen du:
 - Transakzio-isolamendua
 - Web aplikazioarekin koherentzia arkitektonikoa
 
-### 4.2 Antzekotasuna web esparruarekin
+### 4.3 Antzekotasuna web esparruarekin
 
 Web aplikazioan:
 
@@ -177,13 +177,11 @@ Horrela, bi esparruek
 
 ## 5. Errore-kudeaketa
 
-Desktop aplikazioan errore-kudeaketa
-kontrolatzaile mailan egiten da.
+Desktop aplikazioan errore-kudeaketa kontrolatzaile mailan egiten da.
 
 ### 5.1 Negozio-erroreak
 
-- `ZerbitzuSalbuespena`
-- Negozio-arauak betetzen ez direnean jaurtitzen da
+- `ZerbitzuSalbuespena` jaurti egiten da, negozio-arauak betetzen ez direnean.
 
 Kudeaketa:
 

@@ -21,6 +21,8 @@ Zerbitzu geruzak ez du web edo interfazearen mendekotasunik.
 
 DIY Garajea proiektuan, Zerbitzuak ez dira soilik entitateen ordezkari zuzenak; negozioko gaitasunak edo erabilera-kasuak inplementatzen dituzten osagaiak dira.
 
+Adibidez: AutentifikazioZerbitzua, TxostenService, ...
+
 Zerbitzu batek honako galdera honi erantzuten dio:
 "Zer egin daiteke sisteman, negozioaren ikuspegitik?"
 
@@ -30,9 +32,9 @@ Adibideak:
 - LangileaService
 - ErreserbaService
 
-Eta hala ere, proiektua handitu ahala, zeharkako asmoko, edota helburu orokorreko zerbitzuak ager litezke (adib. TxostenService)
+Hala ere, proiektua handitu ahala, zeharkako asmoko, edota helburu orokorreko zerbitzuak ager litezke (adib. TxostenService)
 
-Zerbitzuak klase konkretu gisa inplementatzen dira (interfaze + implementazio eredua erabili gabe), hezkuntza arloan sinpletasuna lehenetsiz.
+Zerbitzuak klase konkretu gisa inplementatzen dira (interfaze + implementazio eredua erabili gabe), hezkuntzako testuinguruan sinpletasuna lehenetsiz.
 
 Zerbitzu bakoitzak:
 
@@ -74,7 +76,7 @@ Zerbitzuak normalean Aggregate Root bati lotuta daude.
 
 Aggregate Root bat da:
 
-- beste entitate batzuk barne hartzen dituen negozio-objektu nagusia
+- beste entitate (mendeko) batzuk barne hartzen dituen negozio-objektu nagusia
 - transakzio-esparrua definitzen duena
 - kanpotik zuzenean atzitu daitekeen entitate bakarra
 
@@ -85,26 +87,10 @@ Adibidez:
 
 Ondorioz:
 
-- Zerbitzuak Aggregate Root-aren mailan diseinatzen dira
+- Zerbitzuak Aggregate Root-en arabera diseinatu ohi dira
 - Entitate mendekoek ez dute zertan Zerbitzu propioa izan
 
-## 3.4 Zerbitzu geruzaren eta DAOen arteko kontratuak
-
-Zerbitzu geruzak DAOen bidez eskuratutako datuetan
-zenbait inbariante betetzen direla suposatzen da.
-
-Bereziki:
-
-- Erreserbak itzultzen dituzten DAO metodoek erreserba-zerrendak kronologikoki ordenatuta ematen dituzte (hasiera dataren arabera).
-- Ordenazio hau domeinuko inbariante bat da:
-  erreserba-zerrenda batek zentzua du soilik denbora-ordenean.
-- Ondorioz, zerbitzu-geruzak ez du berriro ordenatzeko logikarik gehitzen,
-  eta DAOaren kontratu hori oinarri gisa erabiltzen du.
-
-Honek logika errepikapena saihesten du
-eta zerbitzuen kodea sinpleagoa eta adierazgarriagoa bihurtzen du.
-
-## 3.5 Geruzen arteko erantzukizunen banaketa (Controller / Service / DAO)
+## 3.4 Geruzen arteko erantzukizunen banaketa (Controller / Service / DAO)
 
 DIY Garajea proiektuan, aplikazioaren geruza nagusiek ardura zehatz eta bereiziak dituzte.
 
@@ -115,7 +101,7 @@ Helburua da:
 - negozio-logika isolatzea
 - aplikazioaren eboluzioa erraztea
 
-### 3.5.1 Controller
+### 3.4.1 Controller
 
 Controller-ak erabakitzen du zer egin nahi den eta zein parametroekin:
 
@@ -124,7 +110,7 @@ Controller-ak erabakitzen du zer egin nahi den eta zein parametroekin:
 - erabilera-kasu egokia deitzen du
 - zerbitzuen arteko deirik EZ du egiten zuzenean
 
-### 3.5.2 Service
+### 3.4.2 Service
 
 Zerbitzu-geruzak erabakitzen du eragiketa hori baliozkoa den eta nola koordinatu behar den:
 
@@ -135,100 +121,194 @@ Zerbitzu-geruzak erabakitzen du eragiketa hori baliozkoa den eta nola koordinatu
 - datuak berrantolatu ditzake, erabilera-kasuen arabera (adib. datuak taldekatu)
 - ez du HTTP edo UI kontzepturik ezagutzen
 
-### 3.5.3 DAO
+### 3.4.3 DAO
 
 DAOek erabakitzen dute datuak nola eskuratu edo gorde behar diren:
 
 - SQL kontsultak definitzen ditu
 - datu-basearekiko elkarrekintza burutzen du
 - emaitzak normalean entitate, `List<entitate>`, edota DTO bihurtzen ditu
-- kasu berezia: datu-atzipenak gako-balio erlazio naturala sortzen duenean (adib. kontabilitatezko SQL kontsulta bat egitean: SELECT kabina_id, COUNT(*) FROM ERRESERBA GROUP BY kabina_id => `Map<Integer, Integer>`)
+- kasu berezia: datu-atzipenak `<gakoa,balioa>` erlazio naturala sortzen duenean (adib. kontabilitatezko SQL kontsulta bat egitean: SELECT kabina_id, COUNT(*) FROM ERRESERBA GROUP BY kabina_id => `Map<Integer, Integer>`)
 - ez du negozio-logikarik aplikatzen
 - ez du egiturarik eraikitzen bista edota erabilera-kasu baterako pentsatuta
+
+## 3.5 Zerbitzu geruzaren eta DAOen arteko kontratuak
+
+Zerbitzu geruzak DAOen bidez eskuratutako datuetan
+zenbait inbariante betetzen direla suposatzen da.
+
+Bereziki:
+
+- Erreserbak itzultzen dituzten DAO metodoek erreserba-zerrendak kronologikoki ordenatuta ematen dituzte (hasiera dataren arabera).
+- Ordenazio hau domeinuko inbariante bat da:
+  erreserba-zerrenda batek zentzua du soilik denbora-ordenean.
+- Ondorioz, zerbitzu-geruzak ez du berriro ordenatzeko logikarik gehitzen, eta DAOaren kontratu hori oinarri gisa erabiltzen du.
+
+Honek logika errepikapena saihesten du eta zerbitzuen kodea sinpleagoa eta adierazgarriagoa bihurtzen du.
+
+## 3.6 Mendekotasunen Injekzioa eta Inbertsioaren Printzipioa (DIP)
+
+### 3.6.1 Mendekotasun-Inbertsioaren Printzipioa (Dependency Inversion Principle)
+
+Mendekotasun-Inbertsioaren Printzipioak honakoa dio:
+> Goi-mailako moduluak ez dira behe-mailako moduluen mende egon behar.
+> Biak abstrakzioen mende egon behar dira.
+
+DIY Garajea proiektuan, honek esan nahi du:
+
+- Zerbitzu-geruza (goi-mailako modulua) ez dela datu-atzipenaren inplementazio zehatzen mende egon behar.
+- Zerbitzuek interfazeetan (DAO interfazeak) oinarritzen dutela beren logika.
+- Inplementazio zehatza zerbitzua sortzean (eraikitzailean) injektatzen dela.
+
+### 3.6.2 Mendekotasunen Injekzioa (Dependency Injection)
+
+Mendekotasunen injekzioa printzipio hau aplikatzeko mekanismo praktikoa da.
+
+Zerbitzuek ez dituzte beren mendekotasunak sortzen; kanpotik jasotzen dituzte, eraikitzailearen bidez.
+
+Adibidea:
+
+```java
+public ErreserbaService(ErreserbaDAO erreserbaDAO,
+                        KonfigurazioaService konfigurazioaService) {
+    this.erreserbaDAO = erreserbaDAO;
+    this.konfigurazioaService = konfigurazioaService;
+}
+```
+
+Horrela, zerbitzuaren mendekotasunak esplizituak eta egiaztagarriak dira.
 
 ## 4. ServiceContext kontzeptua
 
 ### 4.1 Zer da ServiceContext?
 
-ServiceContext objektuak eskaera (request) baten bizi-zikloa antolatzen du.
+`ServiceContext` **zerbitzuen esparrua (edo testuingurua)** da.
 
-Barnean honako hauek ditu:
+`ServiceContext`-en definizioa gehiago zehaztuz:
 
-- DAOFactory
-- Zerbitzuen instantziak
-- KonfigurazioaService
+> Kontrolatzaile batek erabilera-kasu bat exekutatzeko irekitzen duen
+> **zerbitzuen erabilera-esparru kontrolatua**.
 
-Kontrolatzaileek ServiceContext bakarra erabiltzen dute
-HTTP eskaera bakoitzeko.
+Esparru kontrolatua dela zehazki esan nahi du:
 
-### 4.2 Fluxu kontzeptuala
+- kudeatua: norbaitek (`ServiceContext`-ek) kudeatzen duela,
+- mugatua: esparru hori mugatua dago denboran (try-with-resources bitartez hasi eta bukatu egiten da)
 
-Request
+Zerbitzuen esparru hori sortzean:
+
+- behar diren baliabide teknikoak jasotzen ditu (Mendekotasunen Injekzioa)
+- zerbitzu guztiak sortzeko gaitasuna ematen du (eskaeraren arabera, ez guztiak batera)
+- baliabide horien bizi-zikloa modu bateratuan kudeatzen du
+
+
+
+#### Fluxu kontzeptuala
+
+```text
+HTTP Request (web) / UI Ekintza (desktop)
  └── Controller
        └── ServiceContextFactory.open()
              └── ServiceContext
                    ├── DAOFactory
                    └── KonfigurazioaService
+```
 
-### 4.3 Zergatik erabiltzen da?
+Beraz, `ServiceContext` objektuak (web HTTP) eskaera edota (desktop) UI Ekintza baten bizi-zikloa antolatzen du.
 
-- Printzipioz, datu-base konexio bakarra request bakoitzeko
-- Eragiketa transakzionala burutzeko konexio gehigarri bat sortzen da, oso bizi laburrekoa
-- Baliabideen itxiera automatikoa
+### 4.2 Zer dauka barruan?
+
+`ServiceContext` bat sortzen denean, barnean honako elementuak ditu:
+
+- `DAOFactory` (konexio eta DAO-en sorkuntza kudeatzeko)
+- `KonfigurazioaService` (aplikazio-mailako negozio-konfigurazioa partekatzeko)
+- Zerbitzuen instantziak sortzeko metodoak, eskaeraren arabera, eta get___Service metodoen bidez
+
+`ServiceContext`-ek **ez ditu zerbitzu guztiak aldez aurretik sortzen**;
+zerbitzuak eskatzen direnean instanziatzen dira.
+
+### 4.3 Non eta noiz sortzen da?
+
+- Kontrolatzaile-mailan sortzen da
+- `ServiceContextFactory.open()` metodoaren bidez sortzen da
+- Kontrolatzaileek `ServiceContext` bakarra erabiltzen dute (web) HTTP eskaera / (desktop) UI ekintza bakoitzeko
+- `ServiceContext`-en barnean erabilera-kasua exekutatzen da
+
+### 4.4 Harremana (web) Servlet ingurunearekin
+
+Web aplikazioan:
+
+- `ServiceContextFactory` aplikazioaren hasieran sortzen da
+- `ServletContext`-ean `ServiceContextFactory` hau gordetzen da, eskuragarri azpiegitura-objektu gisa
+- (Servlet) Kontrolatzaile bakoitzak fabrikari `open()` deia egiten dio eskaera bakoitzeko `ServiceContextFactory.open()`
+
+Oso garrantzitsua:
+
+- `ServiceContext` **ez da** `ServletContext`
+- `ServiceContext` **ez da** `HttpServletRequest`
+- `ServiceContext` web ingurunetik independentea den kontzeptua da
+
+Servlet ingurunea (`ServletContext`) soilik erabiltzen da `ServiceContextFactory` eskuratzeko leku edo edukiontzi gisa.
+
+### 4.4 Zergatik erabiltzen da? Zer arazo konpontzen ditu?
+
+- Printzipioz, datu-base konexio bakarra egiteko (web HTTP) eskaera edota (desktop) UI Ekintza bakoitzeko
+- Baliabideen itxiera automatikoa egiteko; baliabide teknikoak (konexioak) kontrolpean daude
+- Eragiketa transakzionala burutzeko konexio gehigarri bat sortzen da, (normalean) oso bizi laburrekoa
+- Zerbitzuei mendekotasunak modu esplizituan injektatzea
 - Zerbitzuen sorkuntza zentralizatua
+- Kontrolatzaileak JDBC edo DAO xehetasunetatik isolatzea
 
-## 5. ServiceContextFactory
+## 5. Zer da ServiceContextFactory?
 
-ServiceContextFactory-k ServiceContext objektuak sortzeko ardura du.
-
-Kontrolatzaileek ez dute JDBC edo DAO inplementazioak ezagutzen;
-fabrika honen bidez bakarrik irekitzen dute testuingurua.
+- `ServiceContextFactory` aplikazioaren hasieran sortzen da
+- (web edota desktop) aplikazioaren esparruan gordetzen da, eta aplikazioaren bizi-zikloan eskuragarri dago
+- `ServiceContextFactory`-k `ServiceContext` objektuak sortzeko ardura du
+- Kontrolatzaileek JDBC edo DAO inplementazioak ezagutzen ez dituztenez, fabrika honen bidez bakarrik erabili ditzakete zerbitzuak
+- Gainera, `InfraConfig` (datu-baseko konfigurazio-parametroak) eta KonfigurazioaService negozio-logikako parametroak (adib. DIY Garajean, lanaldi_hasiera, eta lanaldi_bukaera) gordetzen ditu, `ServiceContext` instantzia bakoitzari injektatuz
 
 ## 6. try-with-resources eredua
 
-Kontrolatzaileek honela erabiltzen dute:
+Kontrolatzaileek honela erabiltzen dute try-with-resources:
 
 ```java
-try (ServiceContext ctx = scf.open()) {
-    ctx.getSomeService().metodoa();
+try (ServiceContext zerbitzuEsparrua = ServiceContextFactory.open()) {
+    zerbitzuEsparrua.getSomeService().metodoa();
 }
 ```
 
-### 6.1 Inplementazioaren ikuspegia
+### 6.1 try-with-resources ereduaren fluxua
 
+```text
 Controller
  └── ServiceContextFactory
         └── open()
              ├── new JDBCDAOFactory(infra)
              └── new JDBCServiceContext(
-                    daoFactory,
+                    DAOFactory,
                     konfigurazioaService
                 )
+```
 
-### 6.2 Abantailak
+### 6.2 try-with-resources ereduaren abantailak
 
 Eredu honek honako hauek bermatzen ditu:
 
 - baliabideak beti ixten direla
-- errore teknikoak ez direla isiltzen
-- try-with-resources erabilera segurua
+- errore teknikoak ez direla isiltzen (baizik eta propagatzen dira)
 
 ## 7. Salbuespenak zerbitzu geruzan
 
-Zerbitzu geruzak ZerbitzuSalbuespena erabiltzen du negozio-erroreak adierazteko.
+Zerbitzu geruzak `ZerbitzuSalbuespena` erabiltzen du negozio-erroreak adierazteko.
 
 Ez dira erabiltzen:
 
 - HTTP egoera-kodeak
 - JSP bistak
-- mezu tekniko gordinak
+- mezu tekniko gordinak (raw)
 
-Errore teknikoak (SQL, baliabideak ixtea)
-RuntimeException gisa igotzen dira,
-eta web moduluko filtroak kudeatzen ditu.
+Errore teknikoak (SQL, baliabideak ixtea) RuntimeException gisa igotzen dira,
+eta web moduluko filtroak (WebFilter) kudeatzen ditu.
 
 ## 8. Laburpena
 
-Zerbitzu geruzak DIY Garajea proiektuan
-negozioaren nukleo argia eta isolatua eskaintzen du,
-arkitektura garbiarekin eta hezkuntza-arlora zuzendua.
+Zerbitzu geruzak DIY Garajea proiektuan negozioaren nukleo argia eta isolatua eskaintzen du, arkitektura garbiarekin eta hezkuntza-arlora zuzendua.

@@ -2,17 +2,11 @@
 
 ## 1. Helburua
 
-Dokumentu honen helburua da DIY Garajea proiektuan
-**bootstrap fasea** nola antolatzen den azaltzea,
-bai web aplikazioan bai desktop aplikazioan.
+Dokumentu honen helburua da DIY Garajea proiektuan **bootstrap fasea** nola antolatzen den azaltzea, bai web aplikazioan bai desktop aplikazioan.
 
-Bootstrap fasea aplikazioa martxan jartzean
-exekutatzen den hasieratze-prozesua da,
-eta aplikazioaren bizi-ziklo osoan
-partekatuko diren baliabideak prestatzen ditu.
+Bootstrap fasea aplikazioa martxan jartzean exekutatzen den hasieratze-prozesua da, eta aplikazioaren bizi-ziklo osoan partekatuko diren baliabideak prestatzen ditu.
 
-Dokumentu honek ez du MVC eredua azaltzen,
-baizik eta **aplikazioaren hasieratze-arkitektura**.
+Dokumentu honek ez du MVC eredua azaltzen, baizik eta **aplikazioaren hasieratze-arkitektura**.
 
 ---
 
@@ -37,17 +31,14 @@ Printzipio nagusiak:
 
 ### 3.1 Exekuzio-ingurunea
 
-Web aplikazioa servlet edukitzaile batean exekutatzen da
-(adib. Tomcat).
+Web aplikazioa servlet edukiontzi batean exekutatzen da (adib. Tomcat).
 
-Edukitzaileak aplikazioaren bizi-zikloa kontrolatzen du
-eta hasieran callback bat eskaintzen du:
+Edukiontziak aplikazioaren bizi-zikloa kontrolatzen du eta hasieran callback bat eskaintzen du:
 `ServletContextListener`.
 
 ### 3.2 Inplementazioa
 
-Web bootstrap-a `WebAppInitializer` klasean
-inplementatzen da.
+Web bootstrap-a `WebAppInitializer` klasean inplementatzen da.
 
 Hasieratze-fluxua:
 
@@ -62,8 +53,7 @@ Application startup
 
 ### 3.3 ServiceContextFactory-ren erabilera
 
-`ServiceContextFactory` aplikazio-mailakoa da
-eta `ServletContext`-ean gordetzen da.
+`ServiceContextFactory` aplikazio-mailakoa da eta `ServletContext`-ean gordetzen da.
 
 Controller-ek honela eskuratzen dute:
 
@@ -89,19 +79,17 @@ try (ServiceContext sc = scf.open()) {
 
 Desktop aplikazioan:
 
-- Ez dago servlet edukitzailerik
+- Ez dago servlet edukiontzirik
 - Ez dago `ServletContext`-ik
 - Aplikazioa bera da exekuzio-ingurunearen jabea
 
-Horregatik, bootstrap logika
-`main()` metodotik abiatzen da.
+Horregatik, bootstrap logika `main()` metodotik abiatzen da.
 
 ### 4.2 Inplementazioa
 
-Desktop bootstrap-a klase dedikatu batean
-inplementatzen da: `DesktopAppBootstrap`.
+Desktop bootstrap-a klase dedikatu batean inplementatzen da: `DesktopAppBootstrap`.
 
-Hasieratze-fluxua:
+Hasieratzearen exekuzio-fluxua:
 
 ```text
 Application startup
@@ -109,7 +97,7 @@ Application startup
        ├── InfraConfig kargatu
        ├── KonfigurazioaService kargatu
        └── ServiceContextFactory sortu
-              └── singleton gisa mantendu
+              └── Singleton gisa mantendu
 ```
 
 ### 4.3 KonfigurazioaService-ren eskurapena (Desktop)
@@ -127,7 +115,7 @@ Horren arrazoia da:
 
 - konfigurazioa aplikazio-mailakoa delako
 - web eta desktop arkitekturen arteko koherentzia mantentzeko
-- konfigurazioaren instantzia bakarra (singleton logikoa) bermatzeko
+- konfigurazioaren instantzia bakarra (Singleton patroiaren logika) bermatzeko
 
 Patroi zuzena honakoa da:
 
