@@ -43,12 +43,12 @@ public class LangileaProfilPanel extends JPanel {
         JButton berrizKargatuBtn = new JButton("Berriz kargatu");
         berrizKargatuBtn.addActionListener(e -> berrizKargatu());
 
-        JPanel goikoBarra = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        goikoBarra.add(berrizKargatuBtn);
+        JPanel oinekoPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        oinekoPanela.add(berrizKargatuBtn);
 
         add(izenaLabel, BorderLayout.NORTH);
         add(tabs, BorderLayout.CENTER);
-        add(goikoBarra, BorderLayout.SOUTH);
+        add(oinekoPanela, BorderLayout.SOUTH);
     }
 
     private void berrizKargatu() {
