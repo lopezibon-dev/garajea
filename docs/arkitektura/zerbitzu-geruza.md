@@ -200,8 +200,6 @@ Zerbitzuen esparru hori sortzean:
 - zerbitzu guztiak sortzeko gaitasuna ematen du (eskaeraren arabera, ez guztiak batera)
 - baliabide horien bizi-zikloa modu bateratuan kudeatzen du
 
-
-
 #### Fluxu kontzeptuala
 
 ```text

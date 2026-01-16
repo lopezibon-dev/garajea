@@ -46,6 +46,13 @@ header {
     padding: 0 0.75rem;
 }
 
+div.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
 /* Logo */
 .logo img {
     max-height: 300px;
@@ -102,9 +109,10 @@ header {
 /* Nabigazioa eta menu nagusia */
 nav {
     background: #eaeaea;
-    width: 100%;
+    /*width: 100%;*/
 }
 
+/*
 .navbar {
     padding: 0.5rem 1rem;
 }
@@ -112,6 +120,7 @@ nav {
 nav:not(.navbar) {
     background: #eaeaea;
 }
+*/
 
 .main-menu {
     display: flex;

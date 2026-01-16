@@ -10,7 +10,6 @@ import com.unieus.garajea.core.services.context.ServiceContext;
 import com.unieus.garajea.core.services.context.ServiceContextFactory;
 import com.unieus.garajea.core.exception.ZerbitzuSalbuespena;
 import com.unieus.garajea.core.presentation.agenda.AgendaBlokeaDTO;
-import com.unieus.garajea.core.presentation.agenda.ErreserbaAgendaBuilder;
 import com.unieus.garajea.model.dto.ErreserbaInfoDTO;
 import com.unieus.garajea.model.entities.Langilea;
 import com.unieus.garajea.web.balidazioa.BalidazioTresnak;

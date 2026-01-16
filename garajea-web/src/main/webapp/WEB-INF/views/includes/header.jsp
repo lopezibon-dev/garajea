@@ -14,21 +14,34 @@
 
 </head>
 <body>
+	<style>
+			//* lg breakpoint-etik aurrera */
+		@media (min-width: 992px) {
+			.navbar>.container {
+					display: flex;
+					align-items: center;
+					justify-content: center; /* A + BUTTON + DIV.collapse erdiratu aitarekiko*/
+			}
+
+			.navbar-collapse-auto {
+					flex: 0 0 auto;	/* zabalera = barneko edukia (UL-a) */
+			}
+		}
+	</style>
 	<header>
-        <div class="container header-container">
-            <div class="logo">
-                <img src="<c:url value="/img/garajea-740-300.png"/>" alt="DIY Garajea Logoa"> 
-            </div>
-        </div>
-    </header>
+		<div class="logo-container">
+				<div class="logo">
+						<img src="<c:url value="/img/garajea-740-300.png"/>" alt="DIY Garajea Logoa"> 
+				</div>
+		</div>
+  </header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="navbar-inner-wrapper">
-		<div class="nav-inner">
+		<div class="container">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
 				DIY Garajea
 			</a>
 
-			<button class="navbar-toggler" type="button"
+			<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse"
 					data-bs-target="#navbarContent"
 					aria-controls="navbarContent"
@@ -37,11 +50,11 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarContent">
+			<div class="collapse navbar-collapse navbar-collapse-auto" id="navbarContent">
 
 				<c:choose>
 					<c:when test="${empty sessionScope.current_user_type}">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-2 mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/">
 									Hasiera
@@ -65,7 +78,7 @@
 						</ul>
 					</c:when>
 					<c:when test="${sessionScope.current_user_type eq 'bezeroa'}">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-2 mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/profila">
 									Profila
@@ -87,14 +100,14 @@
 						</ul>
 					</c:when>
 					<c:when test="${sessionScope.current_user_type eq 'langilea'}">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-2 mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/langilea/profila">
-									Dashboard
+									Profila
 								</a>
 							</li>
 							   <li class="nav-item">
-								<a class="nav-link" href="${pageContext.request.contextPath}/erreserbak">
+								<a class="nav-link" href="${pageContext.request.contextPath}/erreserba/zerrendak/kabinaka">
 									Erreserbak
 								</a>
 							</li>
@@ -113,5 +126,4 @@
 
 			</div>
 		</div>
-      </div>
 	</nav>

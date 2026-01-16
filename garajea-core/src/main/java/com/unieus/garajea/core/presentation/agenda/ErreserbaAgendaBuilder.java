@@ -7,6 +7,8 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 import com.unieus.garajea.core.config.KonfigurazioaService;
 import com.unieus.garajea.model.dto.ErreserbaInfoDTO;
 
@@ -137,6 +139,32 @@ public class ErreserbaAgendaBuilder {
        
         return blokeak;
     }
+
+    /**
+     * Erreserba-agendako blokeak sortzen ditu emandako erreserba informazioen eta data-tartearen arabera, kabina bakoitzeko, horrela kabina bakoitzeko agenda bat sortuz.
+     * 
+     * @param erreserbak Erreserba informazioen zerrenda
+     * @param hasieraData Agenda hasierako data
+     * @param amaieraData Agenda amaierako data
+     * @return AgendaBlokeaDTO objektuen zerrenda, ordenatuta data eta orduaren arabera
+     */    
+    public Map<String, List<AgendaBlokeaDTO>> sortuAgendakKabinaka(
+        List<ErreserbaInfoDTO> erreserbaInfoZerrenda,
+        LocalDate hasieraData,
+        LocalDate amaieraData) {
+        Map<String, List<ErreserbaInfoDTO>> ErreserbaZerrendaMapa = new TreeMap<>();
+        for (ErreserbaInfoDTO erreserba : erreserbaInfoZerrenda) {
+             String kabinaIzena = erreserba.getKabinaIzena();
+             ErreserbaZerrendaMapa.computeIfAbsent(kabinaIzena, k -> new ArrayList<>()).add(erreserba);
+        }
+
+	    Map<String, List<AgendaBlokeaDTO>> AgendaMapa = new TreeMap<>();
+        for (Map.Entry<String, List<ErreserbaInfoDTO>> entry : ErreserbaZerrendaMapa.entrySet()) {
+            AgendaMapa.computeIfAbsent(entry.getKey(), k -> sortuAgenda(entry.getValue(), hasieraData, amaieraData));
+        }
+
+        return AgendaMapa;
+    } 
 
 
 }
