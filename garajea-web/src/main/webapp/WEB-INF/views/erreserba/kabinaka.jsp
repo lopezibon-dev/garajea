@@ -205,7 +205,8 @@
                             title="${blokea.erreserbaInfo.bezeroIzenAbizenak}">
                             <strong>${dt:formatDateTime(blokea.erreserbaInfo.hasiera, "HH:mm")} -
                                 ${dt:formatDateTime(blokea.erreserbaInfo.amaiera, "HH:mm")}</strong><br>
-                            ${blokea.erreserbaInfo.kabinaIzena} - ${erreserba.erreserbaInfo.egoera}<br>
+                            ${blokea.erreserbaInfo.kabinaIzena} - ${blokea.erreserbaInfo.egoera} - Langilea: ${blokea.erreserbaInfo.langileIzena}
+                            <br>
                             ${blokea.erreserbaInfo.bezeroIzenAbizenak} - <i>${blokea.erreserbaInfo.ibilgailuInfo}</i>
                         </div>
                         </c:when>

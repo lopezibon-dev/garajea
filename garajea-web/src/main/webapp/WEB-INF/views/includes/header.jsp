@@ -15,7 +15,7 @@
 </head>
 <body>
 	<style>
-			//* lg breakpoint-etik aurrera */
+			/* lg breakpoint-etik aurrera */
 		@media (min-width: 992px) {
 			.navbar>.container {
 					display: flex;
