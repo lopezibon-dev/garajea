@@ -6,49 +6,56 @@
     <jsp:param name="title" value="Erregistratu"/>
 </jsp:include>
     <main>
-        <section class="register-page">
-            <h1>Bezeroen Erregistroa</h1>
-            <p>Bete formularioa zure kontua sortzeko.</p>
-
-            <c:if test="${not empty erroreak}">
-                <div style="
-                    color: red;
-                    font-weight: bold;
-                    margin-bottom: 1em;
-                    padding: 0.5em;
-                    border: 1px solid red;
-                    background: #ffebeb;
-                ">
-                    <ul style="margin: 0; padding-left: 1.2em;">
-                        <c:forEach var="errore" items="${erroreak}">
-                            <li>${errore}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-            <form action="<c:url value="/bezeroa/erregistratu"/>" method="POST" class="login-form" style="max-width: 450px;">
-
-                <label for="izena">Izena:</label>
-                <input type="text" id="izena" name="izena" required value="${param.izena}">
-
-                <label for="abizenak">Abizenak:</label>
-                <input type="text" id="abizenak" name="abizenak" required value="${param.abizenak}">
-
-                <label for="emaila">Posta Elektronikoa:</label>
-                <input type="email" id="emaila" name="emaila" required value="${param.emaila}">
-                
-                <label for="telefonoa">Telefonoa:</label>
-                <input type="tel" id="telefonoa" name="telefonoa" value="${param.telefonoa}">
-
-                <label for="pasahitza">Pasahitza:</label>
-                <input type="password" id="pasahitza" name="pasahitza" required>
-
-                <button type="submit">Erregistratu</button>
-            </form>
+        <div class="page-container">
+            <h2>Bezeroen Erregistroa</h2>
+            <section class="form-section">
             
-            <p style="margin-top: 1em;">Baduzu konturik? <a href="<c:url value="/bezeroa/login"/>">Saioa Hasi</a></p>
-        </section>
+                <c:if test="${not empty arrakasta}">
+                    <div class="alert alert-success">
+                        ${arrakasta}
+                    </div>
+                </c:if>
+
+                <c:if test="${not empty erroreak}">
+                    <div class="alert alert-error">
+                        <ul>
+                            <c:forEach var="errore" items="${erroreak}">
+                                <li>${errore}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
+
+                <p>Bete formularioa zure kontua sortzeko.</p>
+
+                <form class="garajea-form" method="post" action="<c:url value="/bezeroa/erregistratu"/>">
+
+                    <label for="izena">Izena:</label>
+                    <input type="text" id="izena" name="izena" required value="${param.izena}">
+
+                    <label for="abizenak">Abizenak:</label>
+                    <input type="text" id="abizenak" name="abizenak" required value="${param.abizenak}">
+
+                    <label for="emaila">Posta Elektronikoa:</label>
+                    <input type="email" id="emaila" name="emaila" required value="${param.emaila}">
+                    
+                    <label for="telefonoa">Telefonoa:</label>
+                    <input type="tel" id="telefonoa" name="telefonoa" value="${param.telefonoa}">
+
+                    <label for="pasahitza">Pasahitza:</label>
+                    <input type="password" id="pasahitza" name="pasahitza" required>
+
+                    <div class="form-actions">
+                        <button class="garajea-btn" type="submit">Erregistratu</button>
+                    </div>
+
+                </form>
+                
+                <p style="margin-top: 1em;">Baduzu konturik? <a href="<c:url value="/bezeroa/login"/>">Saioa Hasi</a></p>
+
+            </section>
+
+        </div>
+
     </main>    
-<%-- footer.jsp txertatu --%>
 <jsp:include page="../includes/footer.jsp"/>

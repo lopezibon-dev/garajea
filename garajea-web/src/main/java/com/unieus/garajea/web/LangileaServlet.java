@@ -34,11 +34,11 @@ public class LangileaServlet extends HttpServlet {
 
         String pathInfo = request.getPathInfo(); // Adib: /login , /profila, etab.
 
-        ServiceContextFactory scf =
+        ServiceContextFactory ZerbitzuEsparruFaktoria =
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        try  (ServiceContext ctx = scf.open()) {
+        try  (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
             switch (pathInfo) {
                 case "/login":
                     request.getRequestDispatcher("/WEB-INF/views/langilea/login.jsp").forward(request,
@@ -66,9 +66,6 @@ public class LangileaServlet extends HttpServlet {
             }
         } catch (Exception e) {
             throw e;
-            // Errore kudeaketa
-            // request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
-            // request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
         }
     }
 
@@ -81,11 +78,11 @@ public class LangileaServlet extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
 
-        ServiceContextFactory scf =
+        ServiceContextFactory ZerbitzuEsparruFaktoria =
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        try  (ServiceContext ctx = scf.open()) {
+        try  (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
             switch (pathInfo) {
                 case "/login":
                     handleSaioaHasi(ctx, request, response);
@@ -99,9 +96,6 @@ public class LangileaServlet extends HttpServlet {
             }
         } catch (Exception e) {
             throw e;
-            // DB edo bestelako errorea
-            // request.setAttribute("errorea", "Errorea aplikazioan: " + e.getMessage());
-            // request.getRequestDispatcher("/WEB-INF/views/errorea.jsp").forward(request, response);
         }    
     }
 

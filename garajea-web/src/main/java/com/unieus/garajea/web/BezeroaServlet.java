@@ -65,11 +65,11 @@ public class BezeroaServlet extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
 
-        ServiceContextFactory scf =
+        ServiceContextFactory ZerbitzuEsparruFaktoria =
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        if (scf == null) {
+        if (ZerbitzuEsparruFaktoria == null) {
             throw new IllegalStateException(
                 "ServiceContextFactory ez da hasieratu. " +
                 "ServletContextListener berrikusi."
@@ -79,35 +79,38 @@ public class BezeroaServlet extends HttpServlet {
         try {
             switch (pathInfo) {
                 case "/erregistratu":
-                    handleErregistratu(scf, request, response);
+                    handleErregistratu(ZerbitzuEsparruFaktoria, request, response);
                     break;
                 case "/login":
-                    handleSaioaHasi(scf, request, response);
+                    handleSaioaHasi(ZerbitzuEsparruFaktoria, request, response);
                     break;
                 case "/datuakEguneratu":
-                    handleDatuakEguneratu(scf, request, response);
+                    handleDatuakEguneratu(ZerbitzuEsparruFaktoria, request, response);
                     break;
                 case "/pasahitzaEguneratu":
-                    handlePasahitzaEguneratu(scf, request, response);
+                    handlePasahitzaEguneratu(ZerbitzuEsparruFaktoria, request, response);
                     break;  
                 default:
+                    // Beste kasuetan, 404 orria erakutsi
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Eragiketa ezezaguna.");
             }
-        // Negozio logikako salbuespenak kudeatu    
-        } catch (ZerbitzuSalbuespena e) {
-            request.setAttribute("erroreak", e.getErroreak());
-            String Bista = erabakiErroreBista(pathInfo);
-            request.getRequestDispatcher(Bista).forward(request, response);
-        // Sarreren balidazioaren salbuespenak kudeatu
+            // Sarreren balidazioaren salbuespenak kudeatu
         } catch (InputBalidazioSalbuespena e) {
             request.setAttribute("erroreak", e.getErroreak());
             String Bista = erabakiErroreBista(pathInfo);
             request.getRequestDispatcher(Bista).forward(request, response);
+            // Negozio logikako salbuespenak kudeatu    
+        } catch (ZerbitzuSalbuespena e) {
+            request.setAttribute("erroreak", e.getErroreak());
+            String Bista = erabakiErroreBista(pathInfo);
+            request.getRequestDispatcher(Bista).forward(request, response);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     private void handleErregistratu(
-        ServiceContextFactory scf, 
+        ServiceContextFactory ZerbitzuEsparruFaktoria, 
         HttpServletRequest request, 
         HttpServletResponse response)
             throws ServletException, IOException {
@@ -136,7 +139,7 @@ public class BezeroaServlet extends HttpServlet {
         }
 
         // ServiceContext hasi eta erregistroa burutu
-        try (ServiceContext ctx = scf.open()){
+        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
             Bezeroa bezeroa = new Bezeroa();
             bezeroa.setIzena(izena);
             bezeroa.setAbizenak(request.getParameter("abizenak"));
@@ -155,7 +158,7 @@ public class BezeroaServlet extends HttpServlet {
     }
 
     private void handleSaioaHasi(
-        ServiceContextFactory scf, 
+        ServiceContextFactory ZerbitzuEsparruFaktoria, 
         HttpServletRequest request, 
         HttpServletResponse response)
             throws ServletException, IOException {
@@ -177,7 +180,7 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena(erroreak);
         }
 
-        try (ServiceContext ctx = scf.open()) {
+        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
             Bezeroa bezeroa = ctx.getBezeroaService().saioaHasi(emaila, pasahitza);
 
             HttpSession session = request.getSession(true);
@@ -196,19 +199,26 @@ public class BezeroaServlet extends HttpServlet {
      * Bezeroaren datu pertsonalak eguneratzeko eskaera kudeatzen du.
      */
     private void handleDatuakEguneratu(
-        ServiceContextFactory scf, 
+        ServiceContextFactory ZerbitzuEsparruFaktoria, 
         HttpServletRequest request, 
         HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
-        Bezeroa bezeroaSesioan = (Bezeroa) session.getAttribute("current_user");
-
+        HttpSession sesioa = request.getSession(false);
+        if (sesioa == null ||
+            sesioa.getAttribute("current_user") == null || 
+            !sesioa.getAttribute("current_user_type").equals("bezeroa")) {
+                response.sendRedirect(request.getContextPath() + "/bezeroa/login");
+                return;
+            }
+        Bezeroa bezeroaSesioan = (Bezeroa) sesioa.getAttribute("current_user");  
+        /* 
         if (bezeroaSesioan == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Saioa ez dago hasita.");
             return;
         }
-
+        */
+  
         // Sarrerak balidatu
         List<String> erroreak = new ArrayList<>();
 
@@ -226,7 +236,7 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena(erroreak);
         }
 
-        try (ServiceContext ctx = scf.open()){
+        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
             // bezeroaEguneratu objektua sortu datuekin
             Bezeroa bezeroaEguneratu = new Bezeroa();
             bezeroaEguneratu.setBezeroaId(bezeroaSesioan.getBezeroaId()); // GARRANTZITSUA: IDa mantendu
@@ -240,7 +250,7 @@ public class BezeroaServlet extends HttpServlet {
 
             // Eguneratu saioa datu basean gordetako datuak eskuratuz
             Bezeroa bezeroaBerria = ctx.getBezeroaService().findById(bezeroaEguneratu.getBezeroaId());
-            session.setAttribute("current_user", bezeroaBerria);
+            sesioa.setAttribute("current_user", bezeroaBerria);
 
             request.setAttribute("arrakasta", "Datuak arrakastaz eguneratu dira.");
             request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
@@ -254,7 +264,7 @@ public class BezeroaServlet extends HttpServlet {
      * Bezeroaren pasahitza aldatzeko eskaera kudeatzen du.
      */
     private void handlePasahitzaEguneratu(
-        ServiceContextFactory scf, 
+        ServiceContextFactory ZerbitzuEsparruFaktoria, 
         HttpServletRequest request, 
         HttpServletResponse response)
             throws ServletException, IOException {
@@ -274,7 +284,7 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena("Pasahitza berria derrigorrezkoa da.");
         }
         // Negozio logika: Pasahitza eguneratu
-        try (ServiceContext ctx = scf.open()){
+        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
             
             ctx.getBezeroaService().pasahitzaEguneratu(
                 bezeroaSesioan.getBezeroaId(),

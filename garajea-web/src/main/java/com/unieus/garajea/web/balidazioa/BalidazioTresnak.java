@@ -112,6 +112,74 @@ public final class BalidazioTresnak {
     }
 
     /* ===========================
+       ZENBAKI BALIDAZIOA
+       =========================== */
+
+    public static Integer getRequiredInt(
+            HttpServletRequest req,
+            String paramName,
+            String fieldLabel,
+            List<String> erroreak) {
+
+        String value = req.getParameter(paramName);
+
+        if (value == null || value.trim().isEmpty()) {
+            erroreak.add(fieldLabel + " derrigorrezkoa da");
+            return null;
+        }
+
+        try {
+            return Integer.valueOf(value.trim());
+        } catch (NumberFormatException e) {
+            erroreak.add(fieldLabel + " zenbaki osoa izan behar da");
+            return null;
+        }
+    }
+
+    public static Integer getOptionalInt(
+            HttpServletRequest req,
+            String paramName,
+            String fieldLabel,
+            List<String> erroreak) {
+
+        String value = req.getParameter(paramName);
+
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            return Integer.valueOf(value.trim());
+        } catch (NumberFormatException e) {
+            erroreak.add(fieldLabel + " zenbaki osoa izan behar da");
+            return null;
+        }
+    }
+
+    public static Integer getOptionalIntInRange(
+            HttpServletRequest req,
+            String paramName,
+            String fieldLabel,
+            int min,
+            int max,
+            List<String> erroreak) {
+
+        Integer value = getOptionalInt(req, paramName, fieldLabel, erroreak);
+        if (value == null) {
+            return null;
+        }
+
+        if (value < min || value > max) {
+            erroreak.add(
+                fieldLabel + " balioa " + min + " eta " + max + " artean egon behar da"
+            );
+            return null;
+        }
+
+        return value;
+    }
+
+    /* ===========================
        EMAIL BALIDAZIOA
        =========================== */
 

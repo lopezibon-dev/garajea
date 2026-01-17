@@ -3,6 +3,7 @@ package com.unieus.garajea.core.services.context;
 import com.unieus.garajea.core.config.KonfigurazioaService;
 import com.unieus.garajea.core.services.BezeroaService;
 import com.unieus.garajea.core.services.ErreserbaService;
+import com.unieus.garajea.core.services.IbilgailuaService;
 import com.unieus.garajea.core.services.LangileaService;
 import com.unieus.garajea.core.presentation.agenda.ErreserbaAgendaBuilder;
 /**
@@ -17,6 +18,8 @@ public interface ServiceContext extends AutoCloseable {
     LangileaService getLangileaService();
 
     ErreserbaService getErreserbaService();
+
+    IbilgailuaService getIbilgailuaService();
 
     ErreserbaAgendaBuilder getErreserbaAgendaBuilder();
 

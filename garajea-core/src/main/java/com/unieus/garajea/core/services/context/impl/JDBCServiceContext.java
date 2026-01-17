@@ -5,6 +5,7 @@ import com.unieus.garajea.core.services.context.ServiceContext;
 import com.unieus.garajea.core.services.BezeroaService;
 import com.unieus.garajea.core.services.LangileaService;
 import com.unieus.garajea.core.services.ErreserbaService;
+import com.unieus.garajea.core.services.IbilgailuaService;
 import com.unieus.garajea.core.presentation.agenda.ErreserbaAgendaBuilder;
 import com.unieus.garajea.model.dao.DAOFactory;
 
@@ -36,6 +37,11 @@ public class JDBCServiceContext implements ServiceContext {
     @Override
     public ErreserbaService getErreserbaService() {
         return new ErreserbaService(daoFactory.getErreserbaDAO(), konfigurazioaService);
+    }
+
+    @Override
+    public IbilgailuaService getIbilgailuaService() {
+        return new IbilgailuaService(daoFactory.getIbilgailuaDAO(), daoFactory.getBezeroaDAO());
     }
 
     @Override

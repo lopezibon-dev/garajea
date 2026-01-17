@@ -1,13 +1,13 @@
 /* CSS mobile-first - oinarrizko estiloak mugikorrerako */
 
-/* Oinarrizko berrezarpena */
+/* Reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Tipografia eta koloreak */
+/* Tipografia eta kolore orokorrak */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     background: #f7f7f7;
@@ -15,7 +15,8 @@ body {
     min-height: 100vh;
 }
 
-/* Goiburuaren diseinua */
+/* Layout semantikoa (header, nav, main, footer) */
+
 header {
     background: #222;
     color: #fff;
@@ -26,156 +27,18 @@ header {
     row-gap: 0.5em;
 }
 
-.header-container {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.nav-container {
-    max-width: 900px;
-}
-
-.navbar-inner-wrapper {
-    width: 100%;
-}
-
-.nav-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 0.75rem;
-}
-
-div.logo-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
-}
-
-/* Logo */
-.logo img {
-    max-height: 300px;
-    max-width: 95%;
-    width: auto;
-    margin-bottom: 0.2em;
-}
-
-/* Login formularioa zutabean eta estilo konpaktua */
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.33em;
-    background: #fff;
-    padding: 0.65em 0.7em;
-    border-radius: 4px;
-    box-shadow: 0 1px 4px rgba(60,60,60,0.07);
-    min-width: 175px;
-    width: 100%;
-    max-width: 220px;
-}
-
-.login-form label {
-    font-size: 0.97em;
-    font-weight: 500;
-    color: #217dbb;
-}
-
-.login-form input[type="email"],
-.login-form input[type="password"] {
-    font-size: 0.98em;
-    padding: 0.17em 0.48em;
-    border: 1px solid #bbb;
-    border-radius: 2px;
-    margin-bottom: 0.12em;
-    background: #f7f7f7;
-}
-
-.login-form button {
-    margin-top: 0.37em;
-    padding: 0.24em 0;
-    background: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 2px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-}
-.login-form button:hover {
-    background: #217dbb;
-}
-
-/* Nabigazioa eta menu nagusia */
 nav {
     background: #eaeaea;
-    /*width: 100%;*/
 }
 
-/*
-.navbar {
-    padding: 0.5rem 1rem;
-}
-
-nav:not(.navbar) {
-    background: #eaeaea;
-}
-*/
-
-.main-menu {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    gap: 0.6em;
-    padding: 0.8em;
-    align-items: stretch;
-}
-
-.main-menu li a {
-    text-decoration: none;
-    color: #222;
-    font-weight: 500;
-    font-size: 1.12em;
-    padding: 0.45em 0;
-    transition: color 0.2s;
-}
-
-.main-menu li a:hover {
-    color: #3498db;
-    text-decoration: underline;
-}
-
-/* Edukia: main */
 main {
-    padding: 1.2em 0.5em;
-    box-shadow: none;
-    border-radius: 0;
-    background: #fff;
-    max-width: 100%;
+    padding: 1rem;
 }
-
-/* Sarrerak eta tituluak */
-h1, h2, h3 {
-    margin-bottom: 0.7em;
-    font-weight: 500;
-    color: #18374a;
-}
-
-h1 { font-size: 2em; margin-top: 0; }
-h2 { font-size: 1.19em; }
-h3 { font-size: 1em; color: #217dbb; }
 
 section {
     margin-bottom: 1.6em;
 }
 
-/* Enfasi mekanikoa */
-strong {
-    color: #d35400;
-    font-weight: bold;
-}
-
-/* Oina / footer */
 footer {
     background: #222;
     color: #fff;
@@ -186,9 +49,234 @@ footer {
     border-top: 2px solid #3498db;
 }
 
-/* Desktop eta pantaila zabala: min-width media query */
-@media (min-width: 700px) {
-    /* Goiburua */
+/* Layout containers (page-container, profile-container…) */
+
+.header-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+div.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.logo img {
+    max-height: 300px;
+    max-width: 95%;
+    width: auto;
+    margin-bottom: 0.2em;
+}
+
+.page-container {
+    margin: 0 auto;
+    padding: 1.2em 0.5em;
+    box-shadow: none;
+    border-radius: 0;
+    background: #fff;
+}
+
+.page-container.full-width {
+    max-width: none;
+}
+
+/* Elementu orokorrak (titles, strong, alerts, buttons) */
+
+h1, h2, h3 {
+    margin-bottom: 0.7em;
+    font-weight: 500;
+    color: #18374a;
+}
+
+h1 { font-size: 2em; margin-top: 0; }
+h2 { font-size: 1.19em; }
+h3 { font-size: 1em; color: #217dbb; }
+
+strong {
+    color: #d35400;
+    font-weight: bold;
+}
+
+.alert {
+    font-weight: bold;
+    margin-bottom: 1em;
+    padding: 0.75em;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    background-color: #d4edda;
+}
+
+.alert-error {
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+}
+
+.alert-error ul {
+    margin: 0;
+    padding-left: 1.2em;
+}
+
+.garajea-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.35rem 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    color: #ffffff;
+    background-color: #3498db;
+
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+
+    line-height: 1.2;
+}
+
+.garajea-btn--primary {
+    background-color: #3498db;
+}
+
+.garajea-btn--secondary {
+    background-color: #6c757d;
+}
+
+.garajea-btn--danger {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.garajea-btn--danger:hover {
+    background-color: #bb2d3b;
+}
+
+.garajea-btn--small {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.55rem;
+}
+
+.garajea-btn:hover {
+    filter: brightness(0.92);
+}
+
+.garajea-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Formularioak (garajea-form, form-section, list-section) */
+
+.form-section {
+    background: #ffffff;
+    padding: 1.2rem;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+}
+
+.garajea-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    width: 100%;
+    max-width: 320px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.garajea-form .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.garajea-form label {
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #217dbb;
+}
+
+.garajea-form input
+.garajea-form select,
+.garajea-form textarea {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.95em;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background: #f7f7f7;
+}
+
+.garajea-form .form-actions {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.list-section {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 6px;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.profile-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.profile-sections > .form-section {
+    flex: 1 1 340px;
+    max-width: 400px;
+}
+
+/* Taulak eta zerrendak */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+}
+
+.list-actions {
+    margin-bottom: 1rem;
+}
+
+.row-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* lg */
+@media (min-width: 992px) {
     header {
         flex-direction: row;
         align-items: center;
@@ -197,41 +285,147 @@ footer {
     }
 
     .logo img {
-        max-height: 150px;
         margin: 0;
     }
-    .login-form {
-        min-width: 185px;
-        max-width: 230px;
-        margin-left: auto;
-    }
-
-    .login-form button:hover {
-        background: #217dbb;
-    }
     
-    /* Nabigazioaren menu horizontala */
-    .main-menu {
-        flex-direction: row;
-        gap: 1.5em;
-        justify-content: center;
-        padding: 1em 0;
-        align-items: center;
-    }
-    .main-menu li a {
-        font-size: 1.1em;
-        padding: 0;
-    }
-    main {
+    .page-container {
         padding: 2em 1.5em;
         max-width: 900px;
         margin: 0 auto;
         border-radius: 4px;
         box-shadow: 0 0 8px rgba(60,60,60,0.08);
+
     }
 
     .header-container {
         max-width: 900px;
     }
 
+}
+
+/* === Agenda (osagai berrerabilgarria) === */
+
+:root {
+    --agenda-flex: 240px;
+    --agenda-min: 230px;
+    --agenda-max: 350px;
+}
+
+.agenda-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.agenda-compact .agenda-col {
+    max-width: 320px;
+}
+
+/* Agenda elementua : oinarrizko bertsioa (mobile-first) */
+.agenda-col {
+    flex: 1 1 var(--agenda-flex);
+    /* oinarrizko zabalera */
+    min-width: var(--agenda-min);
+    /* gutxieneko zabalera */
+    max-width: var(--agenda-max);
+    /* zabalera handiena */
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.agenda-header {
+    background: #333;
+    color: #fff;
+    padding: 0.5em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.blokea {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    padding: 4px;
+    overflow: hidden;
+}
+
+.blokea.erreserba {
+    background-color: #d1e7dd;
+    /* Berde argia */
+    border-left: 5px solid #198754;
+    color: #0f5132;
+}
+
+.blokea.librea {
+    background-color: #f8f9fa;
+    /* Grisa */
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blokea.egunbanatzailea {
+    background-color: #333333;
+    /* grisa iluna */
+    color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Media queries (sm, md, lg, xl) */
+
+/* sm */
+@media (min-width: 576px) {
+    :root {
+    --agenda-flex: 250px;
+    }
+
+    .agenda-container {
+    justify-content: flex-start;
+    }
+}
+
+/* md (>=768px) */
+@media (min-width: 768px) {
+    .form-section {
+        border: 1px solid #e0e0e0;
+    }
+    :root {
+        --agenda-flex: 260px;
+    }
+    .agenda-col {
+        flex-basis: 45%;
+        min-width: 240px;
+        max-width: 360px;
+    }
+}
+
+/* lg (>=992px) – navbar expand-lg -rekin bat egin */
+@media (min-width: 992px) {
+    :root {
+        --agenda-flex: 280px;
+        --agenda-max: 380px;
+    }
+
+    .agenda-col {
+        flex-basis: 30%;
+        /* normalean 3 zutabe, edo 4 lekurik badago */
+        min-width: 260px;
+        max-width: 380px;
+    }
+}
+
+/* xl (>=1200px) */
+@media (min-width: 1200px) {
+    :root {
+        --agenda-flex: 300px;
+        --agenda-max: 380px;
+    }
 }

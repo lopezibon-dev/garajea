@@ -35,7 +35,7 @@
 				</div>
 		</div>
   </header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
 				DIY Garajea
@@ -54,7 +54,7 @@
 
 				<c:choose>
 					<c:when test="${empty sessionScope.current_user_type}">
-						<ul class="navbar-nav mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/">
 									Hasiera
@@ -78,17 +78,23 @@
 						</ul>
 					</c:when>
 					<c:when test="${sessionScope.current_user_type eq 'bezeroa'}">
-						<ul class="navbar-nav mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/profila">
 									Profila
 								</a>
 							</li>
 							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.request.contextPath}/ibilgailua">
+									Nire Ibilgailuak
+								</a>
+							</li>							
+							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/erreserbak">
 									Nire Erreserbak
 								</a>
 							</li>
+
 						</ul>
 
 						<ul class="navbar-nav ms-auto">
@@ -100,7 +106,7 @@
 						</ul>
 					</c:when>
 					<c:when test="${sessionScope.current_user_type eq 'langilea'}">
-						<ul class="navbar-nav mb-2 mb-lg-0">
+						<ul class="navbar-nav mb-lg-0">
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/langilea/profila">
 									Profila

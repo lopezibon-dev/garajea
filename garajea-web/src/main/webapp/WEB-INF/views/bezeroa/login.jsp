@@ -6,39 +6,35 @@
     <jsp:param name="title" value="Saioa Hasi"/>
 </jsp:include>
     <main>
-        <section class="login-page">
-            <h1>Bezeroen Saioa Hasi</h1>
+        <div class="page-container">
+
+            <h2>Bezeroen Saioa Hasi</h2>
             <p>Sartu zure datuekin zure ibilgailuak kudeatzeko eta erreserbak egiteko.</p>
 
-            <c:if test="${not empty erroreak}">
-                <div style="
-                    color: red;
-                    font-weight: bold;
-                    margin-bottom: 1em;
-                    padding: 0.5em;
-                    border: 1px solid red;
-                    background: #ffebeb;
-                ">
-                    <ul style="margin: 0; padding-left: 1.2em;">
-                        <c:forEach var="errore" items="${erroreak}">
-                            <li>${errore}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
+            <section class="form-section">
 
-            <form action="<c:url value="/bezeroa/login"/>" method="POST" class="login-form" style="max-width: 350px;">
-                <label for="emaila">Posta Elektronikoa:</label>
-                <input type="email" id="emaila" name="emaila" required value="${param.emaila}">
+                <c:if test="${not empty erroreak}">
+                    <div class="alert alert-error">
+                        <ul>
+                            <c:forEach var="errore" items="${erroreak}">
+                                <li>${errore}</li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
 
-                <label for="pasahitza">Pasahitza:</label>
-                <input type="password" id="pasahitza" name="pasahitza" required>
+                <form class="garajea-form" method="post" action="<c:url value="/bezeroa/login"/>">
+                    <label for="emaila">Posta Elektronikoa:</label>
+                    <input type="email" id="emaila" name="emaila" required value="${param.emaila}">
+                    <label for="pasahitza">Pasahitza:</label>
+                    <input type="password" id="pasahitza" name="pasahitza" required>
+                    <div class="form-actions">
+                        <button class="garajea-btn" type="submit">Saioa Hasi</button>
+                    </div>
+                </form>
                 
-                <button type="submit">Saioa Hasi</button>
-            </form>
-            
-            <p style="margin-top: 1em;">Ez duzu konturik? <a href="<c:url value="/bezeroa/erregistratu"/>">Erregistratu orain</a></p>
-        </section>
+                <p style="margin-top: 1em;">Ez duzu konturik? <a href="<c:url value="/bezeroa/erregistratu"/>">Erregistratu orain</a></p>
+            </section>
+        </div>
     </main>
-<%-- footer.jsp txertatu --%>
 <jsp:include page="../includes/footer.jsp"/>

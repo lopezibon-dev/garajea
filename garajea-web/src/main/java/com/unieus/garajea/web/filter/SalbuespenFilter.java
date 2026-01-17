@@ -14,8 +14,9 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {
     "/bezeroa/*",      // Bezeroaren eremua
-    "/langilea/*",     // Langileen eremua
-    "/erreserbak/*",   // Erreserben eremua
+    "/langilea/*",     // Langilearen eremua
+    "/erreserba/*",   // Erreserbaren eremua
+    "/ibilgailua/*"    // Ibilgailuaren eremua 
 })
 public class SalbuespenFilter implements Filter {
 
