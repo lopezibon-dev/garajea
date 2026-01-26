@@ -1,0 +1,146 @@
+/* =========================
+   reset
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, Ubuntu, sans-serif;
+    line-height: 1.4;
+    color: #222;
+    background-color: #fff;
+}
+
+h1, h2, h3 {
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+/* =========================
+   Layout orokorra
+   ========================= */
+
+header,
+footer {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+footer {
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+section {
+    padding: 1rem;
+}
+
+/* =========================
+   responsive Bistak
+   ========================= */
+
+.desktop-bista {
+    display: none;
+}
+
+/* =========================
+   Mobile – zerrendak
+   ========================= */
+
+.kabina {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.kabina h2 {
+    font-size: 1.1rem;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+li {
+    padding: 0.25rem 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+li span {
+    white-space: nowrap;
+}
+
+/* =========================
+   Desktop – taulak
+   ========================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+th,
+td {
+    padding: 0.4rem 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+thead th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+tfoot th {
+    background-color: #fafafa;
+    font-weight: 600;
+}
+
+/* behar ez den scroll horizontala sahiestu */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* =========================
+   Breakpoint desktop
+   ========================= */
+
+@media (min-width: 768px) {
+
+    .mobile-bista {
+        display: none;
+    }
+
+    .desktop-bista {
+        display: block;
+    }
+
+    header,
+    footer,
+    section {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .kabina {
+        border-bottom: none;
+        margin-bottom: 2rem;
+    }
+}

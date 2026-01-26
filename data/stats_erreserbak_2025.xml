@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<erreserbak urtea="2025" urtekoGuztizkoa="1472">
+
+  <hilabete zenbakia="1" kopurua="110">
+    <kabina izena="Kabina01" kopurua="18"/>
+    <kabina izena="Kabina02" kopurua="24"/>
+    <kabina izena="Kabina03" kopurua="22"/>
+    <kabina izena="Kabina04" kopurua="26"/>
+    <kabina izena="Kabina05" kopurua="20"/>
+  </hilabete>
+
+  <hilabete zenbakia="2" kopurua="106">
+    <kabina izena="Kabina01" kopurua="15"/>
+    <kabina izena="Kabina02" kopurua="19"/>
+    <kabina izena="Kabina03" kopurua="23"/>
+    <kabina izena="Kabina04" kopurua="21"/>
+    <kabina izena="Kabina05" kopurua="28"/>
+  </hilabete>
+
+  <hilabete zenbakia="3" kopurua="112">
+    <kabina izena="Kabina01" kopurua="20"/>
+    <kabina izena="Kabina02" kopurua="24"/>
+    <kabina izena="Kabina03" kopurua="22"/>
+    <kabina izena="Kabina04" kopurua="26"/>
+    <kabina izena="Kabina05" kopurua="20"/>
+  </hilabete>
+
+  <hilabete zenbakia="4" kopurua="120">
+    <kabina izena="Kabina01" kopurua="25"/>
+    <kabina izena="Kabina02" kopurua="23"/>
+    <kabina izena="Kabina03" kopurua="27"/>
+    <kabina izena="Kabina04" kopurua="22"/>
+    <kabina izena="Kabina05" kopurua="23"/>
+  </hilabete>
+
+  <hilabete zenbakia="5" kopurua="118">
+    <kabina izena="Kabina01" kopurua="21"/>
+    <kabina izena="Kabina02" kopurua="25"/>
+    <kabina izena="Kabina03" kopurua="23"/>
+    <kabina izena="Kabina04" kopurua="26"/>
+    <kabina izena="Kabina05" kopurua="23"/>
+  </hilabete>
+
+  <hilabete zenbakia="6" kopurua="148">
+    <kabina izena="Kabina01" kopurua="32"/>
+    <kabina izena="Kabina02" kopurua="30"/>
+    <kabina izena="Kabina03" kopurua="28"/>
+    <kabina izena="Kabina04" kopurua="33"/>
+    <kabina izena="Kabina05" kopurua="25"/>
+  </hilabete>
+
+  <hilabete zenbakia="7" kopurua="150">
+    <kabina izena="Kabina01" kopurua="34"/>
+    <kabina izena="Kabina02" kopurua="28"/>
+    <kabina izena="Kabina03" kopurua="30"/>
+    <kabina izena="Kabina04" kopurua="33"/>
+    <kabina izena="Kabina05" kopurua="25"/>
+  </hilabete>
+
+  <hilabete zenbakia="8" kopurua="116">
+    <kabina izena="Kabina01" kopurua="20"/>
+    <kabina izena="Kabina02" kopurua="23"/>
+    <kabina izena="Kabina03" kopurua="26"/>
+    <kabina izena="Kabina04" kopurua="22"/>
+    <kabina izena="Kabina05" kopurua="25"/>
+  </hilabete>
+
+  <hilabete zenbakia="9" kopurua="104">
+    <kabina izena="Kabina01" kopurua="18"/>
+    <kabina izena="Kabina02" kopurua="19"/>
+    <kabina izena="Kabina03" kopurua="21"/>
+    <kabina izena="Kabina04" kopurua="22"/>
+    <kabina izena="Kabina05" kopurua="24"/>
+  </hilabete>
+
+  <hilabete zenbakia="10" kopurua="120">
+    <kabina izena="Kabina01" kopurua="25"/>
+    <kabina izena="Kabina02" kopurua="24"/>
+    <kabina izena="Kabina03" kopurua="22"/>
+    <kabina izena="Kabina04" kopurua="26"/>
+    <kabina izena="Kabina05" kopurua="23"/>
+  </hilabete>
+
+  <hilabete zenbakia="11" kopurua="112">
+    <kabina izena="Kabina01" kopurua="22"/>
+    <kabina izena="Kabina02" kopurua="20"/>
+    <kabina izena="Kabina03" kopurua="23"/>
+    <kabina izena="Kabina04" kopurua="25"/>
+    <kabina izena="Kabina05" kopurua="22"/>
+  </hilabete>
+
+  <hilabete zenbakia="12" kopurua="136">
+    <kabina izena="Kabina01" kopurua="28"/>
+    <kabina izena="Kabina02" kopurua="27"/>
+    <kabina izena="Kabina03" kopurua="25"/>
+    <kabina izena="Kabina04" kopurua="30"/>
+    <kabina izena="Kabina05" kopurua="26"/>
+  </hilabete>
+
+</erreserbak>

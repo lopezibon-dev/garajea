@@ -1,4 +1,4 @@
-# MAven-eko konpilazio-fitxategiak
+# Maven-eko konpilazio-fitxategiak
 target/
 */target/
 **/target/
@@ -22,3 +22,12 @@ Thumbs.db
 
 #VS Code
 .vscode/
+
+# data/export, data/import
+data/export/
+data/import/
+
+#Python
+scripts/.venv/
+scripts/__pycache__/
+scripts/*.pyc

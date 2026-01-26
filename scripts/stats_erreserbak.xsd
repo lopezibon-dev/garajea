@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="erreserbak">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hilabete" maxOccurs="12">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="kabina" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="izena" type="xs:string" use="required"/>
+                  <xs:attribute name="kopurua" type="xs:nonNegativeInteger" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="zenbakia" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="kopurua" type="xs:nonNegativeInteger" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="urtea" type="xs:positiveInteger" use="required"/>
+      <xs:attribute name="urtekoGuztira" type="xs:nonNegativeInteger" use="required"/>
+
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

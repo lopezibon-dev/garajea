@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <xsl:output method="html" encoding="UTF-8" indent="yes"/>
+  
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>
+          Txostena: Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Kabinaka)
+        </title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="txostena.css">
+      </head>
+      <body>
+
+        <header>
+          <h1>
+            Txostena: Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Kabinaka)
+          </h1>
+          <p>
+            Urteko guztizkoa:
+            <strong><xsl:value-of select="erreserbak/@urtekoGuztizkoa"/></strong>
+          </p>
+        </header>
+
+        <!-- mobile Bista-->
+        <section class="mobile-bista">
+          <xsl:apply-templates
+            select="erreserbak/hilabete[1]/kabina"
+            mode="mobile"/>
+        </section>
+
+        <!--  desktop Bista-->
+        <section class="desktop-bista">
+          <xsl:apply-templates
+            select="erreserbak/hilabete[1]/kabina"
+            mode="desktop"/>
+        </section>
+
+        <footer>
+          <p>DIY Garajea</p>
+        </footer>
+
+      </body>
+    </html>
+  </xsl:template>
+
+  <xsl:template match="kabina" mode="mobile">
+
+    <xsl:variable name="kabinaIzena" select="@izena"/>
+    <xsl:variable name="urtekoGuztizkoa"
+      select="sum(/erreserbak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
+
+    <section class="kabina">
+      <h2>
+        <xsl:value-of select="$kabinaIzena"/>
+        – Urteko Guztizkoa:
+        <xsl:value-of select="$urtekoGuztizkoa"/>
+      </h2>
+
+      <ul>
+        <xsl:for-each select="/erreserbak/hilabete">
+          <li>
+            <xsl:call-template name="hilabete-izena">
+              <xsl:with-param name="zenbakia" select="@zenbakia"/>
+            </xsl:call-template>
+            :
+            <xsl:value-of
+              select="kabina[@izena = $kabinaIzena]/@kopurua"/>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </section>
+
+  </xsl:template>
+  
+    <xsl:template match="kabina" mode="desktop">
+
+    <xsl:variable name="kabinaIzena" select="@izena"/>
+    <xsl:variable name="urtekoGuztizkoa"
+      select="sum(/erreserbak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
+
+    <section class="kabina">
+      <h2><xsl:value-of select="$kabinaIzena"/></h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Hilabetea</th>
+            <th>Erreserbak</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <xsl:for-each select="/erreserbak/hilabete">
+            <tr>
+              <td>
+                <xsl:call-template name="hilabete-izena">
+                  <xsl:with-param name="zenbakia" select="@zenbakia"/>
+                </xsl:call-template>
+              </td>
+              <td>
+                <xsl:value-of
+                  select="kabina[@izena = $kabinaIzena]/@kopurua"/>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th>Guztira</th>
+            <th><xsl:value-of select="$urtekoGuztizkoa"/></th>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+  </xsl:template>
+  
+    <xsl:template name="hilabete-izena">
+    <xsl:param name="zenbakia"/>
+
+    <xsl:choose>
+      <xsl:when test="$zenbakia = 1">Urtarrila</xsl:when>
+      <xsl:when test="$zenbakia = 2">Otsaila</xsl:when>
+      <xsl:when test="$zenbakia = 3">Martxoa</xsl:when>
+      <xsl:when test="$zenbakia = 4">Apirila</xsl:when>
+      <xsl:when test="$zenbakia = 5">Maiatza</xsl:when>
+      <xsl:when test="$zenbakia = 6">Ekaina</xsl:when>
+      <xsl:when test="$zenbakia = 7">Uztaila</xsl:when>
+      <xsl:when test="$zenbakia = 8">Abuztua</xsl:when>
+      <xsl:when test="$zenbakia = 9">Iraila</xsl:when>
+      <xsl:when test="$zenbakia = 10">Urria</xsl:when>
+      <xsl:when test="$zenbakia = 11">Azaroa</xsl:when>
+      <xsl:otherwise>Abendua</xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+</xsl:stylesheet>
+
+  
+
+
+
