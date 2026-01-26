@@ -58,7 +58,7 @@ Ereduaren logika bi modulutan banatzen da:
 - Ez dago bistaren araberako logikarik
 - Negozio-arauak zerbitzuetan zentralizatzen dira
 
-## 4. Kontrolatzailea (Controller)
+## 4. Kontrolatzailea (Web Controller)
 
 ### 4.1 Teknologia
 

@@ -6,6 +6,7 @@ import java.util.List;
 import com.unieus.garajea.web.exception.InputBalidazioSalbuespena;
 import com.unieus.garajea.web.balidazioa.BalidazioTresnak;
 import com.unieus.garajea.web.dto.IbilgailuaFormDTO;
+import com.unieus.garajea.web.dto.IbilgailuaEzabatuFormDTO;
 import com.unieus.garajea.core.exception.ZerbitzuSalbuespena;
 import com.unieus.garajea.core.services.context.ServiceContext;
 import com.unieus.garajea.core.services.context.ServiceContextFactory;
@@ -178,15 +179,30 @@ public class IbilgailuaServlet extends HttpServlet {
         Bezeroa bezeroaSesioan = (Bezeroa) sesioa.getAttribute("current_user"); 
 
         IbilgailuaFormDTO ibilgailuaForm = null;
+        IbilgailuaEzabatuFormDTO ibilgailuaEzabatuForm = null;
         String pathInfo = request.getPathInfo();
         try {
             List<String> erroreak = new ArrayList<>();
-
             // Behin bakarrik irakurri eta balidatu formulariotik jasotakoa
-            ibilgailuaForm =
-                IbilgailuaFormDTO.fromRequest(request, erroreak);
-
-            ibilgailuaForm.setBezeroaId(bezeroaSesioan.getBezeroaId());
+            switch (pathInfo) {
+                case "/sortu":
+                case "/eguneratu":
+                    ibilgailuaForm =
+                        IbilgailuaFormDTO.fromRequest(request, erroreak);
+                    ibilgailuaForm.setBezeroaId(bezeroaSesioan.getBezeroaId());
+                    break;
+                case "/ezabatu":
+                    ibilgailuaEzabatuForm =
+                        IbilgailuaEzabatuFormDTO.fromRequest(request, erroreak);
+                        ibilgailuaEzabatuForm.setBezeroaId(
+                            bezeroaSesioan.getBezeroaId()
+                        );
+                    break;
+                default:
+                    response.sendError(
+                        HttpServletResponse.SC_NOT_FOUND, "Eragiketa ezezaguna");
+                    return;    
+            }
 
             if (!erroreak.isEmpty()) {
                 throw new InputBalidazioSalbuespena(erroreak);
@@ -200,7 +216,7 @@ public class IbilgailuaServlet extends HttpServlet {
                     handleEguneratu(ibilgailuaForm, request, response);
                     break; 
                 case "/ezabatu":
-                    handleEzabatu(ibilgailuaForm, request, response); 
+                    handleEzabatu(ibilgailuaEzabatuForm, request, response); 
                     break;
                 default:
                     // Beste kasu batzuetan, 404 orria erakutsi
@@ -210,7 +226,17 @@ public class IbilgailuaServlet extends HttpServlet {
             // Sarreren balidazioaren salbuespenak kudeatu
         } catch (InputBalidazioSalbuespena e) {
             request.setAttribute("erroreak", e.getErroreak());
-            request.setAttribute("ibilgailuaForm", ibilgailuaForm);
+
+            if (ibilgailuaForm != null) {
+                request.setAttribute("ibilgailuaForm", ibilgailuaForm);
+            }
+
+            if (ibilgailuaEzabatuForm != null) {
+                request.setAttribute(
+                    "ibilgailuaEzabatuForm",
+                    ibilgailuaEzabatuForm
+                );
+            }
 
             String Bista = erabakiErroreBista(pathInfo);
             request.getRequestDispatcher(Bista).forward(request, response);
@@ -218,7 +244,10 @@ public class IbilgailuaServlet extends HttpServlet {
             // Negozio logikako salbuespenak kudeatu    
         } catch (ZerbitzuSalbuespena e) {
             request.setAttribute("erroreak", e.getErroreak());
-            request.setAttribute("ibilgailuaForm", ibilgailuaForm);
+
+            if (ibilgailuaForm != null) {
+                request.setAttribute("ibilgailuaForm", ibilgailuaForm);
+            }
 
             String Bista = erabakiErroreBista(pathInfo);
             request.getRequestDispatcher(Bista).forward(request, response);
@@ -278,29 +307,17 @@ public class IbilgailuaServlet extends HttpServlet {
     }
 
     private void handleEzabatu(
-        IbilgailuaFormDTO ibilgailuaForm,
+        IbilgailuaEzabatuFormDTO ibilgailuaEzabatuForm,
         HttpServletRequest request,
         HttpServletResponse response)
         throws ServletException, IOException {
         
-        List<String> erroreak = new ArrayList<>();
-
-        if (ibilgailuaForm.getIbilgailuaId() == null) {
-            erroreak.add("Ibilgailua identifikatzailea falta da");
-        }
-
-        if (!erroreak.isEmpty()) {
-            throw new InputBalidazioSalbuespena(erroreak);
-        }
-
-        int bezeroaId = ibilgailuaForm.getBezeroaId();
-  
         try (ServiceContext ZerbitzuEsparrua = 
             zerbitzuEsparruFaktoria.open()){
 
             ZerbitzuEsparrua.getIbilgailuaService().ezabatuIbilgailua(
-                bezeroaId, 
-                ibilgailuaForm.getIbilgailuaId()
+                ibilgailuaEzabatuForm.getBezeroaId(), 
+                ibilgailuaEzabatuForm.getIbilgailuaId()
             );
 
             response.sendRedirect(

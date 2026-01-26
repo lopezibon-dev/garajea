@@ -5,11 +5,15 @@ import com.unieus.garajea.model.entities.Ibilgailua;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * IbilgailuaDAO interfazearen JDBC inplementazioa.
  */
 public class IbilgailuaDAOImpl implements IbilgailuaDAO {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BezeroaDAOImpl.class);
 
     private Connection conn;
 
@@ -59,8 +63,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Errorea Ibilgailua gordetzean: " + e.getMessage());
-            // e.printStackTrace();
+            LOG.error("Errorea Ibilgailua gordetzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea ibilgailuaren datuak gordetzean.", e);
         }
     }
     
@@ -76,8 +81,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
             ps.setInt(6, ibilgailua.getIbilgailuaId()); // PK WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Errorea Ibilgailua eguneratzean: " + e.getMessage());
-            // e.printStackTrace();
+            LOG.error("Errorea Ibilgailua eguneratzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea ibilgailuaren datuak eguneratzean.", e);
         }
     }
 
@@ -88,8 +94,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
             ps.setInt(1, ibilgailuaId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Errorea Ibilgailua ezabatzean: " + e.getMessage());
-            // e.printStackTrace();
+            LOG.error("Errorea Ibilgailua ezabatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea ibilgailua ezabatzean.", e);
         }
     }
 
@@ -105,8 +112,10 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Errorea Ibilgailua bilatzean: " + e.getMessage());
-            // e.printStackTrace();
+            LOG.error("Errorea Ibilgailua bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea ibilgailua bilatzean.", e);
+
         }
         return ibilgailua;
     }
@@ -122,8 +131,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 ibilgailuak.add(ibilgailuaSortu(rs));
             }
         } catch (SQLException e) {
-            System.err.println("Errorea Ibilgailu guztiak bilatzean: " + e.getMessage());
-            // e.printStackTrace();
+            LOG.error("Errorea Ibilgailu guztiak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea ibilgailu guztiak bilatzean.", e);
         }
         return ibilgailuak;
     }
@@ -144,7 +154,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Errorea Matrikularen arabera ibilgailua bilatzean: " + e.getMessage());
+            LOG.error("Errorea Matrikularen arabera ibilgailua bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea Matrikularen arabera ibilgailua bilatzean.", e);
         }
         return ibilgailua;
     }
@@ -161,7 +173,9 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Errorea Bezeroaren arabera ibilgailuak bilatzean: " + e.getMessage());
+            LOG.error("Errorea Bezeroaren arabera ibilgailua bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            
+            throw new RuntimeException("Errorea Bezeroaren arabera ibilgailua bilatzean.", e);
         }
         return ibilgailuak;
     }

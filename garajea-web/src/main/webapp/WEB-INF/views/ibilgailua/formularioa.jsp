@@ -40,18 +40,18 @@
                 </ul>
             </div>
           </c:if>
-
+          <c:set var="actionPath" value="${pageContext.request.contextPath}/ibilgailua" />
+          <c:choose>
+            <c:when test='${not empty ibilgailuaForm and ibilgailuaForm.ibilgailuaId ne null}'>
+                <c:set var="actionPath" value="${actionPath}/eguneratu" />
+            </c:when>
+            <c:otherwise>
+                <c:set var="actionPath" value="${actionPath}/sortu" />
+            </c:otherwise>
+          </c:choose>
           <form class="garajea-form"
               method="post"
-              action="${pageContext.request.contextPath}/ibilgailua
-                <c:choose>
-                    <c:when test='${not empty ibilgailuaForm and ibilgailuaForm.ibilgailuaId ne null}'>
-                        /eguneratu
-                    </c:when>
-                    <c:otherwise>
-                        /sortu
-                    </c:otherwise>
-                </c:choose>">
+              action="${actionPath}">
          
               <c:if test="${not empty ibilgailuaForm and ibilgailuaForm.ibilgailuaId ne null}">
                   <input type="hidden"

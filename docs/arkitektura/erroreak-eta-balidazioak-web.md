@@ -28,6 +28,7 @@ DIY Garajea proiektuan honako printzipio hauek aplikatzen dira:
 
 Kontrolatzaileek **sarrera-datuen balidazioa** egiten dute.
 Hau da, adib. HTTP eskaeratik (`HttpServletRequest`) datozen datuak.
+Sarreraren interpretazioa erabilera-kasu bakoitzaren arabera egituratzen da.
 
 Balidazio honen helburua da:
 
@@ -46,12 +47,49 @@ Balidazio hauek **zerbitzuak deitu aurretik** egiten dira,
 `ServiceContext` ireki baino lehen, alferrikako baliabide-kontsumoa saihesteko.
 
 Kontuan izan balidazio honek **ez duela negozio-logika** ordezkatzen:
-erreferentziazko osotasuna edo entitateen arteko erlazioak
-zerbitzu-geruzan balidatzen dira.
+erreferentziazko osotasuna edo entitateen arteko erlazioak zerbitzu-geruzan balidatzen dira.
 
 ---
 
-### 3.2 Sarrera-datuen balidazioaren inplementazioa (BalidazioTresnak)
+### 3.2 Sarrera-kontratuak eta DTOen erabilera
+
+Web kontrolatzaileetan, endpoint (adib. `/ibilgailua/sortu`, `ibilgailua/ezabatu`, ...) bakoitzak bere **sarrera-kontratu esplizitua** du.
+
+`HttpServletRequest` objektua **behin bakarrik** interpretatzen da, `doGet` edo `doPost` metodoaren hasieran, edozein negozio-logika exekutatu aurretik.
+Interpretazio horrek honako urratsak barne hartzen ditu:
+
+- Request-etik beharrezko parametroak irakurtzea.
+- Sarrera-datuen balidazio sintaktikoa egitea.
+- Erabilera-kasuaren sarrera-kontratua ordezkatzen duen DTO bat sortzea.
+
+Kontrolatzaileko `handleX(...)` metodoek **ez dute zuzenean request-a
+irakurtzen**, baizik eta aurretik interpretatutako eta balidatutako
+datuak jasotzen dituzte (DTO bidez).
+
+---
+
+#### DTOak eta sarrera-kontratuak
+
+Sarrera-kontratu bakoitzerako **DTO espezifiko bat definitzen da**,
+jasotako eremu kopurua edozein dela ere.
+
+Formulario-DTO batek honako datu motak izan ditzake:
+
+- Erabiltzaileak HTML formulariotik bidalitako datuak.
+- Kontrolatzaileak berak injektatutako datuak, baldin eta erabilera-kasuaren
+  kontratuaren parte badira.
+
+Adibidez, erabiltzailearen identifikatzailea (`bezeroaId`) saioaren edo
+segurtasun-testuinguruaren bidez lor daiteke, eta DTOaren parte izan daiteke,
+HTML formulariotik zuzenean etorri ez arren.
+
+Horrela, honako helburuak lortzen dira:
+
+- Request-aren interpretazioa eta negozio-logikaren exekuzioa bereiztea.
+- Handler metodo sinpleak eta aurreikusteko errazak izatea.
+- Etorkizunean Spring MVC edo antzeko framework batera migratzea erraztea.
+
+### 3.3 Sarrera-datuen balidazioaren inplementazioa (BalidazioTresnak)
 
 Web aplikazioko sarrera-datuen balidazioa zentralizatzeko,
 `BalidazioTresnak` izeneko utilitate-klase estatikoa erabiltzen da.
@@ -66,7 +104,7 @@ Klase honen ezaugarri nagusiak:
 `BalidazioTresnak` erabiliz, kontrolatzaileek HTTP parametroak modu koherentean
 irakurri, garbitu (trim) eta balioztatu ditzakete, kode bikoizketa saihestuz.
 
-### 3.2.1 `getRequiredX` eta `getOptionalX` metodoak
+### 3.3.1 `getRequiredX` eta `getOptionalX` metodoak
 
 Balidazio-metodoek bi familia nagusi dituzte:
 
@@ -89,7 +127,7 @@ Metodo egokia aukeratzea **kontrolatzailearen ardura da**, kasu bakoitzeko erabi
 
 ---
 
-### 3.3 Erabilitako salbuespena
+### 3.4 Erabilitako salbuespena
 
 Balidazio hauek huts egiten dutenean, `InputBalidazioSalbuespena` salbuespena erabiltzen da.
 
@@ -109,7 +147,7 @@ Horrela, erabiltzaileak errore guztiak batera ikus ditzake, eta ez bata besteare
 
 ---
 
-### 3.4 Adibide kontzeptualak
+### 3.5 Adibide kontzeptualak
 
 #### Adibide orokorra
 
@@ -132,7 +170,7 @@ POST /langilea/login
     ├── Sesioa
     └── Redirect / Forward (Bista)
 
-### 3.5 Eboluzio-aukerak
+### 3.6 Eboluzio-aukerak
 
 Diseinu honek aukera ematen du etorkizunean:
 
@@ -196,7 +234,7 @@ Errore hauek **ez dira berreskuragarriak erabiltzaile mailan**.
 
 Aplikazioaren sendotasuna (robustness) bermatzeko eta erabiltzaileari errore tekniko gordinak ez erakusteko, salbuespenen kudeaketa zentralizatua ezarri da web moduluan.
 
-## 6.2 Soluzio Teknikoa (Web esparruan): `SalbuespenFilter`
+### 6.2 Soluzio Teknikoa (Web esparruan): `SalbuespenFilter`
 
 Jakarta Servlet APIaren **Filter** mekanismoa erabiltzen da.
 
