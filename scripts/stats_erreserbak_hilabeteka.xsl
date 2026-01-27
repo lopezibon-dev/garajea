@@ -41,25 +41,6 @@
       </body>
     </html>
   </xsl:template>
-
-  <xsl:template name="hilabete-izena">
-    <xsl:param name="zenbakia"/>
-
-    <xsl:choose>
-      <xsl:when test="$zenbakia = 1">Urtarrila</xsl:when>
-      <xsl:when test="$zenbakia = 2">Otsaila</xsl:when>
-      <xsl:when test="$zenbakia = 3">Martxoa</xsl:when>
-      <xsl:when test="$zenbakia = 4">Apirila</xsl:when>
-      <xsl:when test="$zenbakia = 5">Maiatza</xsl:when>
-      <xsl:when test="$zenbakia = 6">Ekaina</xsl:when>
-      <xsl:when test="$zenbakia = 7">Uztaila</xsl:when>
-      <xsl:when test="$zenbakia = 8">Abuztua</xsl:when>
-      <xsl:when test="$zenbakia = 9">Iraila</xsl:when>
-      <xsl:when test="$zenbakia = 10">Urria</xsl:when>
-      <xsl:when test="$zenbakia = 11">Azaroa</xsl:when>
-      <xsl:otherwise>Abendua</xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   
   <xsl:template match="hilabete" mode="mobile">
     <section class="hilabete">
@@ -114,6 +95,25 @@
         </xsl:for-each>
       </tbody>
     </table>
+  </xsl:template>
+
+<xsl:template name="hilabete-izena">
+    <xsl:param name="zenbakia"/>
+
+    <xsl:choose>
+      <xsl:when test="$zenbakia = 1">Urtarrila</xsl:when>
+      <xsl:when test="$zenbakia = 2">Otsaila</xsl:when>
+      <xsl:when test="$zenbakia = 3">Martxoa</xsl:when>
+      <xsl:when test="$zenbakia = 4">Apirila</xsl:when>
+      <xsl:when test="$zenbakia = 5">Maiatza</xsl:when>
+      <xsl:when test="$zenbakia = 6">Ekaina</xsl:when>
+      <xsl:when test="$zenbakia = 7">Uztaila</xsl:when>
+      <xsl:when test="$zenbakia = 8">Abuztua</xsl:when>
+      <xsl:when test="$zenbakia = 9">Iraila</xsl:when>
+      <xsl:when test="$zenbakia = 10">Urria</xsl:when>
+      <xsl:when test="$zenbakia = 11">Azaroa</xsl:when>
+      <xsl:otherwise>Abendua</xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
