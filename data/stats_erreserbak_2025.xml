@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<erreserbak urtea="2025" urtekoGuztizkoa="1472">
+<erreserba_estatistikak urtea="2025" urtekoGuztizkoa="1472">
 
   <hilabete zenbakia="1" kopurua="110">
     <kabina izena="Kabina01" kopurua="18"/>
@@ -97,4 +97,4 @@
     <kabina izena="Kabina05" kopurua="26"/>
   </hilabete>
 
-</erreserbak>
+</erreserba_estatistikak>

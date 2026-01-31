@@ -7,26 +7,26 @@
     <html>
       <head>
         <title>
-          Txostena: Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Hilabeteka)
+          Txostena: Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Hilabeteka)
         </title>
         <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="txostena.css">
+        <link rel="stylesheet" href="txostena.css"/>
       </head>
       <body>
 
         <header>
           <h1>
-            Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Hilabeteka)
+            Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Hilabeteka)
           </h1>
           <p>
             Urteko guztizkoa:
-            <strong><xsl:value-of select="erreserbak/@urtekoGuztizkoa"/></strong>
+            <strong><xsl:value-of select="erreserba_estatistikak/@urtekoGuztizkoa"/></strong>
           </p>
         </header>
 
         <!-- mobile Bista-->
         <section class="mobile-bista">
-          <xsl:apply-templates select="erreserbak/hilabete" mode="mobile"/>
+          <xsl:apply-templates select="erreserba_estatistikak/hilabete" mode="mobile"/>
         </section>
 
         <!-- desktop Bista -->
@@ -72,14 +72,14 @@
         <tr>
           <th>Hilabetea</th>
           <th>Guztira</th>
-          <xsl:for-each select="erreserbak/hilabete[1]/kabina">
+          <xsl:for-each select="erreserba_estatistikak/hilabete[1]/kabina">
             <th><xsl:value-of select="@izena"/></th>
           </xsl:for-each>
         </tr>
       </thead>
 
       <tbody>
-        <xsl:for-each select="erreserbak/hilabete">
+        <xsl:for-each select="erreserba_estatistikak/hilabete">
           <tr>
             <td>
               <xsl:call-template name="hilabete-izena">

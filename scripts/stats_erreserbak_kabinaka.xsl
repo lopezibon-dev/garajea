@@ -7,34 +7,34 @@
     <html>
       <head>
         <title>
-          Txostena: Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Kabinaka)
+          Txostena: Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Kabinaka)
         </title>
         <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="txostena.css">
+        <link rel="stylesheet" href="txostena.css"/>
       </head>
       <body>
 
         <header>
           <h1>
-            Txostena: Erreserbak – <xsl:value-of select="erreserbak/@urtea"/> (Kabinaka)
+            Txostena: Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Kabinaka)
           </h1>
           <p>
             Urteko guztizkoa:
-            <strong><xsl:value-of select="erreserbak/@urtekoGuztizkoa"/></strong>
+            <strong><xsl:value-of select="erreserba_estatistikak/@urtekoGuztizkoa"/></strong>
           </p>
         </header>
 
         <!-- mobile Bista-->
         <section class="mobile-bista">
           <xsl:apply-templates
-            select="erreserbak/hilabete[1]/kabina"
+            select="erreserba_estatistikak/hilabete[1]/kabina"
             mode="mobile"/>
         </section>
 
         <!--  desktop Bista-->
         <section class="desktop-bista">
           <xsl:apply-templates
-            select="erreserbak/hilabete[1]/kabina"
+            select="erreserba_estatistikak/hilabete[1]/kabina"
             mode="desktop"/>
         </section>
 
@@ -50,7 +50,7 @@
 
     <xsl:variable name="kabinaIzena" select="@izena"/>
     <xsl:variable name="urtekoGuztizkoa"
-      select="sum(/erreserbak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
+      select="sum(/erreserba_estatistikak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
 
     <section class="kabina">
       <h2>
@@ -60,7 +60,7 @@
       </h2>
 
       <ul>
-        <xsl:for-each select="/erreserbak/hilabete">
+        <xsl:for-each select="/erreserba_estatistikak/hilabete">
           <li>
             <xsl:call-template name="hilabete-izena">
               <xsl:with-param name="zenbakia" select="@zenbakia"/>
@@ -79,7 +79,7 @@
 
     <xsl:variable name="kabinaIzena" select="@izena"/>
     <xsl:variable name="urtekoGuztizkoa"
-      select="sum(/erreserbak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
+      select="sum(/erreserba_estatistikak/hilabete/kabina[@izena = $kabinaIzena]/@kopurua)"/>
 
     <section class="kabina">
       <h2><xsl:value-of select="$kabinaIzena"/></h2>
@@ -93,7 +93,7 @@
         </thead>
 
         <tbody>
-          <xsl:for-each select="/erreserbak/hilabete">
+          <xsl:for-each select="/erreserba_estatistikak/hilabete">
             <tr>
               <td>
                 <xsl:call-template name="hilabete-izena">

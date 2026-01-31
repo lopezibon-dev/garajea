@@ -2,7 +2,7 @@ import logging
 import sys
 from pathlib import Path
 
-from transform_xslt import apply_xslt
+from transform_xslt import apply_xslt_html
 
 # Logging sinplea
 LOG_FILE = r"C:\logs\garajea_python.log"
@@ -16,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
+
+def ensure_dirs():
+    # data direkorioa sortu, behar izanez gero
+    DATA_DIR.mkdir(exist_ok=True)
 
 def main():
     # Argumentuen balidazioa
@@ -40,22 +44,16 @@ def main():
     logger.info("XML fitxategitik txostenak sortzen")
     logger.info("XML: %s", xml_path)
 
-    # Urtea fitxategi-izenetik ateratzeko saiakera sinplea
-    urtea = "test"
-    for part in xml_path.stem.split("_"):
-        if part.isdigit():
-            urtea = part
-            break
-
-    # Txostena: hilabeteka
-    apply_xslt(
+    # XML fitxategia XSLT bidez HTML txostenetan bihurtu
+    # HTML Txostena: hilabeteka
+    apply_xslt_html(
         xml_path,
         BASE_DIR / "scripts" / "stats_erreserbak_hilabeteka.xsl",
         DATA_DIR / f"txostena_erreserbak_hilabeteka_{urtea}.html"
     )
 
-    # Txostena: kabinaka
-    apply_xslt(
+    # HTML Txostena: kabinaka
+    apply_xslt_html(
         xml_path,
         BASE_DIR / "scripts" / "stats_erreserbak_kabinaka.xsl",
         DATA_DIR / f"txostena_erreserbak_kabinaka_{urtea}.html"
@@ -64,4 +62,5 @@ def main():
     logger.info("Txostenak behar bezala sortu dira")
 
 if __name__ == "__main__":
+    ensure_dirs()
     main()
