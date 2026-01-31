@@ -16,7 +16,7 @@
 
         <header>
           <h1>
-            Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Hilabeteka)
+            Txostena: Erreserbak – <xsl:value-of select="erreserba_estatistikak/@urtea"/> (Hilabeteka)
           </h1>
           <p>
             Urteko guztizkoa:
