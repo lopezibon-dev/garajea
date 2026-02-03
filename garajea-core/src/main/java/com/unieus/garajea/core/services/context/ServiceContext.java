@@ -5,6 +5,7 @@ import com.unieus.garajea.core.services.BezeroaService;
 import com.unieus.garajea.core.services.ErreserbaService;
 import com.unieus.garajea.core.services.IbilgailuaService;
 import com.unieus.garajea.core.services.LangileaService;
+import com.unieus.garajea.model.dao.DAOFactory;
 import com.unieus.garajea.core.presentation.agenda.ErreserbaAgendaBuilder;
 /**
  * Zerbitzuen testuingurua.
@@ -22,6 +23,10 @@ public interface ServiceContext extends AutoCloseable {
     IbilgailuaService getIbilgailuaService();
 
     ErreserbaAgendaBuilder getErreserbaAgendaBuilder();
+
+    void executeInTransaction(DAOFactory.TransactionVoidCallback callback);
+
+    <T> T executeInTransaction(DAOFactory.TransactionCallback<T> callback);
 
     @Override
     void close(); 

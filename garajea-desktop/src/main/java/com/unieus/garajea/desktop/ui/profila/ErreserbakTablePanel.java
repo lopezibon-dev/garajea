@@ -33,18 +33,18 @@ public class ErreserbakTablePanel extends JPanel {
     }
 
     public void kargatuDatuak() {
-        ServiceContextFactory scf =
+        ServiceContextFactory zerbitzuEsparruFaktoria =
             DesktopAppBootstrap.getServiceContextFactory();
 
         LocalDate gaur = LocalDate.now();
         LocalDate amaiera = gaur.plusDays(7);
 
-        try (ServiceContext sc = scf.open()) {
+        try (ServiceContext ZerbitzuEsparrua = zerbitzuEsparruFaktoria.open()) {
 
-            ErreserbaService service = sc.getErreserbaService();
+            ErreserbaService erreserbaZerbitzua = ZerbitzuEsparrua.getErreserbaService();
 
             List<ErreserbaInfoDTO> erreserbak =
-                service.bilatuLangilearenErreserbak(
+                erreserbaZerbitzua.bilatuLangilearenErreserbak(
                     langilea.getLangileaId(),
                     "zain", // edo null
                     gaur,

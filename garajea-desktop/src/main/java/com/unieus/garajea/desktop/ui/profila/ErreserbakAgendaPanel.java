@@ -45,13 +45,13 @@ public class ErreserbakAgendaPanel extends JPanel {
         LocalDate gaur = LocalDate.now();
         LocalDate amaiera = gaur.plusDays(7);
 
-        try (ServiceContext sc =
+        try (ServiceContext ZerbitzuEsparrua =
                  DesktopAppBootstrap.getServiceContextFactory().open()) {
 
-            ErreserbaService service = sc.getErreserbaService();
+            ErreserbaService erreserbaZerbitzua = ZerbitzuEsparrua.getErreserbaService();
 
             var erreserbak =
-                service.bilatuLangilearenErreserbak(
+                erreserbaZerbitzua.bilatuLangilearenErreserbak(
                     langilea.getLangileaId(),
                     null,
                     gaur,
@@ -59,7 +59,7 @@ public class ErreserbakAgendaPanel extends JPanel {
                 );
 
             ErreserbaAgendaBuilder builder =
-                new ErreserbaAgendaBuilder(sc.getKonfigurazioaService());
+                new ErreserbaAgendaBuilder(ZerbitzuEsparrua.getKonfigurazioaService());
 
             List<AgendaBlokeaDTO> agenda =
                 builder.sortuAgenda(erreserbak, gaur, amaiera);

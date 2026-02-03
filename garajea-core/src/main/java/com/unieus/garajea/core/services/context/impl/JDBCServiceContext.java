@@ -50,6 +50,18 @@ public class JDBCServiceContext implements ServiceContext {
     }
 
     @Override
+    public void executeInTransaction(
+            DAOFactory.TransactionVoidCallback callback) {
+        daoFactory.executeInTransaction(callback);
+    }
+
+    @Override
+    public <T> T executeInTransaction(
+            DAOFactory.TransactionCallback<T> callback) {
+        return daoFactory.executeInTransaction(callback);
+    }
+
+    @Override
     public void close() {
         try {
             daoFactory.close();

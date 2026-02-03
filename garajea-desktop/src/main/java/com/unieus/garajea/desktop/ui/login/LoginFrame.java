@@ -108,11 +108,11 @@ public class LoginFrame extends JFrame {
         String emaila = emailField.getText();
         String pasahitza = new String(pasahitzaField.getPassword());
 
-        try (ServiceContext sc =
+        try (ServiceContext ZerbitzuEsparrua =
             DesktopAppBootstrap.getServiceContextFactory().open()) {
 
             LangileaService langileaService =
-                sc.getLangileaService();
+                ZerbitzuEsparrua.getLangileaService();
 
             Langilea langilea =
                 langileaService.saioaHasi(emaila, pasahitza);

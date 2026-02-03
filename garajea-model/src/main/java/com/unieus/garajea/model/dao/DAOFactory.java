@@ -51,14 +51,14 @@ public abstract class DAOFactory {
      */
     @FunctionalInterface
     public interface TransactionVoidCallback {
-        void execute(UnitOfWork uow) throws Exception;
+        void execute() throws Exception;
     }
     /**
      * Transakzio baten barruan kodea (callback) exekutatzen du eta emaitza itzultzen du.
      */
     @FunctionalInterface
     public interface TransactionCallback<T> {
-        T execute(UnitOfWork uow) throws Exception;
+        T execute() throws Exception;
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class DAOFactory {
     public void executeInTransaction(TransactionVoidCallback callback) {
         try (UnitOfWork uow = createUnitOfWork()) {
             uow.begin();
-            callback.execute(uow);
+            callback.execute();
             uow.commit();
         } catch (Exception e) {
             // close() metodoa jada exekutatua (eta beharrezkoa balitz, rollback ere)
@@ -94,7 +94,7 @@ public abstract class DAOFactory {
     public <T> T executeInTransaction(TransactionCallback<T> callback) {
         try (UnitOfWork uow = createUnitOfWork()) {
             uow.begin();
-            T result = callback.execute(uow);
+            T result = callback.execute();
             uow.commit();
             return result;
         } catch (Exception e) {
