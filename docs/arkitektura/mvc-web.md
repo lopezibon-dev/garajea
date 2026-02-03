@@ -29,13 +29,12 @@ Ereduaren logika bi modulutan banatzen da:
 - **garajea-model**
 - **garajea-core**
 
-### 3.2 Edukia
-
-**garajea-model** moduluan:
+### 3.2 **garajea-model** modulua
 
 - Entitateak (Bezeroa, Ibilgailua, Erreserba, ...)
 - DAO interfazeak eta inplementazioak (JDBC)
 - Datu-basearekiko elkarrekintza
+- DTO, irakurketa "aberatsak" egiteko
 
 #### 3.2.1 DAOen kontratuak eta inbarianteak
 
@@ -46,13 +45,16 @@ Ereduaren logika bi modulutan banatzen da:
 - Zerbitzu-geruzak ordenazioa emanda datorrela suposatu dezake,
   logika errepikapena saihestuz.
 
-**garajea-core** moduluan:
+### 3.3 **garajea-core** modulua
 
 - Negozio-zerbitzuak (Service Layer)
 - Negozio-arauen balidazioa
 - ServiceContext eta ServiceContextFactory
 
-### 3.3 Printzipioak
+Modulu honetan gehiago sakontzeko:
+[Zerbitzu geruza (Service Layer)](arkitektura/zerbitzu-geruza.md)
+
+### 3.4 Printzipioak
 
 - Ez dago HTTP, JSP erreferentziarik
 - Ez dago bistaren araberako logikarik
@@ -69,8 +71,8 @@ Ereduaren logika bi modulutan banatzen da:
 
 - Web esparruan HTTP eskaerak prozesatu
 - Sarrera-datuen balidazioa (null, hutsik, formatua)
-- ServiceContext irekitzea
-- Negozio-zerbitzuak deitzea
+- `ServiceContext` irekitzea
+- Negozio-zerbitzuak orkestratzea
 - Zein bista erakutsi erabakitzea
 
 ### 4.3 Ez dagoena
@@ -96,10 +98,9 @@ Ereduaren logika bi modulutan banatzen da:
 
 ### 5.3 Murrizketak
 
-- Ez dago Java negozio-logikarik
 - Ez dago zerbitzu-deirik
 - Ez dago negozio-arauik
-- Ez dago DAO edo ServiceContext erabilerarik
+- Ez dago DAO edo `ServiceContext` erabilerarik
 
 ### 5.4 Data eta orduen formateatzea (java.time)
 

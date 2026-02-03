@@ -8,10 +8,19 @@ DIY Garajearen proiektua, tailer mekaniko baterako kudeaketa sistema informatiko
 
 ### 2. Arkitektura Eredua: MVC Patroia (Model-View-Controller)
 
+Garajea proiektuak MVC (Model-View-Controller) patroia hartzen du arkitektura-patroi gisa sistema osoaren egitura orokorra antolatzeko. 
+Patroi hori arkitektura geruzatu baten bidez gauzatzen da, erantzukizunen banaketa argia bermatuz. 
+Barne-diseinuko arazo zehatzak ebazteko, proiektuak diseinu-patroi osagarriak erabiltzen ditu, hala nola DAO, Unit of Work eta Service Context, betiere arkitektura-erabaki nagusiak aldatu gabe. 
+Patroi horien aplikazio zehatza eta erabilera-irizpideak dagokien arkitektura-dokumentazioan azaltzen dira.
+
+Arkitektura-patroi horien aplikazio zehatza eta modulu bakoitzean duten eragina azaltzeko, honako dokumentuak kontsulta daitezke:
+
+- [MVC Web esparruan](./docs/arkitektura/mvc-web.md)
+- [MVC Desktop esparruan](./docs/arkitektura/mvc-desktop.md)
+- [Zerbitzu-geruza (Service Layer)](./docs/arkitektura/zerbitzu-geruza.md)
+
 * Eredua (Model) geruza: MVC patroiaren Eredua geruza bi modulutan banatuko da: garajea-model (entitateak eta iraunkortasuna) eta garajea-core (Negozio Logika, Zerbitzuak)
-
 * Bista (View) eta Kontrolatzailea (Controller) geruzak: Modulu desberdinetan (Web eta Desktop) inplementatuko dira, eta modulu bakoitzak bere kontrolatzaileak eta bistak ditu. Garajea-core moduluarekiko menpekotasuna dute.
-
 * Proiektua egitura antolatu batean eraikitzeko Maven erabiltzen da. Arkitektura moduluanitza da:
 
 ```mermaid
@@ -72,7 +81,7 @@ garajea-web --> garajea-core
 ### 4. Garajea-model moduluko entitateen espezifikazioa
 
 Entitateen eta erlazioen diagrama hemen dago:
-[ERD Diagrama Osoa](./erd-mermaid.md)
+[ER Diagrama (Mermaid sintaxian)](./docs/arkitektura/erd-mermaid.md)
 
 #### 4.1 Entitateak eta harremanak
 

@@ -187,18 +187,25 @@ Horrela, zerbitzuaren mendekotasunak esplizituak eta egiaztagarriak dira.
 `ServiceContext`-en definizioa gehiago zehaztuz:
 
 > Kontrolatzaile batek erabilera-kasu bat exekutatzeko irekitzen duen
-> **zerbitzuen erabilera-esparru kontrolatua**.
+> **zerbitzuen erabilera-esparru kontrolatua** da,
+> non baliabide teknikoen bizi-zikloa eta eragiketa transakzionalen mugak kontrolatzen diren.
 
 Esparru kontrolatua dela zehazki esan nahi du:
 
 - kudeatua: norbaitek (`ServiceContext`-ek) kudeatzen duela,
-- mugatua: esparru hori mugatua dago denboran (try-with-resources bitartez hasi eta bukatu egiten da)
+- mugatua: esparru hori mugatua dago denboran (**try-with-resources** bitartez hasi eta bukatu egiten da)
 
 Zerbitzuen esparru hori sortzean:
 
 - behar diren baliabide teknikoak jasotzen ditu (Mendekotasunen Injekzioa)
 - zerbitzu guztiak sortzeko gaitasuna ematen du (eskaeraren arabera, ez guztiak batera)
 - baliabide horien bizi-zikloa modu bateratuan kudeatzen du
+
+`ServiceContext` ez da transakzio-objektu bat,
+baizik eta zerbitzuen exekuzioaren bizi-zikloa antolatzen duen esparrua.
+
+Transakzioak **ez dira zerbitzuen ardura**,
+baizik eta exekuzioaren testuinguruaren (DAOFactory + UnitOfWork) xehetasun bat.
 
 #### Fluxu kontzeptuala
 
@@ -247,14 +254,46 @@ Oso garrantzitsua:
 
 Servlet ingurunea (`ServletContext`) soilik erabiltzen da `ServiceContextFactory` eskuratzeko leku edo edukiontzi gisa.
 
-### 4.4 Zergatik erabiltzen da? Zer arazo konpontzen ditu?
+### 4.5 Zergatik erabiltzen da? Zer arazo konpontzen ditu?
 
-- Printzipioz, datu-base konexio bakarra egiteko (web HTTP) eskaera edota (desktop) UI Ekintza bakoitzeko
-- Baliabideen itxiera automatikoa egiteko; baliabide teknikoak (konexioak) kontrolpean daude
-- Eragiketa transakzionala burutzeko konexio gehigarri bat sortzen da, (normalean) oso bizi laburrekoa
-- Zerbitzuei mendekotasunak modu esplizituan injektatzea
-- Zerbitzuen sorkuntza zentralizatua
-- Kontrolatzaileak JDBC edo DAO xehetasunetatik isolatzea
+`ServiceContext` erabiltzen da honako arazo eta beharrak modu bateratuan konpontzeko:
+
+- (web HTTP) eskaera edo (desktop) UI Ekintza bakoitzeko **datu-base konexio bakarra** erabiltzeko
+- Baliabide teknikoen bizi-zikloa modu automatikoan kudeatzeko (**try-with-resources** bidez, amaieran itxiera bermatuz)
+- **Eragiketa transakzionalak modu esplizituan mugatzeko**, `executeInTransaction(...)` blokeen bidez
+- Zerbitzuei mendekotasunak modu esplizituan injektatzeko
+- Zerbitzuen sorkuntza zentralizatzeko
+- Kontrolatzaileak JDBC edo DAO xehetasunetatik isolatzeko
+
+Ohar garrantzitsua:
+> Diseinu honetan, eragiketa transakzionalek ez dute konexio gehigarririk sortzen.
+> Transakzioak `ServiceContext`-ek kudeatzen duen konexio berean egiten dira,
+> `UnitOfWork` objektuak konexio horren modua eta egoera (begin / commit / rollback) soilik kontrolatuz.
+
+### 4.6 Fluxu-diagramak
+
+#### Fluxu ez-transakzionala
+
+Controller
+   └── ServiceContextFactory.open()
+         └── ServiceContext
+               └── SomeService.metodoa()
+                     └── DAO
+                          └── Datu-Basea
+
+#### Fluxu transakzionala
+
+Controller
+   └── ServiceContextFactory.open()
+            └── ServiceContext
+                  └── executeInTransaction(callback)
+                        └── DAOFactory.executeInTransaction(callback)
+                              └── UnitOfWork.begin()
+                              └── callback.execute()
+                                    └── SomeService.metodoa()
+                                          └── DAO
+                              └── UnitOfWork.commit/rollback
+                              └── UnitOfWork.close()
 
 ## 5. Zer da ServiceContextFactory?
 
@@ -266,7 +305,7 @@ Servlet ingurunea (`ServletContext`) soilik erabiltzen da `ServiceContextFactory
 
 ## 6. try-with-resources eredua
 
-Kontrolatzaileek honela erabiltzen dute try-with-resources:
+Kontrolatzaileek honela erabiltzen dute **try-with-resources**:
 
 ```java
 try (ServiceContext zerbitzuEsparrua = ServiceContextFactory.open()) {
@@ -287,7 +326,10 @@ Controller
                 )
 ```
 
-### 6.2 try-with-resources ereduaren abantailak
+`ServiceContext` bera ez da aldatzen transakzio batean sartzean.
+Transakzioa DAOFactory eta UnitOfWork-en barneko exekuzio-xehetasuna da.
+
+### 6.3 try-with-resources ereduaren abantailak
 
 Eredu honek honako hauek bermatzen ditu:
 
