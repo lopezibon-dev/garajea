@@ -46,9 +46,14 @@ inplementatzen dira.
 Adibideak:
 
 - Bezero batek erreserba berri bat sortzea
-- Langile batek erreserba bat sortzea
 - Erreserbak irizpide desberdinen arabera kontsultatzea
-- Erreserba baten egoera eguneratzea
+
+## Beste erabilera-kasuak
+
+Langileak Desktop aplikazioa erabiltzean hainbat ekintza burutu ditzake:
+
+- Datu-baseko taulak esportatu. Kasu honen azalpen sakonagoa irakurri hurrengo dokumentuan:
+[Datu-baseko taulen esportazioa](./datubasea-taulen-esportazioa-kasua.md)
 
 ---
 
