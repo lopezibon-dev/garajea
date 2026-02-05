@@ -1,6 +1,7 @@
 import logging
 import sys
 from pathlib import Path
+from garajea_paths import BASE_DIR, DATA_DIR
 
 from transform_xslt import apply_xslt_html
 
@@ -13,9 +14,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
 
 def ensure_dirs():
     # data direkorioa sortu, behar izanez gero

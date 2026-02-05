@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from garajea_paths import BASE_DIR, DATA_DIR
 import sys
 
 from db_lortu_datuak import fetch_erreserba_stats
@@ -16,9 +17,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
 
 def ensure_dirs():
     # data direkorioa sortu, behar izanez gero
