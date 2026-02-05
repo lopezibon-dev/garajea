@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.unieus.garajea.model.dao.BezeroaDAO;
 import com.unieus.garajea.model.dao.DAOFactory;
+import com.unieus.garajea.model.dao.DatubaseaMetaDAO;
 import com.unieus.garajea.model.dao.ErremintaDAO;
 import com.unieus.garajea.model.dao.ErreserbaDAO;
 import com.unieus.garajea.model.dao.FakturaDAO;
@@ -120,6 +121,11 @@ public class JDBCDAOFactory extends DAOFactory {
     public MakinaDAO getMakinaDAO() {
         return new MakinaDAOImpl(connection);
     }
+
+    @Override
+    public DatubaseaMetaDAO getDatubaseaMetaDAO() {
+        return new DatubaseaMetaDAOImpl(connection);
+    }    
     // -----------------------------------------------------------------
     // UnitOfWork funtzionalitatea
     // -----------------------------------------------------------------

@@ -23,9 +23,8 @@ Thumbs.db
 #VS Code
 .vscode/
 
-# data/export, data/import
-data/export/
-data/import/
+# data/datubasea
+data/datubasea/
 
 #Python
 scripts/.venv/

@@ -2,6 +2,7 @@ package com.unieus.garajea.core.services.context;
 
 import com.unieus.garajea.core.config.KonfigurazioaService;
 import com.unieus.garajea.core.services.BezeroaService;
+import com.unieus.garajea.core.services.DatubaseaService;
 import com.unieus.garajea.core.services.ErreserbaService;
 import com.unieus.garajea.core.services.IbilgailuaService;
 import com.unieus.garajea.core.services.LangileaService;
@@ -23,6 +24,8 @@ public interface ServiceContext extends AutoCloseable {
     IbilgailuaService getIbilgailuaService();
 
     ErreserbaAgendaBuilder getErreserbaAgendaBuilder();
+
+    DatubaseaService getDatubaseaService();
 
     void executeInTransaction(DAOFactory.TransactionVoidCallback callback);
 

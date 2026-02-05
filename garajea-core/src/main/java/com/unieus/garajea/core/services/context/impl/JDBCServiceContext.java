@@ -2,7 +2,9 @@ package com.unieus.garajea.core.services.context.impl;
 
 import com.unieus.garajea.core.config.KonfigurazioaService;
 import com.unieus.garajea.core.services.context.ServiceContext;
+import com.unieus.garajea.core.util.PythonEsportazioExecutor;
 import com.unieus.garajea.core.services.BezeroaService;
+import com.unieus.garajea.core.services.DatubaseaService;
 import com.unieus.garajea.core.services.LangileaService;
 import com.unieus.garajea.core.services.ErreserbaService;
 import com.unieus.garajea.core.services.IbilgailuaService;
@@ -42,6 +44,11 @@ public class JDBCServiceContext implements ServiceContext {
     @Override
     public IbilgailuaService getIbilgailuaService() {
         return new IbilgailuaService(daoFactory.getIbilgailuaDAO(), daoFactory.getBezeroaDAO());
+    }
+
+    @Override 
+    public DatubaseaService getDatubaseaService() { 
+        return new DatubaseaService(daoFactory.getDatubaseaMetaDAO(), new PythonEsportazioExecutor()); 
     }
 
     @Override

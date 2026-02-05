@@ -35,6 +35,8 @@ public abstract class DAOFactory {
 
     public abstract MakinaDAO getMakinaDAO();
 
+    public abstract DatubaseaMetaDAO getDatubaseaMetaDAO();
+
     // -----------------------------------------------------------------
     // UnitOfWork funtzionalitatea
     // -----------------------------------------------------------------
