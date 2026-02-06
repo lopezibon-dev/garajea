@@ -50,10 +50,12 @@ Adibideak:
 
 ## Beste erabilera-kasuak
 
-Langileak Desktop aplikazioa erabiltzean hainbat ekintza burutu ditzake:
+Langileak desktop aplikazioa erabiltzean hainbat ekintza burutu ditzake:
 
 - Datu-baseko taulak esportatu. Kasu honen azalpen sakonagoa irakurri hurrengo dokumentuan:
 [Datu-baseko taulen esportazioa](./datubasea-taulen-esportazioa-kasua.md)
+- Datu-baseko taulak inportatu. Kasu honen azalpen sakonagoa irakurri hurrengo dokumentuan:
+[Datu-baseko taulen inportazioa](./datubasea-taulen-inportazioa-kasua.md)
 
 ---
 
@@ -61,4 +63,4 @@ Langileak Desktop aplikazioa erabiltzean hainbat ekintza burutu ditzake:
 
 - Dokumentu honek ez du negozio-arauen xehetasunik jasotzen.
 - Erabilera-kasu berriak sortzen dira sistemaren beharrak hazten diren heinean.
-- Zerbitzuen diseinu-irizpideak arkitektura/zerbitzu-geruza.md dokumentuan azaltzen dira.
+- Zerbitzuen diseinu-irizpideak docs/arkitektura/zerbitzu-geruza.md dokumentuan azaltzen dira.

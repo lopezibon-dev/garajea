@@ -6,12 +6,19 @@ import sys
 from pathlib import Path
 from garajea_paths import DATA_DIR, DATUBASEA_DIR
 
-# Logging sinplea
+# Logging
 LOG_FILE = r"C:\logs\garajea_python.log"
+
+# Handler-ak banaka konfiguratu
+file_handler = logging.FileHandler(LOG_FILE, encoding="utf-8")
+file_handler.setFormatter(logging.Formatter(fmt='%(asctime)s [PYTHON] %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
+
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(logging.Formatter('%(levelname)s: %(message)s'))  # Sinpleagoa
+
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s [PYTHON] %(levelname)s: %(message)s',
-    handlers=[logging.FileHandler(LOG_FILE, encoding="utf-8")]
+    handlers=[file_handler, console_handler]
 )
 
 logger = logging.getLogger(__name__)
