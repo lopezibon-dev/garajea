@@ -15,12 +15,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 
-public class ErreserbakTablePanel extends JPanel {
+public class LangileErreserbakTablePanel extends JPanel {
 
     private final Langilea langilea;
     private JTable taula;
 
-    public ErreserbakTablePanel(Langilea langilea) {
+    public LangileErreserbakTablePanel(Langilea langilea) {
         this.langilea = langilea;
         setLayout(new BorderLayout());
         sortuUI();

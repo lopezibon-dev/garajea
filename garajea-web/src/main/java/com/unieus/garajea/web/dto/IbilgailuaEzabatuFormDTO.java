@@ -1,7 +1,6 @@
 package com.unieus.garajea.web.dto;
 
 import java.util.List;
-import com.unieus.garajea.model.entities.Ibilgailua;
 import com.unieus.garajea.web.balidazioa.BalidazioTresnak;
 import jakarta.servlet.http.HttpServletRequest;
 

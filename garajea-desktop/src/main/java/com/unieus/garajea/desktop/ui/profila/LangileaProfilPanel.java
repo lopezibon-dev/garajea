@@ -14,8 +14,8 @@ public class LangileaProfilPanel extends JPanel {
 
     private final Langilea langilea;
 
-    private ErreserbakTablePanel tablePanel;
-    private ErreserbakAgendaPanel agendaPanel;
+    private LangileErreserbakTablePanel tablePanel;
+    private LangileErreserbakAgendaPanel agendaPanel;
 
     public LangileaProfilPanel(Langilea langilea) {
         this.langilea = langilea;
@@ -34,11 +34,11 @@ public class LangileaProfilPanel extends JPanel {
 
         JTabbedPane tabs = new JTabbedPane();
 
-        tablePanel = new ErreserbakTablePanel(langilea);
-        agendaPanel = new ErreserbakAgendaPanel(langilea);
+        tablePanel = new LangileErreserbakTablePanel(langilea);
+        agendaPanel = new LangileErreserbakAgendaPanel(langilea);
 
-        tabs.add("Taula", tablePanel);
         tabs.add("Agenda", agendaPanel);
+        tabs.add("Taula", tablePanel);
 
         JButton berrizKargatuBtn = new JButton("Berriz kargatu");
         berrizKargatuBtn.addActionListener(e -> berrizKargatu());

@@ -12,16 +12,18 @@ import com.unieus.garajea.model.entities.Langilea;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
-public class ErreserbakAgendaPanel extends JPanel {
+public class LangileErreserbakAgendaPanel extends JPanel {
 
     private final Langilea langilea;
 
     private JPanel agendaContentPanel;
     private JScrollPane scrollPane;
 
-    public ErreserbakAgendaPanel(Langilea langilea) {
+    public LangileErreserbakAgendaPanel(Langilea langilea) {
         this.langilea = langilea;
         initUI();
         kargatuAgenda();
@@ -80,27 +82,40 @@ public class ErreserbakAgendaPanel extends JPanel {
 
         agendaContentPanel.removeAll();
 
-        for (AgendaBlokeaDTO b : agenda) {
+        for (AgendaBlokeaDTO blokea : agenda) {
 
-            if (b.getMota() == AgendaBlokeaDTO.Mota.EGUNBANATZAILEA) {
+            if (blokea.getMota() == AgendaBlokeaDTO.Mota.EGUNBANATZAILEA) {
                 JLabel label = new JLabel(
-                    "=== " + b.getEgunarenEtiketa() + " ==="
+                    "= " + blokea.getEgunarenEtiketa() + " ="
                 );
                 label.setAlignmentX(Component.LEFT_ALIGNMENT);
+				label.setOpaque(true); // GARRANTZIZKOA: JLabel-aren atzealdeko kolorea ikusteko beharrezkoa da
+				label.setBackground(new Color(60, 63, 65)); // gris 'pizarra'
+				label.setForeground(new Color(220, 220, 220)); // txuri suabea
+				label.setFont(label.getFont().deriveFont(Font.BOLD));
+				label.setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
                 agendaContentPanel.add(label);
             }
 
-            if (b.getMota() == AgendaBlokeaDTO.Mota.ERRESERBA) {
-                JLabel label = new JLabel(
-                    b.getHasieraOrdua() + " - " +
-                    b.getAmaieraOrdua() + " | " +
-                    b.getErreserbaInfo().getKabinaIzena() + " | " +
-                    b.getErreserbaInfo().getBezeroIzenAbizenak() + " - " +
-                    b.getErreserbaInfo().getIbilgailuInfo()
-                );
+            if (blokea.getMota() == AgendaBlokeaDTO.Mota.ERRESERBA) {
+				String html = """
+					<html>
+						<b>%s - %s</b> | %s<br>
+						| %s<br>
+						<i>%s</i>
+					</html>
+					""".formatted(
+						blokea.getHasieraOrdua(),
+						blokea.getAmaieraOrdua(),
+						blokea.getErreserbaInfo().getKabinaIzena(),
+						blokea.getErreserbaInfo().getBezeroIzenAbizenak(),
+						blokea.getErreserbaInfo().getIbilgailuInfo()
+					);                
+                JLabel label = new JLabel(html);
                 label.setAlignmentX(Component.LEFT_ALIGNMENT);
+				// irakurriagoa izan dadin, padding eman labelari
+				label.setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
                 agendaContentPanel.add(label);
-
             }
         }
         agendaContentPanel.revalidate();

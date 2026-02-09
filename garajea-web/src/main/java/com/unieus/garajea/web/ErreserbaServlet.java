@@ -22,11 +22,11 @@ public class ErreserbaServlet extends HttpServlet {
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo(); // Adib: /..., etab.
 
-        ServiceContextFactory scf =
+        ServiceContextFactory zerbitzuEsparruFaktoria =
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        try (ServiceContext ctx = scf.open()) {
+        try (ServiceContext ZerbitzuEsparrua = zerbitzuEsparruFaktoria.open()) {
             switch (pathInfo) {
                 case "/zerrendak/kabinaka":
                     // Balio lehenetsia: gaurko data erabili
@@ -38,11 +38,11 @@ public class ErreserbaServlet extends HttpServlet {
                     
                     // eguneko Erreserbak, taldekatu gabe (baina ordenatuta hasiera eremuagatik)
                     List<ErreserbaInfoDTO> egunekoErreserbak = 
-                        ctx.getErreserbaService().bilatuDatakoErreserbak(eguna);       
+                        ZerbitzuEsparrua.getErreserbaService().bilatuDatakoErreserbak(eguna);       
 
                     // eguneko Erreserbak, kabinaka eta agendatan sailkatuta
                     Map <String, List<AgendaBlokeaDTO>> egunekoAgendenMapa = 
-                        ctx.getErreserbaAgendaBuilder()
+                        ZerbitzuEsparrua.getErreserbaAgendaBuilder()
                             .sortuAgendakKabinaka(egunekoErreserbak, eguna, eguna);
 
                     // egunekoErreserbak request atributu bezala gehitu
