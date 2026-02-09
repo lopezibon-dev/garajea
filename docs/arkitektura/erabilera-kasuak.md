@@ -46,7 +46,9 @@ inplementatzen dira.
 Adibideak:
 
 - Bezero batek erreserba berri bat sortzea
-- Erreserbak irizpide desberdinen arabera kontsultatzea
+- Erreserbak irizpide desberdinen arabera kontsultatzea:
+  - Eguneko Erreserbak kabinaka bistaratzea:
+[Eguneko Erreserbak kabinaka - Desktop](./eguneko-erreserbak-kabinaka-desktop-kasua.md)
 
 ## Beste erabilera-kasuak
 
