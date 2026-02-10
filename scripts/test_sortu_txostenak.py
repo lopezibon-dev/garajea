@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 from garajea_paths import BASE_DIR, DATA_DIR
 
-from transform_xslt import apply_xslt_html
+from transform_xslt import apply_xslt_html, apply_xslt_text
 
 # Logging sinplea
 LOG_FILE = r"C:\logs\garajea_python.log"
@@ -23,7 +23,7 @@ def main():
     # Argumentuen balidazioa
     if len(sys.argv) != 3:
         print("Erabilera:")
-        print("  test_sortu_txostenak.py <xml_fitxategia> <urtea>")
+        print("python test_sortu_txostenak.py <xml_fitxategia> <urtea>")
         sys.exit(1)
 
     # XML fitxategiaren bidea (erlatiboa edo absolutua)
@@ -55,6 +55,20 @@ def main():
         xml_path,
         BASE_DIR / "scripts" / "stats_erreserbak_kabinaka.xsl",
         DATA_DIR / f"txostena_erreserbak_kabinaka_{urtea}.html"
+    )
+
+    # MD Txostena: hilabeteka
+    apply_xslt_text(
+        xml_path,
+        BASE_DIR / "scripts" / "stats_erreserbak_hilabeteka_md.xsl",
+        DATA_DIR / f"txostena_erreserbak_hilabeteka_{urtea}.md"
+    )
+
+    # CSV Txostena: hilabeteka
+    apply_xslt_text(
+        xml_path,
+        BASE_DIR / "scripts" / "stats_erreserbak_hilabeteka_csv.xsl",
+        DATA_DIR / f"txostena_erreserbak_hilabeteka_{urtea}.csv"
     )
 
     logger.info("Txostenak behar bezala sortu dira")

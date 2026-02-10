@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from lxml.etree import etree
+from lxml import etree
 
 logger = logging.getLogger(__name__)
 
