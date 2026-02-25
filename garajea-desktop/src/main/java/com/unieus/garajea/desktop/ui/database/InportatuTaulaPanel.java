@@ -20,14 +20,12 @@ public class InportatuTaulaPanel extends JPanel {
     private JLabel egoeraLabel;
 
     public InportatuTaulaPanel() {
-        setLayout(new BorderLayout());
-
         initUI();
-
         kargatuTaulak();
     }
 
     private void initUI() {
+        setLayout(new BorderLayout());
 
         JPanel goikoPanela = new JPanel(new FlowLayout(FlowLayout.LEFT));
 

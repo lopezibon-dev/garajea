@@ -1,10 +1,8 @@
 # Erabilera-kasuak (Use Case Map)
 
-Dokumentu honek DIY Garajea proiektuan
-inplementatutako erabilera-kasuak nagusien
-ikuspegi orokorra eskaintzen du.
+Dokumentu honek DIY Garajea proiektuan inplementatutako erabilera-kasu nagusien ikuspegi orokorra eskaintzen du.
 
-Helburua ez da erabilera-kasuak guztien zerrenda zehatza ematea, baizik eta Zerbitzu geruzaren diseinua eta erabilera ulertzea.
+Helburua ez da erabilera-kasuak guztien zerrenda zehatza ematea, baizik eta proiektuaren arkitekturaren geruzen diseinua eta erabilera ulertzea.
 
 Erabilera-kasuak eboluzionatzen doaz proiektuarekin batera.
 

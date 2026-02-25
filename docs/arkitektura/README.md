@@ -216,6 +216,12 @@ Negozio-logikaren kokapena eta geruzen arteko muga formala definitzen dira.
 
 ---
 
+### [desktop-ui-egitura.md](desktop-ui-egitura.md)
+
+Dokumentu honek Desktop aplikazioko pantaila bakoitzaren Swing osagaien egitura hierarkikoa jasotzen du.
+Helburua ez da diseinu grafikoa edo layout zehatza azaltzea,
+baizik eta ikuspegi arkitektonikotik panel bakoitzaren konposizio estrukturala dokumentatzea.
+
 ### README.md
 
 Karpeta honen sarrera-dokumentua.

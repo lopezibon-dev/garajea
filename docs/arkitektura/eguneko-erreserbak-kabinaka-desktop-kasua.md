@@ -1,4 +1,4 @@
-# Erreserba egunerokoen bistaratzea kabinaka (Desktop – Swing)
+# Eguneko Erreserben kabinaka bistaratzea (Desktop – Swing)
 
 Dokumentu honek DIY Garajea proiektuko **“Eguneko Erreserbak kabinaka bistaratzea”** kasuaren azalpen tekniko sintetizatua jasotzen du, Desktop ingurunean (Swing) inplementatua. Dokumentazioaren fokua **ErreserbakPanel** panelaren diseinu‑erabakietan dago, ez inplementazio‑xehetasunetan.
 
@@ -80,17 +80,23 @@ Ez dute egoerarik aldatzen, eta laguntza‑funtzio hutsa dute.
 Ondoko eskemak ErreserbakPanel‑aren egitura bisuala ulertzeko ikuspegi orokorra eskaintzen du:
 
 ```text
-kabinaAgendakPanel (JPanel)
- ├─ agendaCol (JPanel)
- │   ├─ kabinaIzena (JLabel)
- │   └─ scrollPane (JScrollPane)
- │       └─ timelineBody (JPanel)
- │           ├─ JLabel (agenda lerroa)
- │           ├─ JLabel (agenda lerroa)
- │           └─ ...
- ├─ agendaCol (JPanel)
- │   └─ ...
- └─ ...
+ErreserbakPanel (JPanel - BorderLayout)
+ ├─ goikoKontrolPanel (JPanel - FlowLayout)
+ │   ├─ egunaTextLabel (JLabel)
+ │   ├─ egunaLabel (JLabel)
+ │   └─ datePicker (DatePicker)
+ └─ kabinaAgendakPanel (JPanel - GridLayout 1x5)
+     ├─ agendaCol (JPanel - BorderLayout)
+     │   ├─ kabinaLabel (JLabel)
+     │   └─ scrollPane (JScrollPane)
+     │       └─ timelineBody (JPanel - BoxLayout Y_AXIS)
+     │           ├─ agendaLerroa (JLabel)
+     │           ├─ agendaLerroa (JLabel)
+     │           └─ ...
+     ├─ agendaCol (...)
+     ├─ agendaCol (...)
+     ├─ agendaCol (...)
+     └─ agendaCol (...)
 ```
 
 Egitura honek aukera ematen du:

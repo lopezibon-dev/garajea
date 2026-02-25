@@ -20,14 +20,12 @@ public class ExportatuTaulaPanel extends JPanel {
     private JLabel egoeraLabel;
 
     public ExportatuTaulaPanel() {
-        setLayout(new BorderLayout());
-
         initUI();
         kargatuTaulak();
     }
 
     private void initUI() {
-
+        setLayout(new BorderLayout());
         JPanel goikoPanela = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         taulaCombo = new JComboBox<>();

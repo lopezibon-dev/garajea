@@ -22,12 +22,12 @@ public class LangileErreserbakTablePanel extends JPanel {
 
     public LangileErreserbakTablePanel(Langilea langilea) {
         this.langilea = langilea;
-        setLayout(new BorderLayout());
         sortuUI();
         kargatuDatuak();
     }
 
     private void sortuUI() {
+        setLayout(new BorderLayout());
         taula = new JTable();
         add(new JScrollPane(taula), BorderLayout.CENTER);
     }
@@ -57,7 +57,7 @@ public class LangileErreserbakTablePanel extends JPanel {
             // Errore teknikoa edo ZerbitzuSalbuespena
             JOptionPane.showMessageDialog(
                 this,
-                "Errore tekniko bat gertatu da erreserbak kargatzean.",
+                "Errorea gertatu da erreserbak kargatzean.",
                 "Errorea",
                 JOptionPane.ERROR_MESSAGE
             );

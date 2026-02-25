@@ -34,14 +34,11 @@ public class ErreserbakPanel extends JPanel {
 	private JLabel egunaLabel;
 	private JPanel kabinaAgendakPanel;
 	// agendak garbitu eta birpopulatzeko:
-	private Map<String, JPanel> kabinaTimelineMap;
-	// private List<JPanel> timelineBodyZerrenda;
-	
+	private Map<String, JPanel> kabinaPanelenMapa;
 
     public ErreserbakPanel() {
-        setLayout(new BorderLayout());
-
         initUI();
+		kargatuKabinenDatuak();
     }
 	
     private void initUI() {
@@ -106,7 +103,7 @@ public class ErreserbakPanel extends JPanel {
 			BorderFactory.createEmptyBorder(10, 10, 10, 10)
 		);
 
-		kabinaTimelineMap = new LinkedHashMap<>();
+		kabinaPanelenMapa = new LinkedHashMap<>();
 		
 		List<String> kabinaIzenak = List.of(
 			"Kabina01",
@@ -145,7 +142,7 @@ public class ErreserbakPanel extends JPanel {
 			agendaCol.add(scrollPane, BorderLayout.CENTER);
 
 			kabinaAgendakPanel.add(agendaCol);
-			kabinaTimelineMap.put(kabinaIzena, timelineBody);
+			kabinaPanelenMapa.put(kabinaIzena, timelineBody);
 		}
 
 		add(kabinaAgendakPanel, BorderLayout.CENTER);
@@ -153,7 +150,7 @@ public class ErreserbakPanel extends JPanel {
 	}
 	
 	private void garbituKabinenAgendak() {
-		for (JPanel timelineBody : kabinaTimelineMap.values()) {
+		for (JPanel timelineBody : kabinaPanelenMapa.values()) {
 			timelineBody.removeAll();
 		}
 	}
@@ -202,7 +199,7 @@ public class ErreserbakPanel extends JPanel {
 
 		for (Map.Entry<String, List<AgendaBlokeaDTO>> entry
         : kabinaAgendakMapa.entrySet()) {
-			JPanel timelineBody = kabinaTimelineMap.get(entry.getKey());
+			JPanel timelineBody = kabinaPanelenMapa.get(entry.getKey());
 			List<AgendaBlokeaDTO> agenda = entry.getValue();
 
 			for (AgendaBlokeaDTO blokea : agenda) {
