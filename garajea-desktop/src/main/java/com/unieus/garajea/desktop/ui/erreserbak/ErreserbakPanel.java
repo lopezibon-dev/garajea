@@ -252,7 +252,11 @@ public class ErreserbakPanel extends JPanel {
 				JLabel label = new JLabel(html);
 				label.setAlignmentX(Component.LEFT_ALIGNMENT);
 				// irakurriagoa izan dadin, padding eman labelari
-				label.setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
+				label.setBorder(
+					BorderFactory.createCompoundBorder(
+						BorderFactory.createEmptyBorder(4, 6, 4, 6), 
+						BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY)
+				));
 
 				return label;
 			}
