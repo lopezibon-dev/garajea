@@ -251,7 +251,7 @@ public class ErreserbakPanel extends JPanel {
 
 				JLabel label = new JLabel(html);
 				label.setAlignmentX(Component.LEFT_ALIGNMENT);
-				// irakurriagoa izan dadin, padding eman labelari
+				// padding eman labelari, eta beheko borderra gehitu, labelen arteko bereizketa hobetzeko
 				label.setBorder(
 					BorderFactory.createCompoundBorder(
 						BorderFactory.createEmptyBorder(4, 6, 4, 6), 

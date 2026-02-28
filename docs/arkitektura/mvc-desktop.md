@@ -47,8 +47,7 @@ Bistak **ez du**:
 - zerbitzu-deirik zuzenean
 - DAO edo ServiceContext erabilerarik
 
-Ikuspegiak soilik **kontrolatzaileari** deitzen dio
-UI ekintzen bidez.
+Bistak soilik **kontrolatzaileari** deitzen dio UI ekintzen bidez.
 
 ---
 
@@ -95,7 +94,7 @@ UI ekintza bakoitzean (adib. botoi baten klik-a),
 ServiceContext bat sortzen da:
 
 ```java
-try (ServiceContext sc = serviceContextFactory.open()) {
+try (ServiceContext zerbitzuEsparrua = serviceContextFactory.open()) {
     // Zerbitzu-deiak
 }
 ```

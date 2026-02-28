@@ -88,13 +88,14 @@
 								<a class="nav-link" href="${pageContext.request.contextPath}/ibilgailua">
 									Nire Ibilgailuak
 								</a>
-							</li>							
+							</li>	
+							<!--  						
 							<li class="nav-item">
 								<a class="nav-link" href="${pageContext.request.contextPath}/bezeroa/erreserbak">
 									Nire Erreserbak
 								</a>
 							</li>
-
+							-->
 						</ul>
 
 						<ul class="navbar-nav ms-auto">

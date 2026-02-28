@@ -11,7 +11,7 @@ Hemen definitutako irizpideek lehentasuna dute beste edozein dokumentu edo inple
 
 ## 2. Proiektuaren izaera
 
-* Hezkuntza-proiektua da, arkitektura zuzena lantzeko sortua.
+* Hezkuntza-proiektua da, aplikazioen arkitektura lantzeko sortua.
 * Ez da produktu komertzial bat.
 * Helburua da diseinu garbia, koherentzia eta geruzen arteko bereizketa zorrotza.
 
@@ -28,21 +28,21 @@ Sistema aplikazio banatua da:
 
 Biak partekatzen dute:
 
-* Model modulua (entitateak + DAO)
 * Core modulua (negozio-logika)
+* Model modulua (entitateak + DAO)
 
 Maven multi-modulu egitura derrigorrezkoa da.
-Ez da onartzen dependentzia-saltoarik.
+Ez da onartzen dependentzia-saltorik.
 
 ---
 
 ## 4. Geruzen Banaketa
 
-Arkitektura geruzatua eta zorrotza da:
+Proiektuko aplikazioen arkitektura geruzetan oinarritua da:
 
 1. Aurkezpena (web / desktop)
 2. Zerbitzu-geruza (core)
-3. Persistenzia (model – DAO)
+3. Persistentzia (model – DAO)
 
 ### Debeku formalak
 
