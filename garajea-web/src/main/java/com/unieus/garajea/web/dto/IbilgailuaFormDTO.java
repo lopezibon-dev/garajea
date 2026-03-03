@@ -12,18 +12,20 @@ public class IbilgailuaFormDTO {
     private String marka;
     private String modeloa;
     private int urtea;
+    private String kolorea;
     private int bezeroaId;
 
     public IbilgailuaFormDTO() {
     }
 
     public IbilgailuaFormDTO(Integer ibilgailuaId, String matrikula, String marka, String modeloa,
-            int urtea, int bezeroaId) {
+            int urtea, String kolorea, int bezeroaId) {
         this.ibilgailuaId = ibilgailuaId;
         this.matrikula = matrikula;
         this.marka = marka;
         this.modeloa = modeloa;
         this.urtea = urtea;
+        this.kolorea = kolorea;
         this.bezeroaId = bezeroaId;
     }
 
@@ -67,6 +69,14 @@ public class IbilgailuaFormDTO {
         this.urtea = urtea;
     }
 
+    public String getKolorea() {
+        return kolorea;
+    }
+
+    public void setKolorea(String kolorea) {
+        this.kolorea = kolorea;
+    } 
+
     public int getBezeroaId() {
         return bezeroaId;
     }
@@ -83,6 +93,7 @@ public class IbilgailuaFormDTO {
         dto.setMarka(ibilgailua.getMarka());
         dto.setModeloa(ibilgailua.getModeloa());
         dto.setUrtea(ibilgailua.getUrtea());
+        dto.setKolorea(ibilgailua.getKolorea());
         dto.setBezeroaId(ibilgailua.getBezeroaId());
 
         return dto;
@@ -122,6 +133,11 @@ public class IbilgailuaFormDTO {
                 erroreak
             )
         );
+        dto.setKolorea(
+            BalidazioTresnak.getOptionalString(
+                request, "kolorea", 30, "Kolorea", erroreak
+            )
+        );
 
         return dto;
     }
@@ -137,6 +153,7 @@ public class IbilgailuaFormDTO {
         ibilgailua.setMarka(this.marka);
         ibilgailua.setModeloa(this.modeloa);
         ibilgailua.setUrtea(this.urtea);
+        ibilgailua.setKolorea(this.kolorea);
         ibilgailua.setBezeroaId(this.bezeroaId);
 
         return ibilgailua;

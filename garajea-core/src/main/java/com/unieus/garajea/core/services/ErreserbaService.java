@@ -26,24 +26,6 @@ public class ErreserbaService {
     }
 
     /**
-     * Erreserba baten iraupena kalkulatzen du minututan, lanaldiko orduak soilik kontuan hartuta.
-     * @param e Erreserba objektua.
-     * @return Erreserba iraupena minututan.
-     */
-    public long kalkulatuErreserbaIraupena(Erreserba e) {
-        return konfigurazioaService.kalkulatuLanIraupenaMinututan(e.getHasiera(), e.getAmaiera());
-    }
-    
-    /**
-     * ErreserbaInfo objektu baten iraupena kalkulatzen du minututan, lanaldiko orduak soilik kontuan hartuta.
-     * @param info ErreserbaInfo objektua.
-     * @return ErreserbaInfo iraupena minututan.
-     */
-    public long kalkulatuErreserbaInfoIraupena(ErreserbaInfoDTO info) {
-        return konfigurazioaService.kalkulatuLanIraupenaMinututan(info.getHasiera(), info.getAmaiera());
-    }
-
-    /**
      * Erreserbak bilatzen ditu filtro ezberdinen arabera.
      * @param langileId Langile baten IDa.
      * @param kabinaId Kabina baten IDa.      
@@ -114,4 +96,21 @@ public class ErreserbaService {
         return erreserbaDAO.bilatuErreserbaInfoLista(null, kabinaId, null, hasieraData, amaieraData);
     }
 
+    /**
+     * Erreserba baten iraupena kalkulatzen du minututan, lanaldiko orduak soilik kontuan hartuta.
+     * @param e Erreserba objektua.
+     * @return Erreserba iraupena minututan.
+     */
+    public long kalkulatuErreserbaIraupena(Erreserba e) {
+        return konfigurazioaService.kalkulatuLanIraupenaMinututan(e.getHasiera(), e.getAmaiera());
+    }
+    
+    /**
+     * ErreserbaInfo objektu baten iraupena kalkulatzen du minututan, lanaldiko orduak soilik kontuan hartuta.
+     * @param info ErreserbaInfo objektua.
+     * @return ErreserbaInfo iraupena minututan.
+     */
+    public long kalkulatuErreserbaInfoIraupena(ErreserbaInfoDTO info) {
+        return konfigurazioaService.kalkulatuLanIraupenaMinututan(info.getHasiera(), info.getAmaiera());
+    }
 }

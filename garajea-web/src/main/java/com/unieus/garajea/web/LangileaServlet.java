@@ -38,7 +38,7 @@ public class LangileaServlet extends HttpServlet {
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        try  (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
+        try  (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()) {
             switch (pathInfo) {
                 case "/login":
                     request.getRequestDispatcher("/WEB-INF/views/langilea/login.jsp").forward(request,
@@ -49,7 +49,7 @@ public class LangileaServlet extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/langilea/login");
                         return;
                     }
-                    handleErakutsiLangileProfila(ctx, request, response);
+                    handleErakutsiLangileProfila(ZerbitzuEsparrua, request, response);
                     break;
                 case "/logout":
                     // Saioa amaitu eta langilearen login-era berbideratu
@@ -82,10 +82,10 @@ public class LangileaServlet extends HttpServlet {
         (ServiceContextFactory) getServletContext()
             .getAttribute("serviceContextFactory");
 
-        try  (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
+        try  (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()) {
             switch (pathInfo) {
                 case "/login":
-                    handleSaioaHasi(ctx, request, response);
+                    handleSaioaHasi(ZerbitzuEsparrua, request, response);
                     break;
                 case "/":
                 case null: 
@@ -100,7 +100,7 @@ public class LangileaServlet extends HttpServlet {
     }
 
     private void handleErakutsiLangileProfila(
-        ServiceContext ctx,
+        ServiceContext ZerbitzuEsparrua,
         HttpServletRequest request,
         HttpServletResponse response) throws ServletException, IOException {
 
@@ -114,7 +114,7 @@ public class LangileaServlet extends HttpServlet {
         }
 
         try {
-            Langilea langileaEguneratua = ctx.getLangileaService()
+            Langilea langileaEguneratua = ZerbitzuEsparrua.getLangileaService()
                 .findById(langilea.getLangileaId());
 
             LocalDate tarteHasiera = LocalDate.now();
@@ -124,14 +124,14 @@ public class LangileaServlet extends HttpServlet {
             // String egoeraFiltratu = request.getParameter("egoera");
             String egoeraFiltratu = null;
 
-            List<ErreserbaInfoDTO> langilearenErreserbak = ctx.getErreserbaService()
+            List<ErreserbaInfoDTO> langilearenErreserbak = ZerbitzuEsparrua.getErreserbaService()
                 .bilatuLangilearenErreserbak(langileaEguneratua.getLangileaId(), egoeraFiltratu, tarteHasiera, tarteAmaiera);
             
-            List<AgendaBlokeaDTO> langilearenAgenda = ctx.getErreserbaAgendaBuilder()
+            List<AgendaBlokeaDTO> langilearenAgenda = ZerbitzuEsparrua.getErreserbaAgendaBuilder()
                 .sortuAgenda(langilearenErreserbak, tarteHasiera, tarteAmaiera);
 
             LocalTime lanaldiHasiera =
-                ctx.getKonfigurazioaService().getLanaldiHasiera();
+                ZerbitzuEsparrua.getKonfigurazioaService().getLanaldiHasiera();
 
             // Datuak eskaeran (request) gorde
             request.setAttribute("langilea", langileaEguneratua);
@@ -148,7 +148,7 @@ public class LangileaServlet extends HttpServlet {
         }
     }
 
-    private void handleSaioaHasi(ServiceContext ctx, HttpServletRequest request, HttpServletResponse response)
+    private void handleSaioaHasi(ServiceContext ZerbitzuEsparrua, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<String> erroreak = new ArrayList<>();
@@ -165,7 +165,7 @@ public class LangileaServlet extends HttpServlet {
 
         try {
             // Logika exekutatu: saioa hasi
-            Langilea langilea = ctx.getLangileaService().saioaHasi(
+            Langilea langilea = ZerbitzuEsparrua.getLangileaService().saioaHasi(
                 dto.getEmaila(), 
                 dto.getPasahitza()
             );

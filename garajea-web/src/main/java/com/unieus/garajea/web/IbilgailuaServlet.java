@@ -55,11 +55,17 @@ public class IbilgailuaServlet extends HttpServlet {
             }
         Bezeroa bezeroaSesioan = (Bezeroa) sesioa.getAttribute("current_user"); 
 
+        String flashMezua  = (String) sesioa.getAttribute("flashMezua");
+        if (flashMezua != null) {
+            request.setAttribute("arrakasta", flashMezua);
+            sesioa.removeAttribute("flashMezua");
+        }
+
         String pathInfo = request.getPathInfo();
         try {
             switch (pathInfo) {
                 case null:
-                case "/":
+                case "/zerrenda":
                     handleIbilgailuenZerrenda(bezeroaSesioan, request, response);
                     break; 
                 case "/berria":
@@ -270,10 +276,10 @@ public class IbilgailuaServlet extends HttpServlet {
 
             Ibilgailua ibilgailua = ibilgailuaForm.toEntity();
             ZerbitzuEsparrua.getIbilgailuaService().sortuIbilgailua(bezeroaId, ibilgailua);
-
+            request.getSession().setAttribute("flashMezua", "Ibilgailua behar bezala sortu da.");
             response.sendRedirect(
                 request.getContextPath() +
-                "/ibilgailua");
+                "/ibilgailua/zerrenda");
         }
     }
 
@@ -286,7 +292,7 @@ public class IbilgailuaServlet extends HttpServlet {
         List<String> erroreak = new ArrayList<>();
 
         if (ibilgailuaForm.getIbilgailuaId() == null) {
-            erroreak.add("Ibilgailua identifikatzailea falta da");
+            erroreak.add("Ibilgailuaren identifikatzailea falta da");
         }
 
         if (!erroreak.isEmpty()) {
@@ -299,10 +305,10 @@ public class IbilgailuaServlet extends HttpServlet {
             zerbitzuEsparruFaktoria.open()){
 
             ZerbitzuEsparrua.getIbilgailuaService().eguneratuIbilgailua(bezeroaId, ibilgailuaForm.toEntity());
-
+            request.getSession().setAttribute("flashMezua", "Ibilgailua behar bezala eguneratu da.");
             response.sendRedirect(
                 request.getContextPath() +
-                "/ibilgailua");
+                "/ibilgailua/zerrenda");
         }
     }
 
@@ -322,7 +328,7 @@ public class IbilgailuaServlet extends HttpServlet {
 
             response.sendRedirect(
                 request.getContextPath() +
-                "/ibilgailua");
+                "/ibilgailua/zerrenda");
         }
     }    
 

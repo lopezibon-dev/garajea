@@ -96,7 +96,11 @@ Core mailan sortzen diren aurkezpen-eredu abstraktuak. Ez dago teknologia zehatz
 Erreserba-zerrendetatik abiatuta agenda-egitura abstraktuak sortzen dituzten osagaiak (View-tik independienteak).
 
 `garajea-core\src\main\java\com\unieus\garajea\core\services`
-Use case edo kasu-erabileren inplementazioa (zerbitzuak).
+Zerbitzuak: `use case` edo kasu-erabileren inplementazioa (negozio-logika, eta baita aplikazioaren datu-basearen inguruko logika).
+
+`garajea-core\src\main\java\com\unieus\garajea\core\services\context`
+`garajea-core\src\main\java\com\unieus\garajea\core\services\context\impl`
+`ServiceContext`, zerbitzuen esparrua (edo infraestruktura) da. Kontrolatzaile batek erabilera-kasu bat exekutatzeko irekitzen duen zerbitzuen erabilera-esparru kontrolatua da
 
 `garajea-core\src\main\java\com\unieus\garajea\core\util`
 Laguntza utilitarioak (ez negozio-arauak).

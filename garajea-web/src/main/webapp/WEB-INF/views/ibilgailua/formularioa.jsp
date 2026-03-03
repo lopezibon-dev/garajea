@@ -26,13 +26,13 @@
           </h2>
 
           <c:if test="${not empty arrakasta}">
-            <div class="alert alert-success">
+            <div class="nire-alert nire-alert-success">
                 ${arrakasta}
             </div>
           </c:if>
 
           <c:if test="${not empty erroreak}">
-            <div class="alert alert-error">
+            <div class="nire-alert nire-alert-error">
                 <ul>
                     <c:forEach var="errore" items="${erroreak}">
                         <li>${errore}</li>
@@ -89,6 +89,15 @@
                           id="urtea"
                           name="urtea"
                           value="${ibilgailuaForm.urtea}" />
+              </div>
+
+
+              <div class="form-field">
+                <label for="kolorea">Kolorea</label>
+                <input type="text"
+                        id="kolorea"
+                        name="kolorea"
+                        value="${ibilgailuaForm.kolorea}" />
               </div>
 
               <div class="form-actions">

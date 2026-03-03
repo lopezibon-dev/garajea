@@ -12,7 +12,7 @@
                 <h2>Errore bat gertatu da</h2>
 
                 <c:if test="${not empty erroreak}">
-                    <div class="alert alert-error">
+                    <div class="nire-alert nire-alert-error">
                         <ul>
                             <c:forEach var="errore" items="${erroreak}">
                                 <li>${errore}</li>

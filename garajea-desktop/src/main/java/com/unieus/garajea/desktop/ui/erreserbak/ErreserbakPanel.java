@@ -3,7 +3,7 @@ package com.unieus.garajea.desktop.ui.erreserbak;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -103,7 +103,7 @@ public class ErreserbakPanel extends JPanel {
 			BorderFactory.createEmptyBorder(10, 10, 10, 10)
 		);
 
-		kabinaPanelenMapa = new LinkedHashMap<>();
+		kabinaPanelenMapa = new TreeMap<>();
 		
 		List<String> kabinaIzenak = List.of(
 			"Kabina01",

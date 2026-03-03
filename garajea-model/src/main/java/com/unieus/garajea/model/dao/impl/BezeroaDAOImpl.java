@@ -19,7 +19,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
     }
     
     // -----------------------------------------------------------------
-    // Metodo laguntzailea
+    // Metodo laguntzailea (mapeatzailea)
     // -----------------------------------------------------------------
     private Bezeroa bezeroaSortu(ResultSet rs) throws SQLException {
         Bezeroa bezeroa = new Bezeroa();
@@ -49,7 +49,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             if (affectedRows > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        // Gako primario sortua esleitu
+                        // Gako nagusi sortu berria bezeroa objektuari esleitu
                         bezeroa.setBezeroaId(rs.getInt(1)); 
                     }
                 }
@@ -59,7 +59,7 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea datu-basean Bezeroa gordetzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
+            // runtime salbuespen bat sortu, Zerbitzuen geruzak jaso dezan
             throw new RuntimeException("Errorea Bezeroaren datuak gordetzean.", e);
         }
     }
@@ -75,10 +75,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             ps.setInt(5, bezeroa.getBezeroaId()); // PK WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea datu-basean Bezeroa eguneratzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea Bezeroaren datuak eguneratzean.", e);
         }
     }
@@ -90,10 +88,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             ps.setInt(1, bezeroaId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea datu-basean Bezeroa ezabatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea Bezeroaren datuak ezabatzean.", e);
         }
     }
@@ -110,10 +106,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
                 }
             }
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea datu-basean Bezeroa bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea Bezeroa bilatzean.", e);
         }
         return bezeroa;
@@ -130,11 +124,9 @@ public class BezeroaDAOImpl implements BezeroaDAO {
                 bezeroak.add(bezeroaSortu(rs));
             }
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea datu-basean Bezero guztiak bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
-            throw new RuntimeException("Errorea Bezero guztiak bilatzean.", e);
+            throw new RuntimeException("Errorea bezero guztiak bilatzean.", e);
         }
         return bezeroak;
     }
@@ -150,10 +142,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
                 }
             }
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea emaila existitzen den egiaztatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea emaila existitzen den egiaztatzean.", e);
         }
         return false;
@@ -173,10 +163,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
                 }
             }
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea emaila eta pasahitzaren arabera bezeroa bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea emaila eta pasahitzaren arabera bezeroa bilatzean.", e);
         }
         return bezeroa;
@@ -190,10 +178,8 @@ public class BezeroaDAOImpl implements BezeroaDAO {
             ps.setInt(2, bezeroaId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            // logger-a catch blokean erabili (System.err.println -ren ordez)
             LOG.error("Errorea Bezeroaren pasahitza eguneratzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            // runtime salbuespen bat egin, Service geruzak kapturatu dezan
             throw new RuntimeException("Errorea Bezeroaren pasahitza eguneratzean.", e);
         }
     }    

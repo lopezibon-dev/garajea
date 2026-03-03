@@ -17,13 +17,13 @@
         <h2>Nire ibilgailuak</h2>
 
         <c:if test="${not empty arrakasta}">
-          <div class="alert alert-success">
+          <div class="nire-alert nire-alert-success">
               ${arrakasta}
           </div>
         </c:if>
 
         <c:if test="${not empty erroreak}">
-            <div class="alert alert-error">
+            <div class="nire-alert nire-alert-error">
                 <ul>
                     <c:forEach var="errore" items="${erroreak}">
                         <li>${errore}</li>
@@ -52,6 +52,7 @@
                             <th>Marka</th>
                             <th>Modeloa</th>
                             <th>Urtea</th>
+                            <th>Kolorea</th>
                             <th>Ekintzak</th>
                         </tr>
                     </thead>
@@ -62,6 +63,7 @@
                                 <td>${ibilgailua.marka}</td>
                                 <td>${ibilgailua.modeloa}</td>
                                 <td>${ibilgailua.urtea}</td>
+                                <td>${ibilgailua.kolorea}</td>
                                 <td class="row-actions">
 
                                     <a class="garajea-btn garajea-btn--small"

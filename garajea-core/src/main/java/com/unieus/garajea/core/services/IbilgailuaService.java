@@ -51,6 +51,12 @@ public class IbilgailuaService {
             erroreak.add("Bezeroa ez da existitzen");
         }
 
+        // Matrikula jada sisteman dagoen egiaztatu
+        Ibilgailua BadagoenIbilgailua = ibilgailuaDao.findByMatrikula(ibilgailua.getMatrikula());
+        if (BadagoenIbilgailua != null) {
+            erroreak.add("Ibilgailuaren matrikula jada existitzen da sisteman");
+        }
+
         if (!erroreak.isEmpty()) {
             throw new ZerbitzuSalbuespena(erroreak);
         }

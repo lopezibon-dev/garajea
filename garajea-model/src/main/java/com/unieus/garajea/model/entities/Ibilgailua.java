@@ -11,6 +11,7 @@ public class Ibilgailua {
     private String marka;
     private String modeloa;
     private int urtea;
+    private String kolorea;
     private int bezeroaId; // FK: bezeroa_id
     
     // -----------------------------------------------------------------
@@ -19,12 +20,13 @@ public class Ibilgailua {
     public Ibilgailua() {
     }
 
-    public Ibilgailua(int ibilgailuaId, String matrikula, String marka, String modeloa, int urtea, int bezeroaId) {
+    public Ibilgailua(int ibilgailuaId, String matrikula, String marka, String modeloa, int urtea, String kolorea, int bezeroaId) {
         this.ibilgailuaId = ibilgailuaId;
         this.matrikula = matrikula;
         this.marka = marka;
         this.modeloa = modeloa;
         this.urtea = urtea;
+        this.kolorea = kolorea;
         this.bezeroaId = bezeroaId;
     }
 
@@ -72,6 +74,14 @@ public class Ibilgailua {
         this.urtea = urtea;
     }
 
+    public String getKolorea() {
+        return kolorea;
+    }
+
+    public void setKolorea(String kolorea) {
+        this.kolorea = kolorea;
+    }
+
     public int getBezeroaId() {
         return bezeroaId;
     }
@@ -82,6 +92,6 @@ public class Ibilgailua {
     
     @Override
     public String toString() {
-        return "Ibilgailua [id=" + ibilgailuaId + ", matrikula=" + matrikula + ", marka=" + marka + ", modeloa=" + modeloa + ", urtea=" + urtea + ", bezeroaId=" + bezeroaId + "]";
+        return "Ibilgailua [id=" + ibilgailuaId + ", matrikula=" + matrikula + ", marka=" + marka + ", modeloa=" + modeloa + ", urtea=" + urtea + ", kolorea=" + kolorea + ", bezeroaId=" + bezeroaId + "]";
     }
 }

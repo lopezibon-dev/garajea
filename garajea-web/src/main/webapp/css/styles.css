@@ -65,7 +65,7 @@ div.logo-container {
 }
 
 .logo img {
-    max-height: 300px;
+    max-height: 200px;
     max-width: 95%;
     width: auto;
     margin-bottom: 0.2em;
@@ -100,26 +100,26 @@ strong {
     font-weight: bold;
 }
 
-.alert {
+.nire-alert {
     font-weight: bold;
     margin-bottom: 1em;
     padding: 0.75em;
     border-radius: 4px;
 }
 
-.alert-success {
+.nire-alert-success {
     color: #155724;
     border: 1px solid #c3e6cb;
     background-color: #d4edda;
 }
 
-.alert-error {
+.nire-alert-error {
     color: #721c24;
     border: 1px solid #f5c6cb;
     background-color: #f8d7da;
 }
 
-.alert-error ul {
+.nire-alert-error ul {
     margin: 0;
     padding-left: 1.2em;
 }

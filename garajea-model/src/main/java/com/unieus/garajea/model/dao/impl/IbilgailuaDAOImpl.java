@@ -33,6 +33,7 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
         ibilgailua.setMarka(rs.getString("marka"));
         ibilgailua.setModeloa(rs.getString("modeloa"));
         ibilgailua.setUrtea(rs.getInt("urtea"));
+        ibilgailua.setKolorea(rs.getString("kolorea"));
         // FK
         ibilgailua.setBezeroaId(rs.getInt("bezeroa_id")); 
         return ibilgailua;
@@ -44,21 +45,22 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
     
     @Override
     public void save(Ibilgailua ibilgailua) {
-        String sql = "INSERT INTO IBILGAILUA (matrikula, marka, modeloa, urtea, bezeroa_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO IBILGAILUA (matrikula, marka, modeloa, urtea, kolorea, bezeroa_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, ibilgailua.getMatrikula());
             ps.setString(2, ibilgailua.getMarka());
             ps.setString(3, ibilgailua.getModeloa());
             ps.setInt(4, ibilgailua.getUrtea());
-            ps.setInt(5, ibilgailua.getBezeroaId());
+            ps.setString(5, ibilgailua.getKolorea());
+            ps.setInt(6, ibilgailua.getBezeroaId());
             
             int affectedRows = ps.executeUpdate();
 
             if (affectedRows > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        ibilgailua.setIbilgailuaId(rs.getInt(1)); // PK sortua esleitu
+                        ibilgailua.setIbilgailuaId(rs.getInt(1)); // PK sortu berria esleitu ibilgailua objektuari
                     }
                 }
             }
@@ -71,14 +73,15 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
     
     @Override
     public void update(Ibilgailua ibilgailua) {
-        String sql = "UPDATE IBILGAILUA SET matrikula = ?, marka = ?, modeloa = ?, urtea = ?, bezeroa_id = ? WHERE ibilgailua_id = ?";
+        String sql = "UPDATE IBILGAILUA SET matrikula = ?, marka = ?, modeloa = ?, urtea = ?, kolorea = ?, bezeroa_id = ? WHERE ibilgailua_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, ibilgailua.getMatrikula());
             ps.setString(2, ibilgailua.getMarka());
             ps.setString(3, ibilgailua.getModeloa());
             ps.setInt(4, ibilgailua.getUrtea());
-            ps.setInt(5, ibilgailua.getBezeroaId());
-            ps.setInt(6, ibilgailua.getIbilgailuaId()); // PK WHERE klausulan
+            ps.setString(5, ibilgailua.getKolorea());
+            ps.setInt(6, ibilgailua.getBezeroaId());
+            ps.setInt(7, ibilgailua.getIbilgailuaId()); // PK, WHERE klausulan
             ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error("Errorea Ibilgailua eguneratzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
@@ -102,7 +105,7 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
 
     @Override
     public Ibilgailua findById(int ibilgailuaId) {
-        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, bezeroa_id FROM IBILGAILUA WHERE ibilgailua_id = ?";
+        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, kolorea, bezeroa_id FROM IBILGAILUA WHERE ibilgailua_id = ?";
         Ibilgailua ibilgailua = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, ibilgailuaId);
@@ -122,7 +125,7 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
 
     @Override
     public List<Ibilgailua> findAll() {
-        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, bezeroa_id FROM IBILGAILUA ORDER BY matrikula";
+        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, kolorea, bezeroa_id FROM IBILGAILUA";
         List<Ibilgailua> ibilgailuak = new ArrayList<>();
         try (Statement st = conn.createStatement(); 
              ResultSet rs = st.executeQuery(sql)) {
@@ -144,7 +147,7 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
     
     @Override
     public Ibilgailua findByMatrikula(String matrikula) {
-        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, bezeroa_id FROM IBILGAILUA WHERE matrikula = ?";
+        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, kolorea, bezeroa_id FROM IBILGAILUA WHERE matrikula = ?";
         Ibilgailua ibilgailua = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, matrikula);
@@ -154,16 +157,16 @@ public class IbilgailuaDAOImpl implements IbilgailuaDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error("Errorea Matrikularen arabera ibilgailua bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
+            LOG.error("Errorea matrikularen arabera ibilgailua bilatzean. Kodea: {}. Mezua: {}", e.getErrorCode(), e.getMessage(), e);
             
-            throw new RuntimeException("Errorea Matrikularen arabera ibilgailua bilatzean.", e);
+            throw new RuntimeException("Errorea matrikularen arabera ibilgailua bilatzean.", e);
         }
         return ibilgailua;
     }
 
     @Override
     public List<Ibilgailua> findByBezeroa(int bezeroaId) {
-        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, bezeroa_id FROM IBILGAILUA WHERE bezeroa_id = ? ORDER BY urtea DESC";
+        String sql = "SELECT ibilgailua_id, matrikula, marka, modeloa, urtea, kolorea, bezeroa_id FROM IBILGAILUA WHERE bezeroa_id = ? ORDER BY urtea DESC";
         List<Ibilgailua> ibilgailuak = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, bezeroaId);

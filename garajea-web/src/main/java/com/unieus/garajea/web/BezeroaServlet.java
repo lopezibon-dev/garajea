@@ -28,7 +28,7 @@ public class BezeroaServlet extends HttpServlet {
         String pathInfo = request.getPathInfo(); // Adib: /erregistratu edo /login
 
         if (pathInfo == null || pathInfo.equals("/")) {
-            // Profila kudeatzeko ikuspegira birbideratu.
+            // Profila kudeatzeko ikuspegira berbideratu.
             response.sendRedirect(request.getContextPath() + "/bezeroa/profila");
         } else if (pathInfo.equalsIgnoreCase("/erregistratu")) {
             // Bista: erregistratu.jsp
@@ -45,8 +45,7 @@ public class BezeroaServlet extends HttpServlet {
                 return;
             }
             // Bista: profila.jsp, non bi formulario dauden
-            request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request,
-                    response);
+            request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
         } else if (pathInfo.equalsIgnoreCase("/logout")) {
             // Saioa amaitu eta login-era berbideratu
             request.getSession().invalidate();
@@ -130,8 +129,8 @@ public class BezeroaServlet extends HttpServlet {
             erroreak.add("Email formatua ez da zuzena");
         }
 
-        if (pasahitza == null) {
-            erroreak.add("Pasahitza hutsa da.");
+        if (pasahitza == null || pasahitza.trim().isEmpty()) {
+            erroreak.add("Pasahitza hutsik dago.");
         }
 
         if (!erroreak.isEmpty()) {
@@ -139,7 +138,7 @@ public class BezeroaServlet extends HttpServlet {
         }
 
         // ServiceContext hasi eta erregistroa burutu
-        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
+        try (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()){
             Bezeroa bezeroa = new Bezeroa();
             bezeroa.setIzena(izena);
             bezeroa.setAbizenak(request.getParameter("abizenak"));
@@ -147,12 +146,14 @@ public class BezeroaServlet extends HttpServlet {
             bezeroa.setPasahitza(pasahitza); // Pasahitza kodetu barik
             bezeroa.setTelefonoa(request.getParameter("telefonoa"));
             
-            Bezeroa bezeroaGordeta = ctx.getBezeroaService().erregistratu(bezeroa);
+            Bezeroa bezeroaGordeta = ZerbitzuEsparrua.getBezeroaService().erregistratu(bezeroa);
 
             HttpSession session = request.getSession(true);
             session.setAttribute("current_user", bezeroaGordeta);
             session.setAttribute("current_user_type", "bezeroa");
 
+            // Konpondu!!!
+            request.setAttribute("arrakasta", "Bezeroaren erregistroa behar bezala burutu da.");
             response.sendRedirect(request.getContextPath() + "/bezeroa/profila");
         }
     }
@@ -180,8 +181,8 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena(erroreak);
         }
 
-        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()) {
-            Bezeroa bezeroa = ctx.getBezeroaService().saioaHasi(emaila, pasahitza);
+        try (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()) {
+            Bezeroa bezeroa = ZerbitzuEsparrua.getBezeroaService().saioaHasi(emaila, pasahitza);
 
             HttpSession session = request.getSession(true);
             session.setAttribute("current_user", bezeroa);
@@ -212,12 +213,6 @@ public class BezeroaServlet extends HttpServlet {
                 return;
             }
         Bezeroa bezeroaSesioan = (Bezeroa) sesioa.getAttribute("current_user");  
-        /* 
-        if (bezeroaSesioan == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Saioa ez dago hasita.");
-            return;
-        }
-        */
   
         // Sarrerak balidatu
         List<String> erroreak = new ArrayList<>();
@@ -236,26 +231,27 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena(erroreak);
         }
 
-        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
+        try (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()){
             // bezeroaEguneratu objektua sortu datuekin
-            Bezeroa bezeroaEguneratu = new Bezeroa();
-            bezeroaEguneratu.setBezeroaId(bezeroaSesioan.getBezeroaId()); // GARRANTZITSUA: IDa mantendu
-            bezeroaEguneratu.setIzena(izena);
-            bezeroaEguneratu.setAbizenak(request.getParameter("abizenak"));
-            bezeroaEguneratu.setEmaila(emaila);
-            bezeroaEguneratu.setTelefonoa(request.getParameter("telefonoa"));
+            Bezeroa bezeroa = new Bezeroa();
+            bezeroa.setBezeroaId(bezeroaSesioan.getBezeroaId()); // GARRANTZITSUA: IDa mantendu
+            bezeroa.setIzena(izena);
+            bezeroa.setAbizenak(request.getParameter("abizenak"));
+            bezeroa.setEmaila(emaila);
+            bezeroa.setTelefonoa(request.getParameter("telefonoa"));
 
             // Datuak eguneratu
-            ctx.getBezeroaService().datuakEguneratu(bezeroaEguneratu);
+            ZerbitzuEsparrua.getBezeroaService().datuakEguneratu(bezeroa);
 
             // Eguneratu saioa datu basean gordetako datuak eskuratuz
-            Bezeroa bezeroaBerria = ctx.getBezeroaService().findById(bezeroaEguneratu.getBezeroaId());
-            sesioa.setAttribute("current_user", bezeroaBerria);
+            Bezeroa bezeroBerria = ZerbitzuEsparrua.getBezeroaService().findById(bezeroa.getBezeroaId());
+            sesioa.setAttribute("current_user", bezeroBerria);
 
-            request.setAttribute("arrakasta", "Datuak arrakastaz eguneratu dira.");
-            request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
+            request.getSession().setAttribute("flashMezua", "Datuak arrakastaz eguneratu dira.");
+            response.sendRedirect(
+                request.getContextPath() + "/bezeroa/profila");
         } catch (ZerbitzuSalbuespena e) {
-            request.setAttribute("errorea", "Errorea datuak eguneratzean: " + e.getMessage());
+            request.setAttribute("errorea", "Errorea datuak eguneratzean.");
             request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
         }
     }
@@ -284,9 +280,9 @@ public class BezeroaServlet extends HttpServlet {
             throw new InputBalidazioSalbuespena("Pasahitza berria derrigorrezkoa da.");
         }
         // Negozio logika: Pasahitza eguneratu
-        try (ServiceContext ctx = ZerbitzuEsparruFaktoria.open()){
+        try (ServiceContext ZerbitzuEsparrua = ZerbitzuEsparruFaktoria.open()){
             
-            ctx.getBezeroaService().pasahitzaEguneratu(
+            ZerbitzuEsparrua.getBezeroaService().pasahitzaEguneratu(
                 bezeroaSesioan.getBezeroaId(),
                 pasahitzaBerria);
 
@@ -297,6 +293,9 @@ public class BezeroaServlet extends HttpServlet {
             // Baina erraztasunagatik, profila kargatuko dugu.
             request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
 
+        } catch (ZerbitzuSalbuespena e) {
+            request.setAttribute("errorea", "Errorea pasahitza eguneratzean.");
+            request.getRequestDispatcher("/WEB-INF/views/bezeroa/profila.jsp").forward(request, response);
         } 
     }
 
