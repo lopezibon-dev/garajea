@@ -310,4 +310,4 @@ HTTP Request
 
 Balidazioen eta erroreen kudeaketa DIY Garajea proiektuan
 sinpletasuna, segurtasuna eta mantengarritasuna lehenesten dituen
-eredu argi eta hezkuntza-arlokoan oinarritzen da.
+eredu argi eta hezkuntza arlora zuzendutakoan oinarritzen da.

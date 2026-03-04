@@ -20,11 +20,11 @@ Helburua da:
 
 ---
 
-## 2. Ikuspegia (View)
+## 2. Bista (View)
 
 ### 2.1 Teknologia
 
-Desktop ikuspegia **Java Swing** teknologian oinarritzen da:
+Desktop bista **Java Swing** teknologian oinarritzen da:
 
 - `JFrame`
 - `JPanel`
@@ -71,7 +71,7 @@ Kontrolatzailearen ardurak:
 - Sarrera-datuen balidazioa
 - ServiceContext irekitzea
 - Negozio-zerbitzuak deitzea
-- Emaitzen arabera ikuspegia eguneratzea
+- Emaitzen arabera bista eguneratzea
 
 ### 3.3 Zer ez duen egiten
 
@@ -208,13 +208,13 @@ Desktop aplikazioko ekintza baten fluxu orokorra honakoa da:
 
 ```text
 Erabiltzailearen ekintza
- └── Ikuspegia (Swing Panel)
+ └── Bista (Swing Panel)
        └── Kontrol-fluxua (UI ekintza)
              ├── Input balidazioa
              ├── ServiceContext.open()
              │     └── Zerbitzuak
              │           └── DAO
-             └── Ikuspegiaren eguneraketa
+             └── Bistaren eguneraketa
 ```
 
 Fluxu honek web aplikazioaren egitura bera jarraitzen du,
@@ -245,7 +245,7 @@ Frame-ek ez dute:
 - Zerbitzu-deirik
 - Datu-kargarik
 
-#### Panel-ak (Ikuspegi funtzionalak)
+#### Panel-ak (Bista funtzionalak)
 
 Panel-ak dira aplikazioaren **eduki funtzionala** erakusten duten osagaiak.
 
@@ -267,7 +267,7 @@ Panel batek (proiektu honen arkitekturan):
 ### 6.2 contentPanel eredua: edukien trukaketa
 
 MainFrame klasean, contentPanel izeneko JPanel bat erabiltzen da
-ikuspegi desberdinak modu dinamikoan kargatzeko.
+bista desberdinak modu dinamikoan kargatzeko.
 
 ```java
 private JPanel contentPanel;
@@ -291,7 +291,7 @@ contentPanel.repaint();
 Eredu honek aukera ematen du:
 
 - Menu nagusia eta leihoa egonkorrak izateko
-- Ikuspegiak (Panel-ak) modu sinplean trukatzeko
+- Bistak (Panel-ak) modu sinplean trukatzeko
 - CardLayout bezalako mekanismo konplexuak saihesteko
 
 Hezkuntza-arloan eta aplikazioaren tamaina kontuan hartuta,
